@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable-xxxhdpi_ic_logo.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable-xxxhdpi/ic_logo.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable-xxhdpi_ic_logo.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable-xxhdpi/ic_logo.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-ldpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-ldpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable-hdpi_ic_logo.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable-hdpi/ic_logo.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable_launch_background.xml.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable/launch_background.xml"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable-xhdpi_ic_logo.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable-xhdpi/ic_logo.png"
+    },
+    {
+        "merged": "com.huynh.listar_flutter_pro.app-merged_res-46:/drawable-mdpi_ic_logo.png.flat",
+        "source": "com.huynh.listar_flutter_pro.app-main-39:/drawable-mdpi/ic_logo.png"
+    }
+]
