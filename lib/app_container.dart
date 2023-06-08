@@ -34,8 +34,7 @@ class _AppContainerState extends State<AppContainer> {
   bool _requireAuth(String route) {
     switch (route) {
       case Routes.home:
-      case Routes.dashboard:
-      case Routes.account:
+      case Routes.discovery:
         return false;
       default:
         return true;
@@ -47,10 +46,12 @@ class _AppContainerState extends State<AppContainer> {
     switch (route) {
       case Routes.home:
         return 0;
-      case Routes.dashboard:
+      case Routes.discovery:
         return 1;
-      case Routes.account:
+      case Routes.wishList:
         return 2;
+      case Routes.account:
+        return 3;
       default:
         return 0;
     }
@@ -123,15 +124,22 @@ class _AppContainerState extends State<AppContainer> {
     String title = 'home';
     IconData iconData = Icons.help_outline;
     switch (route) {
-      case Routes.dashboard:
-        iconData = Icons.dashboard_customize_sharp;
-        title = 'dashboard';
+      case Routes.home:
+        iconData = Icons.home_outlined;
+        title = 'home';
+        break;
+      case Routes.discovery:
+        iconData = Icons.location_on_outlined;
+        title = 'discovery';
+        break;
+      case Routes.wishList:
+        iconData = Icons.bookmark_outline;
+        title = 'wish_list';
         break;
       case Routes.account:
         iconData = Icons.account_circle_outlined;
         title = 'account';
         break;
-      case Routes.home:
       default:
         iconData = Icons.home_outlined;
         title = 'home';
@@ -194,7 +202,9 @@ class _AppContainerState extends State<AppContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildMenuItem(Routes.home),
-            _buildMenuItem(Routes.dashboard),
+            _buildMenuItem(Routes.discovery),
+            const SizedBox(width: 56),
+            _buildMenuItem(Routes.wishList),
             _buildMenuItem(Routes.account),
           ],
         ),
@@ -206,7 +216,8 @@ class _AppContainerState extends State<AppContainer> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildMenuItem(Routes.home),
-          _buildMenuItem(Routes.dashboard),
+          _buildMenuItem(Routes.discovery),
+          _buildMenuItem(Routes.wishList),
           _buildMenuItem(Routes.account),
         ],
       ),
@@ -223,11 +234,11 @@ class _AppContainerState extends State<AppContainer> {
         },
         child: IndexedStack(
           index: _exportIndexed(_selected),
-          children: const <Widget>[Home(), Discovery(), Account()],
+          children: const <Widget>[Home(), Discovery(), WishList(), Account()],
         ),
       ),
       bottomNavigationBar: _buildBottomMenu(),
-      // floatingActionButton: _buildSubmit(),
+      floatingActionButton: _buildSubmit(),
       floatingActionButtonLocation: submitPosition,
     );
   }

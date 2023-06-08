@@ -5,7 +5,6 @@ import 'package:listar_flutter_pro/blocs/bloc.dart';
 import 'package:listar_flutter_pro/configs/config.dart';
 import 'package:listar_flutter_pro/utils/utils.dart';
 import 'package:listar_flutter_pro/widgets/widget.dart';
-import 'dart:developer';
 
 class SignIn extends StatefulWidget {
   final String from;
@@ -55,17 +54,11 @@ class _SignInState extends State<SignIn> {
 
   ///On login
   void _login() async {
-    log("Sigin clicked...");
-
     Utils.hiddenKeyboard(context);
     setState(() {
       _errorID = UtilValidator.validate(_textIDController.text);
       _errorPass = UtilValidator.validate(_textPassController.text);
     });
-
-    log("_errorID: $_errorID");
-    log("_errorPass: $_errorPass");
-
     if (_errorID == null && _errorPass == null) {
       AppBloc.loginCubit.onLogin(
         username: _textIDController.text,

@@ -28,13 +28,13 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
           height: 28,
           color: Theme.of(context).colorScheme.background,
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        //   child: HomeSearchBar(
-        //     onSearch: onSearch,
-        //     onScan: onScan,
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: HomeSearchBar(
+            onSearch: onSearch,
+            onScan: onScan,
+          ),
+        ),
       ],
     );
   }

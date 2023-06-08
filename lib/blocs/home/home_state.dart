@@ -5,22 +5,15 @@ abstract class HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeSuccess extends HomeState {
-  final List<String>? banner;
-  final List<CategoryModel>? category;
-  final List<CategoryModel>? location;
-  final List<ProductModel>? recent;
-
-  final List<CategoryModel>? achievementAgent;
-  final List<ProductModel>? top3Pipeline;
-  final List<ProductModel>? top5Quotation;
+  final List<String> banner;
+  final List<CategoryModel> category;
+  final List<CategoryModel> location;
+  final List<ProductModel> recent;
 
   HomeSuccess({
-    this.banner,
-    this.category,
-    this.location,
-    this.recent,
-    this.achievementAgent,
-    this.top3Pipeline,
-    this.top5Quotation,
+    required this.banner,
+    required this.category,
+    required this.location,
+    required this.recent,
   });
 }

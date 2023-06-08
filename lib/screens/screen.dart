@@ -37,6 +37,3 @@ export 'tags_picker/tags_picker.dart';
 export 'theme_setting/theme_setting.dart';
 export 'web/web.dart';
 export 'wishlist/wishlist.dart';
-
-
-export 'pipeline/list_pipeline.dart';

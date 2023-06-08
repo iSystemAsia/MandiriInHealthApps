@@ -11,19 +11,6 @@ import 'package:listar_flutter_pro/screens/home/home_sliver_app_bar.dart';
 import 'package:listar_flutter_pro/utils/utils.dart';
 import 'package:listar_flutter_pro/widgets/widget.dart';
 
-import 'package:logger/logger.dart';
-
-final logger = Logger(
-  printer: PrettyPrinter(
-    methodCount: 0,
-    errorMethodCount: 5,
-    lineLength: 50,
-    colors: true,
-    printEmojis: true,
-    printTime: false,
-  ),
-);
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -37,19 +24,9 @@ class _HomeState extends State<Home> {
   late StreamSubscription _submitSubscription;
   late StreamSubscription _reviewSubscription;
 
-  String top3PipelineTitle = "Top 3 Pipeline";
-  String top3PipelineSubTitle = "Based On Total GWP Current Year";
-  String achievementAgentTitle = "Achievement Agent";
-  String achievementAgentSubTitle = "Total In Current Year";
-  String top5QuotationTitle = "Top 5 Quotation";
-  String top5QuotationSubTitle = "Based On Total GWP Current Year";
-
   @override
   void initState() {
     super.initState();
-
-    print("Home > initState");
-
     AppBloc.homeCubit.onLoad();
     _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
       if (state is Submitted) {
@@ -103,10 +80,8 @@ class _HomeState extends State<Home> {
       return;
     }
     if (item.hasChild) {
-      print("Has Child");
       Navigator.pushNamed(context, Routes.category, arguments: item);
     } else {
-      print("Not Has Child");
       Navigator.pushNamed(context, Routes.listProduct, arguments: item);
     }
   }
@@ -163,7 +138,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildAchievementAgent(List<CategoryModel>? achievementAgent) {
+  ///Build popular UI
+  Widget _buildLocation(List<CategoryModel>? location) {
     ///Loading
     Widget content = ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -179,12 +155,12 @@ class _HomeState extends State<Home> {
       itemCount: List.generate(8, (index) => index).length,
     );
 
-    if (achievementAgent != null) {
+    if (location != null) {
       content = ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         itemBuilder: (context, index) {
-          final item = achievementAgent[index];
+          final item = location[index];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: AppCategoryItem(
@@ -196,7 +172,7 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        itemCount: achievementAgent.length,
+        itemCount: location.length,
       );
     }
 
@@ -210,20 +186,18 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                // Translate.of(context).translate(
-                //   'popular_location',
-                // ),
-                achievementAgentTitle,
+                Translate.of(context).translate(
+                  'popular_location',
+                ),
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                // Translate.of(context).translate(
-                //   'let_find_interesting',
-                // ),
-                achievementAgentSubTitle,
+                Translate.of(context).translate(
+                  'let_find_interesting',
+                ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -238,7 +212,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildTop3Pipeline(List<ProductModel>? pipeline) {
+  ///Build list recent
+  Widget _buildRecent(List<ProductModel>? recent) {
     ///Loading
     Widget content = ListView.builder(
       padding: const EdgeInsets.all(0),
@@ -253,13 +228,13 @@ class _HomeState extends State<Home> {
       itemCount: 8,
     );
 
-    if (pipeline != null) {
+    if (recent != null) {
       content = ListView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.all(0),
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          final item = pipeline[index];
+          final item = recent[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: AppProductItem(
@@ -271,7 +246,7 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        itemCount: pipeline.length,
+        itemCount: recent.length,
       );
     }
 
@@ -284,87 +259,16 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                // Translate.of(context).translate('recent_location'),
-                top3PipelineTitle,
+                Translate.of(context).translate('recent_location'),
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                // Translate.of(context).translate(
-                //   'what_happen',
-                // ),
-                top3PipelineSubTitle,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          content,
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTop5Quotation(List<ProductModel>? quotation) {
-    ///Loading
-    Widget content = ListView.builder(
-      padding: const EdgeInsets.all(0),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.only(bottom: 16),
-          child: AppProductItem(type: ProductViewType.small),
-        );
-      },
-      itemCount: 8,
-    );
-
-    if (quotation != null) {
-      content = ListView.builder(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          final item = quotation[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: AppProductItem(
-              onPressed: () {
-                _onProductDetail(item);
-              },
-              item: item,
-              type: ProductViewType.small,
-            ),
-          );
-        },
-        itemCount: quotation.length,
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                // Translate.of(context).translate('recent_location'),
-                top5QuotationTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                // Translate.of(context).translate(
-                //   'what_happen',
-                // ),
-                top5QuotationSubTitle,
+                Translate.of(context).translate(
+                  'what_happen',
+                ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -381,50 +285,16 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          List<CategoryModel> category = [
-            CategoryModel(
-              id: 1,
-              title: "Pipeline",
-              icon: UtilIcon.getIconFromCss("fas fa-chart-column"),
-              color: UtilColor.getColorFromHex("#45A4F7"),
-            ),
-            CategoryModel(
-              id: 2,
-              title: "Sales Activity",
-              icon: UtilIcon.getIconFromCss("far fa-calendar-check"),
-              color: UtilColor.getColorFromHex("#FF9C0C"),
-            ),
-            CategoryModel(
-              id: 3,
-              title: "Quotation",
-              icon: UtilIcon.getIconFromCss("fas fa-handshake"),
-              color: UtilColor.getColorFromHex("#FF5722"),
-            ),
-            CategoryModel(
-              id: 4,
-              title: "Closing",
-              icon: UtilIcon.getIconFromCss("fas fa-medal"),
-              color: UtilColor.getColorFromHex("#9C27B0"),
-            )
-          ];
-
           List<String>? banner;
-          // List<CategoryModel>? category;
+          List<CategoryModel>? category;
           List<CategoryModel>? location;
           List<ProductModel>? recent;
 
-          List<CategoryModel>? achievementAgent;
-          List<ProductModel>? top3Pipeline;
-          List<ProductModel>? top5Quotation;
-
           if (state is HomeSuccess) {
             banner = state.banner;
-            // category = state.category;
+            category = state.category;
             location = state.location;
             recent = state.recent;
-            achievementAgent = state.achievementAgent;
-            top3Pipeline = state.top3Pipeline;
-            top5Quotation = state.top5Quotation;
           }
 
           return CustomScrollView(
@@ -452,11 +322,10 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: <Widget>[
                         _buildCategory(category),
-                        _buildAchievementAgent(achievementAgent),
+                        _buildLocation(location),
                         const SizedBox(height: 8),
-                        _buildTop3Pipeline(top3Pipeline),
-                        const SizedBox(height: 8),
-                        _buildTop5Quotation(top5Quotation)
+                        _buildRecent(recent),
+                        const SizedBox(height: 28),
                       ],
                     ),
                   )

@@ -275,8 +275,7 @@ class AppCategoryItem extends StatelessWidget {
                                 .textTheme
                                 .titleSmall!
                                 .copyWith(
-                                  // color: Colors.white,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),

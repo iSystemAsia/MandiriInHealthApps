@@ -1,45 +1,11 @@
 import 'dart:async';
 
 import 'package:listar_flutter_pro/api/http_manager.dart';
-import 'package:listar_flutter_pro/api/custom_http_manager.dart';
 import 'package:listar_flutter_pro/models/model.dart';
 import 'package:listar_flutter_pro/utils/utils.dart';
 
 class Api {
   static final httpManager = HTTPManager();
-  static final customHttpManager = CustomHTTPManager();
-
-  static const String secretKey = "2y\$10\$QAsAzXePzUSQjX3T3PYuPuDJzAANS3Vf8If./n810N0i4itTeJLlm";
-  static const String achievementAgent = "/list-mini-dashboard?SecretKey=$secretKey";
-  static const String top3Pipeline = "/list-top-3-pipeline?SecretKey=$secretKey";
-  static const String top5Quotation = "/list-top-5-quotation?SecretKey=$secretKey";
-  
-  static Future<ResultApiModel> requestAchievementAgent() async {
-    // final Map<String, String> params = {
-    //   "ContactId": "0000000000000",
-    //   "KanalDistribusiId": "0000000000000"
-    // };
-    final result = await customHttpManager.post(url: achievementAgent);
-    return ResultApiModel.fromJson(result);
-  }
-
-  static Future<ResultApiModel> requestTop3Pipeline() async {
-    // final Map<String, String> params = {
-    //   "ContactId": "0000000000000",
-    //   "KanalDistribusiId": "0000000000000"
-    // };
-    final result = await customHttpManager.post(url: top3Pipeline);
-    return ResultApiModel.fromJson(result);
-  }
-
-  static Future<ResultApiModel> requestTop5Quotation() async {
-    // final Map<String, String> params = {
-    //   "ContactId": "0000000000000",
-    //   "KanalDistribusiId": "0000000000000"
-    // };
-    final result = await customHttpManager.post(url: top5Quotation);
-    return ResultApiModel.fromJson(result);
-  }
 
   ///URL API
   static const String login = "/jwt-auth/v1/token";

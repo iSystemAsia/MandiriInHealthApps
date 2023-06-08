@@ -4,7 +4,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 class Application {
   static bool debug = true;
   static String domain = 'https://listarapp.com';
-  static String customDomain = 'http://devnewmarkis-report.inhealth.co.id';
   static DeviceModel? device;
   static PackageInfo? packageInfo;
   static SettingModel setting = SettingModel.fromDefault();

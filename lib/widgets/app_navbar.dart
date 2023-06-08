@@ -62,17 +62,17 @@ class AppNavBar extends StatelessWidget {
                   ),
                 ],
               ),
-              // IconButton(
-              //   icon: const Icon(Icons.track_changes),
-              //   onPressed: onFilter,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 16, left: 16),
-              //   child: Text(
-              //     Translate.of(context).translate('filter'),
-              //     style: Theme.of(context).textTheme.titleSmall,
-              //   ),
-              // )
+              IconButton(
+                icon: const Icon(Icons.track_changes),
+                onPressed: onFilter,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 16, left: 16),
+                child: Text(
+                  Translate.of(context).translate('filter'),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              )
             ],
           )
         ],

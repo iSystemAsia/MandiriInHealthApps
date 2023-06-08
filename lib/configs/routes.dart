@@ -10,9 +10,6 @@ class RouteArguments<T> {
 }
 
 class Routes {
-  static const String dashboard = "/dashboard";
-  static const String pipeline = "/pipeline";
-
   static const String home = "/home";
   static const String discovery = "/discovery";
   static const String wishList = "/wishList";
@@ -55,14 +52,6 @@ class Routes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-
-      case pipeline:
-        return MaterialPageRoute(
-          builder: (context) {
-            return ListPipeline(category: settings.arguments as CategoryModel);
-          },
-        );
-
       case signIn:
         return MaterialPageRoute(
           builder: (context) {
