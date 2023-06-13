@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class LanguageSetting extends StatefulWidget {
   const LanguageSetting({Key? key}) : super(key: key);

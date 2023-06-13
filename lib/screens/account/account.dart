@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
@@ -142,7 +143,7 @@ class _AccountState extends State<Account> {
   }
 
   ///On Preview Profile
-  void _onProfile(UserModel user) {
+  void _onProfile(UserModel_ user) {
     Navigator.pushNamed(context, Routes.profile, arguments: user);
   }
 
@@ -176,7 +177,7 @@ class _AccountState extends State<Account> {
         ],
       ),
       body: SafeArea(
-        child: BlocBuilder<UserCubit, UserModel?>(
+        child: BlocBuilder<UserCubit, UserModel_?>(
           builder: (context, user) {
             if (user == null) {
               return const Center(

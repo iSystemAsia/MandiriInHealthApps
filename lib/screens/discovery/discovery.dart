@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/screens/home/search_bar.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/screens/home/search_bar.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class Discovery extends StatefulWidget {
   const Discovery({Key? key}) : super(key: key);

@@ -1,11 +1,119 @@
 import 'dart:async';
-
-import 'package:listar_flutter_pro/api/http_manager.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/models/sales_activity_model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/api/http_manager.dart';
+import 'package:mandiri_in_health/models/achievement_agent_model.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/pipeline_model.dart';
+import 'package:mandiri_in_health/models/quotation_model.dart';
+import 'package:mandiri_in_health/models/auth_model.dart';
 
 class Api {
   static final httpManager = HTTPManager();
+
+  static const String secretKey = "2y\$10\$QAsAzXePzUSQjX3T3PYuPuDJzAANS3Vf8If./n810N0i4itTeJLlm";
+  static const String login_ = "/login?SecretKey=$secretKey";
+  static const String achievementAgent = "/achievement-agent?SecretKey=$secretKey";
+  static const String pipeline = "/pipeline/?SecretKey=$secretKey";
+  static const String salesActivity = "/sales-activity/?SecretKey=$secretKey";
+  static const String quotation = "/quotation/?SecretKey=$secretKey";
+
+  static Future<AuthModel> requestLogin(params) async {
+    final result = await httpManager.post(url: login_, data: params);
+    return AuthModel.fromJson(result);
+  }
+
+  static Future<List<AchievementAgentModel>> requestAchievementAgent(params) async {
+    List<AchievementAgentModel> achievementAgentList = [];
+    final result = await httpManager.get(url: achievementAgent, params: params);
+    print("requestAchievementAgent: $result");
+
+    result.forEach((item) => achievementAgentList.add(AchievementAgentModel.fromJson(item)));
+
+    return achievementAgentList;
+  }
+
+  static Future<List<PipelineModel>> requestTop3Pipeline(params) async {
+    List<PipelineModel> pipelineList = [];
+    params['type'] = 'top-3';
+    final result = await httpManager.get(url: pipeline, params: params);
+    print("requestTop3Pipeline: $result");
+
+    result.forEach((item) => pipelineList.add(PipelineModel.fromJson(item)));
+
+    return pipelineList;
+  }
+
+  static Future<List<QuotationModel>> requestTop5Quotation(params) async {
+    List<QuotationModel> pipelineList = [];
+    params['type'] = 'top-5';
+    final result = await httpManager.get(url: quotation, params: params);
+    print("requestTop5Quotation: $result");
+
+    result.forEach((item) => pipelineList.add(QuotationModel.fromJson(item)));
+
+    return pipelineList;
+  }
+
+  static Future<Map<String, dynamic>> requestPipeline(params) async {
+    List<PipelineModel> pipelineList = [];
+    final result = await httpManager.get(url: pipeline, params: params);
+    print("requestPipeline: $result");
+    
+    result['data'].forEach((item) => pipelineList.add(PipelineModel.fromJson(item)));
+    PaginationModel pagination = PaginationModel(
+      page: result['current_page'],
+      perPage: result['per_page'],
+      maxPage: result['last_page'],
+      total: result['total']
+    );
+
+    return {
+      'list': pipelineList,
+      'pagination': pagination
+    };
+  }
+
+  static Future<Map<String, dynamic>> requestSalesActivity(params) async {
+    List<SalesActivityModel> salesActivityList = [];
+    final result = await httpManager.get(url: salesActivity, params: params);
+    print("requestSalesActivity: $result");
+    
+    result['data'].forEach((item) => salesActivityList.add(SalesActivityModel.fromJson(item)));
+    PaginationModel pagination = PaginationModel(
+      page: result['current_page'],
+      perPage: result['per_page'],
+      maxPage: result['last_page'],
+      total: result['total']
+    );
+
+    return {
+      'list': salesActivityList,
+      'pagination': pagination
+    };
+  }
+
+  static Future<Map<String, dynamic>> requestQuotation(params) async {
+    List<QuotationModel> quotationList = [];
+    final result = await httpManager.get(url: quotation, params: params);
+    print("requestQuotation: $result");
+    
+    result['data'].forEach((item) => quotationList.add(QuotationModel.fromJson(item)));
+    PaginationModel pagination = PaginationModel(
+      page: result['current_page'],
+      perPage: result['per_page'],
+      maxPage: result['last_page'],
+      total: result['total']
+    );
+
+    return {
+      'list': quotationList,
+      'pagination': pagination
+    };
+  }
+
+  /// ===============================================================
+
 
   ///URL API
   static const String login = "/jwt-auth/v1/token";
@@ -46,10 +154,10 @@ class Api {
   static const String deactivate = "/listar/v1/auth/deactivate";
 
   ///Login api
-  static Future<ResultApiModel> requestLogin(params) async {
-    final result = await httpManager.post(url: login, data: params);
-    return ResultApiModel.fromJson(result);
-  }
+  // static Future<ResultApiModel> requestLogin(params) async {
+  //   final result = await httpManager.post(url: login, data: params);
+  //   return ResultApiModel.fromJson(result);
+  // }
 
   ///Validate token valid
   static Future<ResultApiModel> requestValidateToken() async {
@@ -273,16 +381,16 @@ class Api {
   }
 
   ///Upload image
-  static Future<ResultApiModel> requestUploadImage(formData, progress) async {
-    var result = await httpManager.post(
-      url: uploadImage,
-      formData: formData,
-      progress: progress,
-    );
+  // static Future<ResultApiModel> requestUploadImage(formData, progress) async {
+  //   var result = await httpManager.post(
+  //     url: uploadImage,
+  //     formData: formData,
+  //     progress: progress,
+  //   );
 
-    final convertResponse = {"success": result['id'] != null, "data": result};
-    return ResultApiModel.fromJson(convertResponse);
-  }
+  //   final convertResponse = {"success": result['id'] != null, "data": result};
+  //   return ResultApiModel.fromJson(convertResponse);
+  // }
 
   ///Get booking form
   static Future<ResultApiModel> requestBookingForm(params) async {

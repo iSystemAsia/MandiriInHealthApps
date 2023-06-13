@@ -1,39 +1,40 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
 
-class UserCubit extends Cubit<UserModel?> {
+class UserCubit extends Cubit<UserModel_?> {
   UserCubit() : super(null);
 
   ///Event load user
-  Future<UserModel?> onLoadUser() async {
-    UserModel? user = await UserRepository.loadUser();
+  Future<UserModel_?> onLoadUser() async {
+    UserModel_? user = await UserRepository.loadUser();
     emit(user);
     return user;
   }
 
   ///Event fetch user
-  Future<UserModel?> onFetchUser() async {
-    UserModel? local = await UserRepository.loadUser();
-    UserModel? remote = await UserRepository.fetchUser();
-    if (local != null && remote != null) {
-      final sync = local.updateUser(
-        name: remote.name,
-        email: remote.email,
-        url: remote.url,
-        description: remote.description,
-        image: remote.image,
-      );
-      onSaveUser(sync);
-      return sync;
-    }
+  Future<UserModel_?> onFetchUser() async {
+    UserModel_? local = await UserRepository.loadUser();
+    UserModel_? remote = await UserRepository.fetchUser();
+    // if (local != null && remote != null) {
+    //   final sync = local.updateUser(
+    //     name: remote.name,
+    //     email: remote.email,
+    //     url: remote.url,
+    //     description: remote.description,
+    //     image: remote.image,
+    //   );
+    //   onSaveUser(sync);
+    //   return sync;
+    // }
     return null;
   }
 
   ///Event save user
-  Future<void> onSaveUser(UserModel user) async {
-    await UserRepository.saveUser(user: user);
+  Future<void> onSaveUser(UserModel_ user) async {
+    await UserRepository.saveUser_(user: user);
     emit(user);
   }
 

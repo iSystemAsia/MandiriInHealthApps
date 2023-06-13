@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQR extends StatefulWidget {

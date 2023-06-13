@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/models/model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Web extends StatefulWidget {

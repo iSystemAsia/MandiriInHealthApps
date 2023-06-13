@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:listar_flutter_pro/app.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/app.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override

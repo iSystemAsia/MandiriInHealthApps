@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 enum CategoryView { full, icon, cardLarge }
 

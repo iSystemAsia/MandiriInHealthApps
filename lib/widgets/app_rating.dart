@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/app_placeholder.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/app_placeholder.dart';
 
 class AppRating extends StatelessWidget {
   final RateModel? rate;

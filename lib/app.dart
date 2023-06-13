@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:listar_flutter_pro/app_container.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/screens/screen.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/app_container.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/screens/screen.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

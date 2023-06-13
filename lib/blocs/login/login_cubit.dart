@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:listar_flutter_pro/blocs/app_bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/blocs/app_bloc.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 enum LoginState {
   init,
@@ -23,13 +23,18 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginState.loading);
 
     ///Set Device Token
-    Application.device?.token = await Utils.getDeviceToken();
+    var token = await Utils.getDeviceToken();
+    Application.device?.token = token;
+
+    print("onLogin > token: $token");
 
     ///login via repository
     final result = await UserRepository.login(
       username: username,
       password: password,
     );
+
+    print("onLogin > UserRepository.login > result: $result");
 
     if (result != null) {
       ///Begin start Auth flow

@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/models/model.dart';
 
 class ProductModel {
   final int id;

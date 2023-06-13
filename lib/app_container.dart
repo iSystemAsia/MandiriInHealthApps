@@ -1,11 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/screens/screen.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/screens/dashboard/discovery.dart';
+import 'package:mandiri_in_health/screens/screen.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class AppContainer extends StatefulWidget {
   const AppContainer({Key? key}) : super(key: key);
@@ -30,28 +31,15 @@ class _AppContainerState extends State<AppContainer> {
     });
   }
 
-  ///check route need auth
-  bool _requireAuth(String route) {
-    switch (route) {
-      case Routes.home:
-      case Routes.discovery:
-        return false;
-      default:
-        return true;
-    }
-  }
-
   ///Export index stack
   int _exportIndexed(String route) {
     switch (route) {
       case Routes.home:
         return 0;
-      case Routes.discovery:
+      case Routes.dashboard:
         return 1;
-      case Routes.wishList:
-        return 2;
       case Routes.account:
-        return 3;
+        return 2;
       default:
         return 0;
     }
@@ -71,7 +59,7 @@ class _AppContainerState extends State<AppContainer> {
 
   ///Force switch home when authentication state change
   void _listenAuthenticateChange(AuthenticationState authentication) async {
-    if (authentication == AuthenticationState.fail && _requireAuth(_selected)) {
+    if (authentication == AuthenticationState.fail) {
       final result = await Navigator.pushNamed(
         context,
         Routes.signIn,
@@ -91,7 +79,7 @@ class _AppContainerState extends State<AppContainer> {
 
   ///On change tab bottom menu and handle when not yet authenticate
   void _onItemTapped(String route) async {
-    if (AppBloc.userCubit.state == null && _requireAuth(route)) {
+    if (AppBloc.userCubit.state == null) {
       final result = await Navigator.pushNamed(
         context,
         Routes.signIn,
@@ -106,7 +94,12 @@ class _AppContainerState extends State<AppContainer> {
 
   ///On handle submit post
   void _onSubmit() async {
-    if (AppBloc.userCubit.state == null) {
+    final getUser = Preferences.getString(Preferences.user);
+    print("_onSubmit > AppBloc.userCubit.state: ${AppBloc.userCubit.state}");
+    print("_onSubmit > getUser: $getUser");
+
+    // if (AppBloc.userCubit.state == null) {
+    if (getUser == null) {
       final result = await Navigator.pushNamed(
         context,
         Routes.signIn,
@@ -128,13 +121,9 @@ class _AppContainerState extends State<AppContainer> {
         iconData = Icons.home_outlined;
         title = 'home';
         break;
-      case Routes.discovery:
-        iconData = Icons.location_on_outlined;
-        title = 'discovery';
-        break;
-      case Routes.wishList:
-        iconData = Icons.bookmark_outline;
-        title = 'wish_list';
+      case Routes.dashboard:
+        iconData = Icons.dashboard_customize_outlined;
+        title = 'dashboard';
         break;
       case Routes.account:
         iconData = Icons.account_circle_outlined;
@@ -202,9 +191,7 @@ class _AppContainerState extends State<AppContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildMenuItem(Routes.home),
-            _buildMenuItem(Routes.discovery),
-            const SizedBox(width: 56),
-            _buildMenuItem(Routes.wishList),
+            _buildMenuItem(Routes.dashboard),
             _buildMenuItem(Routes.account),
           ],
         ),
@@ -216,8 +203,7 @@ class _AppContainerState extends State<AppContainer> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildMenuItem(Routes.home),
-          _buildMenuItem(Routes.discovery),
-          _buildMenuItem(Routes.wishList),
+          _buildMenuItem(Routes.dashboard),
           _buildMenuItem(Routes.account),
         ],
       ),
@@ -234,7 +220,7 @@ class _AppContainerState extends State<AppContainer> {
         },
         child: IndexedStack(
           index: _exportIndexed(_selected),
-          children: const <Widget>[Home(), Discovery(), WishList(), Account()],
+          children: const <Widget>[Home(), Dashboard(), Account()],
         ),
       ),
       bottomNavigationBar: _buildBottomMenu(),

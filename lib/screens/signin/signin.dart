@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class SignIn extends StatefulWidget {
   final String from;
@@ -29,8 +29,8 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _textIDController.text = "paul";
-    _textPassController.text = "123456@listar";
+    _textIDController.text = "supervisor@supervisor.com";
+    _textPassController.text = "Supervisor";
   }
 
   @override

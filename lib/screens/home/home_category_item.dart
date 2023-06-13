@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/widgets/app_placeholder.dart';
+import 'package:mandiri_in_health/models/menu_model.dart';
+import 'package:mandiri_in_health/widgets/app_placeholder.dart';
 
 class HomeCategoryItem extends StatelessWidget {
-  final CategoryModel? item;
-  final Function(CategoryModel)? onPressed;
+  final MenuModel? item;
+  final Function(MenuModel)? onPressed;
 
   const HomeCategoryItem({
     Key? key,

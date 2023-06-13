@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/widgets/app_placeholder.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
+import 'package:mandiri_in_health/widgets/app_placeholder.dart';
 
 enum UserViewType { basic, information, qrcode }
 
 class AppUserInfo extends StatelessWidget {
-  final UserModel? user;
+  final UserModel_? user;
   final VoidCallback? onPressed;
   final UserViewType type;
 
@@ -64,90 +65,90 @@ class AppUserInfo extends StatelessWidget {
           );
         }
         Widget description = Container();
-        if (user!.description.isNotEmpty) {
-          description = Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                user!.description,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          );
-        }
+        // if (user!.description.isNotEmpty) {
+        //   description = Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       const SizedBox(height: 4),
+        //       Text(
+        //         user!.description,
+        //         maxLines: 1,
+        //         style: Theme.of(context).textTheme.bodySmall,
+        //       ),
+        //     ],
+        //   );
+        // }
         return InkWell(
           onTap: onPressed,
           child: Row(
             children: <Widget>[
-              CachedNetworkImage(
-                imageUrl: user!.image,
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(
-                        color: Theme.of(context).dividerColor.withOpacity(0.05),
-                      ),
-                    ),
-                  );
-                },
-                placeholder: (context, url) {
-                  return AppPlaceholder(
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                  );
-                },
-                errorWidget: (context, url, error) {
-                  return AppPlaceholder(
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Icon(Icons.error),
-                    ),
-                  );
-                },
-              ),
+              // CachedNetworkImage(
+              //   imageUrl: user!.image,
+              //   imageBuilder: (context, imageProvider) {
+              //     return Container(
+              //       width: 60,
+              //       height: 60,
+              //       decoration: BoxDecoration(
+              //         image: DecorationImage(
+              //           image: imageProvider,
+              //           fit: BoxFit.cover,
+              //         ),
+              //         borderRadius: BorderRadius.circular(30),
+              //         border: Border.all(
+              //           color: Theme.of(context).dividerColor.withOpacity(0.05),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   placeholder: (context, url) {
+              //     return AppPlaceholder(
+              //       child: Container(
+              //         width: 60,
+              //         height: 60,
+              //         decoration: BoxDecoration(
+              //           color: Colors.white,
+              //           borderRadius: BorderRadius.circular(30),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   errorWidget: (context, url, error) {
+              //     return AppPlaceholder(
+              //       child: Container(
+              //         width: 60,
+              //         height: 60,
+              //         decoration: BoxDecoration(
+              //           color: Colors.white,
+              //           borderRadius: BorderRadius.circular(30),
+              //         ),
+              //         child: const Icon(Icons.error),
+              //       ),
+              //     );
+              //   },
+              // ),
               const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      user!.name,
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    description,
-                    const SizedBox(height: 2),
-                    Text(
-                      user!.nickname,
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ),
+              // Expanded(
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: <Widget>[
+              //       Text(
+              //         user!.name,
+              //         maxLines: 1,
+              //         style: Theme.of(context)
+              //             .textTheme
+              //             .titleSmall
+              //             ?.copyWith(fontWeight: FontWeight.bold),
+              //       ),
+              //       description,
+              //       const SizedBox(height: 2),
+              //       Text(
+              //         user!.nickname,
+              //         maxLines: 1,
+              //         style: Theme.of(context).textTheme.bodySmall,
+              //       ),
+              //     ],
+              //   ),
+              // ),
               RotatedBox(
                 quarterTurns: AppLanguage.isRTL() ? 2 : 0,
                 child: const Icon(
@@ -200,47 +201,47 @@ class AppUserInfo extends StatelessWidget {
           onTap: onPressed,
           child: Row(
             children: <Widget>[
-              CachedNetworkImage(
-                imageUrl: user!.image,
-                placeholder: (context, url) {
-                  return AppPlaceholder(
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  );
-                },
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                  );
-                },
-                errorWidget: (context, url, error) {
-                  return AppPlaceholder(
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.error),
-                    ),
-                  );
-                },
-              ),
+              // CachedNetworkImage(
+              //   imageUrl: user!.image,
+              //   placeholder: (context, url) {
+              //     return AppPlaceholder(
+              //       child: Container(
+              //         width: 40,
+              //         height: 40,
+              //         decoration: const BoxDecoration(
+              //           color: Colors.white,
+              //           shape: BoxShape.circle,
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   imageBuilder: (context, imageProvider) {
+              //     return Container(
+              //       width: 40,
+              //       height: 40,
+              //       decoration: BoxDecoration(
+              //         image: DecorationImage(
+              //           image: imageProvider,
+              //           fit: BoxFit.cover,
+              //         ),
+              //         shape: BoxShape.circle,
+              //       ),
+              //     );
+              //   },
+              //   errorWidget: (context, url, error) {
+              //     return AppPlaceholder(
+              //       child: Container(
+              //         width: 40,
+              //         height: 40,
+              //         decoration: const BoxDecoration(
+              //           color: Colors.white,
+              //           shape: BoxShape.circle,
+              //         ),
+              //         child: const Icon(Icons.error),
+              //       ),
+              //     );
+              //   },
+              // ),
               const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,10 +253,10 @@ class AppUserInfo extends StatelessWidget {
                         .labelLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    user!.email,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  )
+                  // Text(
+                  //   user!.email,
+                  //   style: Theme.of(context).textTheme.labelSmall,
+                  // )
                 ],
               )
             ],

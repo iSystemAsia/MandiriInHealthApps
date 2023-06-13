@@ -2,22 +2,23 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/utils/logger.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/utils/logger.dart';
 
 class HTTPManager {
-  final exceptionCode = ['jwt_auth_bad_iss', 'jwt_auth_invalid_token'];
+  // final exceptionCode = ['jwt_auth_bad_iss', 'jwt_auth_invalid_token'];
   late final Dio _dio;
 
   HTTPManager() {
     ///Dio
     _dio = Dio(
       BaseOptions(
-        baseUrl: '${Application.domain}/index.php/wp-json',
+        // baseUrl: '${Application.domain}/index.php/wp-json',
+        baseUrl: '${Application.domain_}/api',
         connectTimeout: const Duration(seconds: 30000),
         receiveTimeout: const Duration(seconds: 30000),
-        contentType: Headers.formUrlEncodedContentType,
+        contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
       ),
     );
@@ -34,6 +35,8 @@ class HTTPManager {
             "Device-Token": Application.device?.token,
           };
           String? token = AppBloc.userCubit.state?.token;
+          print("Request HTTP Token: $token");
+
           if (token != null) {
             headers["Authorization"] = "Bearer $token";
           }
@@ -42,9 +45,12 @@ class HTTPManager {
           return handler.next(options);
         },
         onError: (DioError error, handler) async {
-          if (exceptionCode.contains(error.response?.data['code'])) {
-            AppBloc.loginCubit.onLogout();
-          }
+          print("Request HTTP Error: $error");
+          print("Request HTTP Handler: $handler");
+
+          // if (exceptionCode.contains(error.response?.data['code'])) {
+          //   AppBloc.loginCubit.onLogout();
+          // }
 
           if (error.response?.data is Map) {
             final response = Response(
@@ -64,7 +70,6 @@ class HTTPManager {
   Future<dynamic> post({
     required String url,
     dynamic data,
-    FormData? formData,
     Options? options,
     Function(num)? progress,
     bool? loading,
@@ -76,7 +81,7 @@ class HTTPManager {
     try {
       final response = await _dio.post(
         url,
-        data: data ?? formData,
+        data: data,
         options: options,
         onSendProgress: (received, total) {
           if (progress != null) {

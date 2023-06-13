@@ -1,4 +1,4 @@
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/models/model.dart';
 
 abstract class ProfileEvent {}
 

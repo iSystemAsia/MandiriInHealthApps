@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/screens/screen.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/screens/pipeline/list.dart';
+import 'package:mandiri_in_health/screens/quotation/list.dart';
+import 'package:mandiri_in_health/screens/sales_activity/list.dart';
+import 'package:mandiri_in_health/screens/screen.dart';
 
 class RouteArguments<T> {
   final T? item;
@@ -10,6 +13,25 @@ class RouteArguments<T> {
 }
 
 class Routes {
+  static const String achievementAgent = "/achievement-agent";
+
+  static const String pipeline = "/pipeline";
+  static const String pipelineDetail = "/pipeline/detail";
+
+  static const String salesActivity = "/sales-activity";
+  static const String salesActivityDetail = "/sales-activity/detail";
+
+  static const String quotation = "/quotation";
+  static const String quotationDetail = "/quotation/detail";
+
+  static const String closing = "/closing";
+  static const String closingDetail = "/closing/detail";
+
+  static const String dashboard = "/dashboard";
+
+  /// ==============================================================
+  /// ==============================================================
+
   static const String home = "/home";
   static const String discovery = "/discovery";
   static const String wishList = "/wishList";
@@ -59,6 +81,51 @@ class Routes {
           },
           fullscreenDialog: true,
         );
+
+      case pipeline:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const PipelineList();
+          },
+        );
+
+      case pipelineDetail:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ProductDetail(item: settings.arguments as ProductModel);
+          },
+        );
+
+      case salesActivity:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const SalesActivityList();
+          },
+        );
+
+      case salesActivityDetail:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ProductDetail(item: settings.arguments as ProductModel);
+          },
+        );
+
+      case quotation:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const QuotationList();
+          },
+        );
+
+      case quotationDetail:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ProductDetail(item: settings.arguments as ProductModel);
+          },
+        );
+
+      /// ==============================================================
+      /// ==============================================================
 
       case signUp:
         return MaterialPageRoute(

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
 
 enum UploadImageType { circle, square }
 
@@ -46,35 +46,35 @@ class _AppUploadImageState extends State<AppUploadImage> {
     super.dispose();
   }
 
-  Future<void> _uploadImage() async {
-    try {
-      final pickedFile = await _picker.pickImage(
-        source: ImageSource.gallery,
-      );
-      if (pickedFile == null) return;
-      if (!mounted) return;
-      setState(() {
-        _completed = false;
-        _file = File(pickedFile.path);
-      });
-      final response = await ListRepository.uploadImage(_file!, (percent) {
-        setState(() {
-          _percent = percent;
-        });
-      });
-      if (response.success) {
-        setState(() {
-          _completed = true;
-        });
-        final item = ImageModel.fromJsonUpload(response.data);
-        widget.onChange(item);
-      } else {
-        AppBloc.messageCubit.onShow(response.message);
-      }
-    } catch (e) {
-      AppBloc.messageCubit.onShow(e.toString());
-    }
-  }
+  // Future<void> _uploadImage() async {
+  //   try {
+  //     final pickedFile = await _picker.pickImage(
+  //       source: ImageSource.gallery,
+  //     );
+  //     if (pickedFile == null) return;
+  //     if (!mounted) return;
+  //     setState(() {
+  //       _completed = false;
+  //       _file = File(pickedFile.path);
+  //     });
+  //     final response = await ListRepository.uploadImage(_file!, (percent) {
+  //       setState(() {
+  //         _percent = percent;
+  //       });
+  //     });
+  //     if (response.success) {
+  //       setState(() {
+  //         _completed = true;
+  //       });
+  //       final item = ImageModel.fromJsonUpload(response.data);
+  //       widget.onChange(item);
+  //     } else {
+  //       AppBloc.messageCubit.onShow(response.message);
+  //     }
+  //   } catch (e) {
+  //     AppBloc.messageCubit.onShow(e.toString());
+  //   }
+  // }
 
   Widget? _buildContent() {
     if (widget.image != null && _file == null) return null;
@@ -224,7 +224,7 @@ class _AppUploadImageState extends State<AppUploadImage> {
     }
 
     return InkWell(
-      onTap: _uploadImage,
+      // onTap: _uploadImage,
       child: Stack(
         children: [
           DottedBorder(

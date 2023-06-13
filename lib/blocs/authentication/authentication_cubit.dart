@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(AuthenticationState.loading);
@@ -13,7 +14,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(AuthenticationState.loading);
 
     ///Event load user
-    UserModel? user = await AppBloc.userCubit.onLoadUser();
+    UserModel_? user = await AppBloc.userCubit.onLoadUser();
 
     if (user != null) {
       ///Attach token push
@@ -44,11 +45,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  Future<void> onSave(UserModel user) async {
+  Future<void> onSave(UserModel_ user) async {
     ///Notify
     emit(AuthenticationState.loading);
 
     ///Event Save user
+    // await AppBloc.userCubit.onSaveUser(user);
     await AppBloc.userCubit.onSaveUser(user);
 
     ///Load wishList

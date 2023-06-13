@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
+import 'package:mandiri_in_health/configs/config.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

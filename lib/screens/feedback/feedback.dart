@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class WriteReview extends StatefulWidget {
   final ProductModel product;
@@ -79,48 +79,48 @@ class _WriteReviewState extends State<WriteReview> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        CachedNetworkImage(
-                          imageUrl: AppBloc.userCubit.state!.image,
-                          imageBuilder: (context, imageProvider) {
-                            return Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) {
-                            return AppPlaceholder(
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                            );
-                          },
-                          errorWidget: (context, url, error) {
-                            return AppPlaceholder(
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(Icons.error),
-                              ),
-                            );
-                          },
-                        )
+                        // CachedNetworkImage(
+                        //   imageUrl: AppBloc.userCubit.state!.image,
+                        //   imageBuilder: (context, imageProvider) {
+                        //     return Container(
+                        //       width: 60,
+                        //       height: 60,
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         shape: BoxShape.circle,
+                        //         image: DecorationImage(
+                        //           image: imageProvider,
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        //   placeholder: (context, url) {
+                        //     return AppPlaceholder(
+                        //       child: Container(
+                        //         width: 60,
+                        //         height: 60,
+                        //         decoration: const BoxDecoration(
+                        //           color: Colors.white,
+                        //           shape: BoxShape.circle,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        //   errorWidget: (context, url, error) {
+                        //     return AppPlaceholder(
+                        //       child: Container(
+                        //         width: 60,
+                        //         height: 60,
+                        //         decoration: const BoxDecoration(
+                        //           color: Colors.white,
+                        //           shape: BoxShape.circle,
+                        //         ),
+                        //         child: const Icon(Icons.error),
+                        //       ),
+                        //     );
+                        //   },
+                        // )
                       ],
                     ),
                     const SizedBox(height: 4),

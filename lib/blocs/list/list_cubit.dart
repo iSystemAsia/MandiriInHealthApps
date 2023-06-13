@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
-import 'package:listar_flutter_pro/utils/logger.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
+import 'package:mandiri_in_health/utils/logger.dart';
 
 import 'cubit.dart';
 

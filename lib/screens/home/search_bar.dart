@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class HomeSearchBar extends StatelessWidget {
   final VoidCallback onSearch;
@@ -42,24 +42,8 @@ class HomeSearchBar extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    Translate.of(context).translate(
-                      'search_location',
-                    ),
+                    "Search",
                     style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-                const VerticalDivider(),
-                InkWell(
-                  onTap: onScan,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: Icon(
-                      Icons.qr_code_scanner_outlined,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
                   ),
                 ),
               ],

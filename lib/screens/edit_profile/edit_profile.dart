@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -36,9 +36,9 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     final user = AppBloc.userCubit.state!;
     _textNameController.text = user.name;
-    _textEmailController.text = user.email;
-    _textWebsiteController.text = user.url;
-    _textInfoController.text = user.description;
+    // _textEmailController.text = user.email;
+    // _textWebsiteController.text = user.url;
+    // _textInfoController.text = user.description;
   }
 
   @override
@@ -101,11 +101,11 @@ class _EditProfileState extends State<EditProfile> {
                         height: 100,
                         child: AppUploadImage(
                           type: UploadImageType.circle,
-                          image: ImageModel(
-                            id: 0,
-                            full: AppBloc.userCubit.state!.image,
-                            thumb: AppBloc.userCubit.state!.image,
-                          ),
+                          // image: ImageModel(
+                          //   id: 0,
+                          //   full: AppBloc.userCubit.state!.image,
+                          //   thumb: AppBloc.userCubit.state!.image,
+                          // ),
                           onChange: (result) {
                             setState(() {
                               _image = result;

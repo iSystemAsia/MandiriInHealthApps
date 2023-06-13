@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:listar_flutter_pro/api/api.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/api/api.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
 
 class UserRepository {
   ///Fetch api login
-  static Future<UserModel?> login({
+  static Future<UserModel_?> login({
     required String username,
     required String password,
   }) async {
@@ -16,9 +17,11 @@ class UserRepository {
       "password": password,
     };
     final response = await Api.requestLogin(params);
+    print("UserRepository > login > response: $response");
 
     if (response.success) {
-      return UserModel.fromJson(response.data);
+      // return UserModel.fromJson(response.data);
+      return response.user;
     }
     AppBloc.messageCubit.onShow(response.message);
     return null;
@@ -121,20 +124,27 @@ class UserRepository {
     );
   }
 
+  static Future<bool> saveUser_({required UserModel_ user}) async {
+    return await Preferences.setString(
+      Preferences.user,
+      jsonEncode(user.toJson()),
+    );
+  }
+
   ///Load User
-  static Future<UserModel?> loadUser() async {
+  static Future<UserModel_?> loadUser() async {
     final result = Preferences.getString(Preferences.user);
     if (result != null) {
-      return UserModel.fromJson(jsonDecode(result));
+      return UserModel_.fromJson(jsonDecode(result));
     }
     return null;
   }
 
   ///Fetch User
-  static Future<UserModel?> fetchUser() async {
+  static Future<UserModel_?> fetchUser() async {
     final response = await Api.requestUser();
     if (response.success) {
-      return UserModel.fromJson(response.data);
+      return UserModel_.fromJson(response.data);
     }
     AppBloc.messageCubit.onShow(response.message);
     return null;

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:listar_flutter_pro/api/api.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
+import 'package:mandiri_in_health/api/api.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
 
 class ListRepository {
   ///load setting
@@ -127,12 +127,12 @@ class ListRepository {
   }
 
   ///Upload image
-  static Future<ResultApiModel> uploadImage(File file, progress) async {
-    final formData = FormData.fromMap({
-      'file': await MultipartFile.fromFile(file.path, filename: file.path),
-    });
-    return await Api.requestUploadImage(formData, progress);
-  }
+  // static Future<ResultApiModel> uploadImage(File file, progress) async {
+  //   final formData = FormData.fromMap({
+  //     'file': await MultipartFile.fromFile(file.path, filename: file.path),
+  //   });
+  //   return await Api.requestUploadImage(formData, progress);
+  // }
 
   ///load detail
   static Future<ProductModel?> loadProduct(id) async {

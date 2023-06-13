@@ -1,6 +1,6 @@
-import 'package:listar_flutter_pro/api/api.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/api/api.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/models/model.dart';
 
 class ReviewRepository {
   ///Fetch api getReview

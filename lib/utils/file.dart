@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:listar_flutter_pro/models/model.dart';
+import 'package:mandiri_in_health/models/model.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UtilFile {

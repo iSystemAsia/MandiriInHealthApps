@@ -5,14 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listar_flutter_pro/blocs/bloc.dart';
-import 'package:listar_flutter_pro/configs/config.dart';
-import 'package:listar_flutter_pro/models/model.dart';
-import 'package:listar_flutter_pro/repository/repository.dart';
-import 'package:listar_flutter_pro/screens/profile/profile_header.dart';
-import 'package:listar_flutter_pro/screens/profile/profile_tab.dart';
-import 'package:listar_flutter_pro/utils/utils.dart';
-import 'package:listar_flutter_pro/widgets/widget.dart';
+import 'package:mandiri_in_health/blocs/bloc.dart';
+import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/repository/repository.dart';
+import 'package:mandiri_in_health/screens/profile/profile_header.dart';
+import 'package:mandiri_in_health/screens/profile/profile_tab.dart';
+import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
 
@@ -43,7 +43,7 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _isOwner = widget.user.id == AppBloc.userCubit.state?.id;
+    // _isOwner = widget.user.id == AppBloc.userCubit.state?.id;
     _tabController = TabController(length: _isOwner ? 3 : 2, vsync: this);
     _scrollController.addListener(_onScroll);
     _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
