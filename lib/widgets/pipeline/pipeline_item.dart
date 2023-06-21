@@ -93,7 +93,7 @@ class PipelineItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(4),
                               child: Icon(
-                                item!.isKomit
+                                item!.MdrKomitmentAgen ?? false
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.white,
@@ -135,7 +135,7 @@ class PipelineItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                item!.title,
+                item!.MdrName,
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
@@ -148,7 +148,7 @@ class PipelineItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                item!.info,
+                item!.MdrGWP ?? "",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary),
@@ -294,7 +294,7 @@ class PipelineItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          item!.title,
+                          item!.MdrName,
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
@@ -315,7 +315,7 @@ class PipelineItem extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Expanded(
-                              child: Text(item!.telpNo.toString(),
+                              child: Text(item!.MdrNoTelp ?? "",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodySmall),
                             )
@@ -332,7 +332,7 @@ class PipelineItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                item!.address.toString(),
+                                item!.MdrAlamat ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
@@ -344,7 +344,7 @@ class PipelineItem extends StatelessWidget {
                           children: [
                             const SizedBox(height: 4),
                             Text(
-                              item!.info,
+                              item!.MdrGWP ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -365,7 +365,7 @@ class PipelineItem extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Icon(
-                  item!.isKomit ? Icons.favorite : Icons.favorite_border,
+                  item!.MdrKomitmentAgen ?? false ? Icons.favorite : Icons.favorite_border,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               )
@@ -451,7 +451,7 @@ class PipelineItem extends StatelessWidget {
                               //       )
                               //     : Container(),
                               Icon(
-                                item!.isKomit
+                                item!.MdrKomitmentAgen ?? false
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.white,
@@ -495,7 +495,7 @@ class PipelineItem extends StatelessWidget {
                             children: [
                               const SizedBox(height: 8),
                               Text(
-                                item!.title,
+                                item!.MdrName,
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
@@ -514,7 +514,7 @@ class PipelineItem extends StatelessWidget {
                           children: [
                             const SizedBox(height: 8),
                             Text(
-                              item!.info,
+                              item!.MdrGWP ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -539,7 +539,7 @@ class PipelineItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.telpNo.toString(),
+                            item!.MdrNoTelp ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -557,7 +557,7 @@ class PipelineItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.address.toString(),
+                            item!.MdrAlamat ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

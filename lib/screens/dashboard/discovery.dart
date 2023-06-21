@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    _discoveryCubit.onLoad();
+    // _discoveryCubit.onLoad();
     _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
       if (state is Submitted) {
         _onRefresh();

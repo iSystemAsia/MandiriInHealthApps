@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:mandiri_in_health/api/api.dart';
-import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/model_filter.dart';
+import 'package:mandiri_in_health/configs/preferences.dart';
+import 'package:mandiri_in_health/models/quotation_model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
 
 class QuotationRepository {
   static Future<List?> loadList({
@@ -11,12 +16,21 @@ class QuotationRepository {
     Map<String, dynamic> params = {
       "page": page,
       "limit": perPage,
-      "s": keyword,
+      "search": keyword,
     };
     if (filter != null) {
       params.addAll(await filter.getParams());
     }
+
+    final getUser = Preferences.getString(Preferences.user);
+    final user = getUser != null ? UserModel_.fromJson(jsonDecode(getUser)) : null;
+    params['contact'] = user?.contactId;
+
     final response = await Api.requestQuotation(params);
     return [response['list'], response['pagination']];
+  }
+
+  static Future<QuotationModel?> loadQuotation(id) async {
+    return await Api.requestQuotationDetail(id);
   }
 }

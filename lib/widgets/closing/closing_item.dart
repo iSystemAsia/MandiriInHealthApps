@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mandiri_in_health/models/closing_model.dart';
 import 'package:mandiri_in_health/models/model.dart';
-import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
 
-class QuotationItem extends StatelessWidget {
-  const QuotationItem({
+class ClosingItem extends StatelessWidget {
+  const ClosingItem({
     Key? key,
     this.item,
     this.onPressed,
@@ -13,7 +13,7 @@ class QuotationItem extends StatelessWidget {
     this.trailing,
   }) : super(key: key);
 
-  final QuotationModel? item;
+  final ClosingModel? item;
   final ProductViewType type;
   final VoidCallback? onPressed;
   final Widget? trailing;
@@ -124,17 +124,17 @@ class QuotationItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                item!.badan_usaha ?? "",
+                item?.pipeline ?? '',
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               const SizedBox(height: 8),
               Text(
                 item!.status ?? "",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary),
+                textAlign: TextAlign.end,
+              )
             ],
           ),
         );
@@ -283,16 +283,8 @@ class QuotationItem extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item!.badan_usaha ?? "",
+                          item!.pipeline ?? '',
                           style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          item!.status ?? "",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -304,7 +296,7 @@ class QuotationItem extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Expanded(
-                              child: Text(item!.MdrPhoneNumber ?? "",
+                              child: Text(item!.no_telp ?? "",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodySmall),
                             )
@@ -325,6 +317,23 @@ class QuotationItem extends StatelessWidget {
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            Text(
+                              item!.status ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                             )
                           ],
                         ),
@@ -442,19 +451,28 @@ class QuotationItem extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                item!.badan_usaha ?? "",
+                                item!.pipeline ?? '',
                                 style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                item!.status ?? "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            Text(
+                              item!.status ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -469,7 +487,7 @@ class QuotationItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.MdrPhoneNumber ?? "",
+                            item!.no_telp ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

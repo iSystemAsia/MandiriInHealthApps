@@ -27,9 +27,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late StreamSubscription _submitSubscription;
-  late StreamSubscription _reviewSubscription;
-
   String achievementTitle = "Achievement Agent";
   String achievementSubTitle = "Total In Current Year";
   String top3PipelineTitle = "Top 3 Pipeline";
@@ -41,22 +38,10 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     AppBloc.homeCubit.onLoad();
-    _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
-      if (state is Submitted) {
-        AppBloc.homeCubit.onLoad();
-      }
-    });
-    _reviewSubscription = AppBloc.reviewCubit.stream.listen((state) {
-      if (state is ReviewSuccess && state.id != null) {
-        AppBloc.homeCubit.onLoad();
-      }
-    });
   }
 
   @override
   void dispose() {
-    _submitSubscription.cancel();
-    _reviewSubscription.cancel();
     super.dispose();
   }
 
@@ -94,11 +79,11 @@ class _HomeState extends State<Home> {
 
   ///On navigate product detail
   void _onPipelineDetail(PipelineModel item) {
-    Navigator.pushNamed(context, Routes.productDetail, arguments: item);
+    Navigator.pushNamed(context, Routes.pipelineDetail, arguments: item);
   }
 
   void _onQuotationDetail(QuotationModel item) {
-    Navigator.pushNamed(context, Routes.productDetail, arguments: item);
+    Navigator.pushNamed(context, Routes.quotationDetail, arguments: item);
   }
 
   Widget _buildMenu(List<MenuModel>? menu) {

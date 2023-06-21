@@ -58,20 +58,6 @@ class Top3PipelineItem extends StatelessWidget {
       );
     }
 
-    Widget? price;
-    price = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 4),
-        Text(
-          item!.info,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary),
-        )
-      ],
-    );
-
     return InkWell(
       onTap: onPressed,
       child: Row(
@@ -123,17 +109,28 @@ class Top3PipelineItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  item!.title,
+                  item!.MdrName,
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text(item!.kanal,
+                Text(item!.kanal ?? "",
                     style: Theme.of(context).textTheme.labelSmall),
                 const SizedBox(height: 4),
-                price,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 4),
+                    Text(
+                      item!.MdrGWP ?? "",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

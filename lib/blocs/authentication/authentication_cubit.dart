@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/configs/config.dart';
-import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/user_model.dart';
-import 'package:mandiri_in_health/repository/repository.dart';
 import 'package:mandiri_in_health/utils/utils.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
@@ -24,21 +22,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       await AppBloc.userCubit.onSaveUser(user);
 
       ///Valid token server
-      final result = await UserRepository.validateToken();
+      // final result = await UserRepository.validateToken();
+      // AppBloc.wishListCubit.onLoad();
 
-      if (result) {
-        ///Load wishList
-        AppBloc.wishListCubit.onLoad();
+      ///Fetch user
+      AppBloc.userCubit.onFetchUser();
 
-        ///Fetch user
-        AppBloc.userCubit.onFetchUser();
+      ///Notify
+      emit(AuthenticationState.success);
 
-        ///Notify
-        emit(AuthenticationState.success);
-      } else {
-        ///Logout
-        onClear();
-      }
+      // if (result) {
+      //   ///Load wishList
+      //   AppBloc.wishListCubit.onLoad();
+
+      //   ///Fetch user
+      //   AppBloc.userCubit.onFetchUser();
+
+      //   ///Notify
+      //   emit(AuthenticationState.success);
+      // } else {
+      //   ///Logout
+      //   onClear();
+      // }
     } else {
       ///Notify
       emit(AuthenticationState.fail);
@@ -54,13 +59,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     await AppBloc.userCubit.onSaveUser(user);
 
     ///Load wishList
-    AppBloc.wishListCubit.onLoad();
+    // AppBloc.wishListCubit.onLoad();
 
     /// Notify
     emit(AuthenticationState.success);
   }
 
   void onClear() {
+    print("AuthenticationCubit > onClear...");
+
     /// Notify
     emit(AuthenticationState.fail);
 

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Preferences {
   static SharedPreferences? instance;
 
-  static const String domain = 'domain';
+  static const String domain = 'domain_';
   static const String reviewIntro = 'review';
   static const String user = 'user';
   static const String language = 'language';

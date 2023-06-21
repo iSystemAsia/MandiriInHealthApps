@@ -94,7 +94,7 @@ class SalesActivityItem extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(4),
                               child: Icon(
-                                item!.isKomit
+                                item!.MdrCommitment ?? false
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.white,
@@ -136,7 +136,7 @@ class SalesActivityItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                item!.namaBU,
+                item!.pipeline ?? "",
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
@@ -144,7 +144,7 @@ class SalesActivityItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                item?.status ?? '',
+                item!.MdrStatusAktivitas ?? '',
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium!
@@ -152,12 +152,14 @@ class SalesActivityItem extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                item!.updateActivitas,
+                item!.MdrKeteranganProgres ?? "",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               Text(
-                  DateFormat('dd/MM/yyyy')
-                      .format(item!.tglAktifitasTerakhir as DateTime),
+                  item!.MdrLastActivityDate != null
+                      ? DateFormat('dd/MM/yyyy')
+                          .format(item!.MdrLastActivityDate as DateTime)
+                      : "",
                   style: Theme.of(context).textTheme.labelMedium)
             ],
           ),
@@ -299,7 +301,7 @@ class SalesActivityItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          item!.namaBU,
+                          item!.pipeline ?? "",
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
@@ -307,7 +309,7 @@ class SalesActivityItem extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item?.status ?? '',
+                          item!.MdrStatusAktivitas ?? '',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!
@@ -324,7 +326,7 @@ class SalesActivityItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                item!.updateActivitas.toString(),
+                                item!.MdrKeteranganProgres ?? "".toString(),
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
@@ -342,8 +344,10 @@ class SalesActivityItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                  DateFormat('dd/MM/yyyy').format(
-                                      item!.tglAktifitasTerakhir as DateTime),
+                                  item!.MdrLastActivityDate != null
+                                      ? DateFormat('dd/MM/yyyy').format(
+                                          item!.MdrLastActivityDate as DateTime)
+                                      : "",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodySmall),
                             )
@@ -358,7 +362,9 @@ class SalesActivityItem extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Icon(
-                  item!.isKomit ? Icons.favorite : Icons.favorite_border,
+                  item!.MdrCommitment ?? false
+                      ? Icons.favorite
+                      : Icons.favorite_border,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               )
@@ -444,7 +450,7 @@ class SalesActivityItem extends StatelessWidget {
                               //       )
                               //     : Container(),
                               Icon(
-                                item!.isKomit
+                                item!.MdrCommitment ?? false
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 color: Colors.white,
@@ -488,7 +494,7 @@ class SalesActivityItem extends StatelessWidget {
                             children: [
                               const SizedBox(height: 8),
                               Text(
-                                item!.namaBU,
+                                item!.pipeline ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
@@ -496,7 +502,7 @@ class SalesActivityItem extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                item?.status ?? '',
+                                item!.MdrStatusAktivitas ?? '',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
@@ -518,7 +524,7 @@ class SalesActivityItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.updateActivitas,
+                            item!.MdrKeteranganProgres ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -535,8 +541,10 @@ class SalesActivityItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            DateFormat('dd/MM/yyyy')
-                                .format(item!.tglAktifitasTerakhir as DateTime),
+                            item!.MdrLastActivityDate != null
+                                ? DateFormat('dd/MM/yyyy').format(
+                                    item!.MdrLastActivityDate as DateTime)
+                                : "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

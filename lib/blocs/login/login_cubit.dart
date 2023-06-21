@@ -49,6 +49,8 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void onLogout() async {
+    print("LoginCubit > onLogout...");
+
     ///Begin start auth flow
     emit(LoginState.init);
     AppBloc.authenticateCubit.onClear();

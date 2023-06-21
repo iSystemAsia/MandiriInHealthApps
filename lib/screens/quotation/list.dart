@@ -10,13 +10,11 @@ import 'package:mandiri_in_health/models/model_filter.dart';
 import 'package:mandiri_in_health/models/model_picker.dart';
 import 'package:mandiri_in_health/models/model_setting.dart';
 import 'package:mandiri_in_health/models/model_sort.dart';
-import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/utils/translate.dart';
 import 'package:mandiri_in_health/widgets/app_bottom_picker.dart';
 import 'package:mandiri_in_health/widgets/app_product_item.dart';
 import 'package:mandiri_in_health/widgets/custom_app_navbar.dart';
-import 'package:mandiri_in_health/widgets/pipeline/pipeline_item.dart';
 import 'package:mandiri_in_health/widgets/quotation/quotation_item.dart';
 
 class QuotationList extends StatefulWidget {

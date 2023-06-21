@@ -3,31 +3,31 @@ import 'dart:async';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandiri_in_health/blocs/pipeline/list_cubit.dart';
-import 'package:mandiri_in_health/blocs/pipeline/list_state.dart';
+import 'package:mandiri_in_health/blocs/closing/list_cubit.dart';
+import 'package:mandiri_in_health/blocs/closing/list_state.dart';
 import 'package:mandiri_in_health/configs/config.dart';
+import 'package:mandiri_in_health/models/closing_model.dart';
 import 'package:mandiri_in_health/models/model_filter.dart';
 import 'package:mandiri_in_health/models/model_picker.dart';
 import 'package:mandiri_in_health/models/model_setting.dart';
 import 'package:mandiri_in_health/models/model_sort.dart';
-import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/utils/translate.dart';
 import 'package:mandiri_in_health/widgets/app_bottom_picker.dart';
 import 'package:mandiri_in_health/widgets/app_product_item.dart';
+import 'package:mandiri_in_health/widgets/closing/closing_item.dart';
 import 'package:mandiri_in_health/widgets/custom_app_navbar.dart';
-import 'package:mandiri_in_health/widgets/pipeline/pipeline_item.dart';
 
-class PipelineList extends StatefulWidget {
-  const PipelineList({Key? key}) : super(key: key);
+class ClosingList extends StatefulWidget {
+  const ClosingList({Key? key}) : super(key: key);
 
   @override
-  State<PipelineList> createState() {
-    return _PipelineListState();
+  State<ClosingList> createState() {
+    return _ClosingListState();
   }
 }
 
-class _PipelineListState extends State<PipelineList> {
-  final _listCubit = PipelineListCubit();
+class _ClosingListState extends State<ClosingList> {
+  final _listCubit = ClosingListCubit();
   final _swipeController = SwiperController();
   final _scrollController = ScrollController();
   final _endReachedThreshold = 100;
@@ -65,7 +65,7 @@ class _PipelineListState extends State<PipelineList> {
   void _onScroll() {
     if (_scrollController.position.extentAfter > _endReachedThreshold) return;
     final state = _listCubit.state;
-    if (state is PipelineListSuccess &&
+    if (state is ClosingListSuccess &&
         state.canLoadMore &&
         !state.loadingMore) {
       _listCubit.onLoadMore();
@@ -135,8 +135,8 @@ class _PipelineListState extends State<PipelineList> {
   }
 
   ///On navigate product detail
-  void _onPipelineDetail(PipelineModel item) {
-    Navigator.pushNamed(context, Routes.pipelineDetail, arguments: item);
+  void _onClosingDetail(ClosingModel item) {
+    Navigator.pushNamed(context, Routes.closingDetail, arguments: item);
   }
 
   ///Export Icon for Mode View
@@ -156,7 +156,7 @@ class _PipelineListState extends State<PipelineList> {
 
   ///_build Item
   Widget _buildItem({
-    PipelineModel? item,
+    ClosingModel? item,
     required ProductViewType type,
   }) {
     switch (type) {
@@ -164,9 +164,9 @@ class _PipelineListState extends State<PipelineList> {
         if (item != null) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: PipelineItem(
+            child: ClosingItem(
               onPressed: () {
-                _onPipelineDetail(item);
+                _onClosingDetail(item);
               },
               item: item,
               type: _listMode,
@@ -181,9 +181,9 @@ class _PipelineListState extends State<PipelineList> {
         );
       default:
         if (item != null) {
-          return PipelineItem(
+          return ClosingItem(
             onPressed: () {
-              _onPipelineDetail(item);
+              _onClosingDetail(item);
             },
             item: item,
             type: _listMode,
@@ -197,7 +197,7 @@ class _PipelineListState extends State<PipelineList> {
 
   ///Build Content Page Style
   Widget _buildContent() {
-    return BlocBuilder<PipelineListCubit, PipelineListState>(
+    return BlocBuilder<ClosingListCubit, ClosingListState>(
       builder: (context, state) {
         /// List Style
         if (_pageType == PageType.list) {
@@ -231,7 +231,7 @@ class _PipelineListState extends State<PipelineList> {
           }
 
           ///Build List
-          if (state is PipelineListSuccess) {
+          if (state is ClosingListSuccess) {
             List list = List.from(state.list);
             if (state.loadingMore) {
               list.add(null);
@@ -310,7 +310,7 @@ class _PipelineListState extends State<PipelineList> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("Pipeline"),
+          title: const Text("Closing"),
         ),
         body: Column(
           children: <Widget>[

@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:mandiri_in_health/api/api.dart';
 import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/configs/config.dart';
 import 'package:mandiri_in_health/models/achievement_agent_model.dart';
 import 'package:mandiri_in_health/models/menu_model.dart';
-import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/models/user_model.dart';
@@ -24,14 +22,8 @@ class HomeCubit extends Cubit<HomeState> {
     List<PipelineModel> pipelineList = [];
     List<QuotationModel> quotationList = [];
 
-    final Map<String, dynamic> params = {};
-
     final getUser = Preferences.getString(Preferences.user);
-    if (getUser != null) {
-      final user = UserModel_.fromJson(jsonDecode(getUser));
-      params['contact_id'] = user.contactId;
-      params['kanal_id'] = user.kanalId;
-    }
+    final user = getUser != null ? UserModel_.fromJson(jsonDecode(getUser)) : null;
 
     print("Home Cubit > onLoad > preference user: $getUser");
 
@@ -74,9 +66,16 @@ class HomeCubit extends Cubit<HomeState> {
     ]);
 
     var request = await Future.wait([
-      Api.requestAchievementAgent(params),
-      Api.requestTop3Pipeline(params),
-      Api.requestTop5Quotation(params)
+      Api.requestAchievementAgent({
+        'contact': user?.contactId,
+        'kanal': user?.kanalId
+      }),
+      Api.requestTop3Pipeline({
+        'contact': user?.contactId,
+      }),
+      Api.requestTop5Quotation({
+        'contact': user?.contactId
+      })
     ]);
     achievementAgentList = request[0] as List<AchievementAgentModel>;
     pipelineList = request[1] as List<PipelineModel>;

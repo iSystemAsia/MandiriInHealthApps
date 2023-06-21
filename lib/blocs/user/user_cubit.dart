@@ -17,7 +17,7 @@ class UserCubit extends Cubit<UserModel_?> {
   ///Event fetch user
   Future<UserModel_?> onFetchUser() async {
     UserModel_? local = await UserRepository.loadUser();
-    UserModel_? remote = await UserRepository.fetchUser();
+    // UserModel_? remote = await UserRepository.fetchUser();
     // if (local != null && remote != null) {
     //   final sync = local.updateUser(
     //     name: remote.name,

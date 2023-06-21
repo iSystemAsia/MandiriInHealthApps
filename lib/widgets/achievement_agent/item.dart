@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mandiri_in_health/models/achievement_agent_model.dart';
-import 'package:mandiri_in_health/utils/utils.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
 
 class AchievementAgentItem extends StatelessWidget {

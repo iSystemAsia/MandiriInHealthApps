@@ -1,6 +1,5 @@
 import 'package:mandiri_in_health/models/achievement_agent_model.dart';
 import 'package:mandiri_in_health/models/menu_model.dart';
-import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/models/quotation_model.dart';
 

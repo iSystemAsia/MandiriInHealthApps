@@ -60,55 +60,23 @@ class _AppContainerState extends State<AppContainer> {
   ///Force switch home when authentication state change
   void _listenAuthenticateChange(AuthenticationState authentication) async {
     if (authentication == AuthenticationState.fail) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: _selected,
-      );
-      if (result != null) {
-        setState(() {
-          _selected = result as String;
-        });
-      } else {
-        setState(() {
-          _selected = Routes.home;
-        });
-      }
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const SignIn()),
+          (Route<dynamic> route) => false);
     }
   }
 
   ///On change tab bottom menu and handle when not yet authenticate
   void _onItemTapped(String route) async {
     if (AppBloc.userCubit.state == null) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: route,
-      );
-      if (result == null) return;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const SignIn()),
+          (Route<dynamic> route) => false);
+      return;
     }
     setState(() {
       _selected = route;
     });
-  }
-
-  ///On handle submit post
-  void _onSubmit() async {
-    final getUser = Preferences.getString(Preferences.user);
-    print("_onSubmit > AppBloc.userCubit.state: ${AppBloc.userCubit.state}");
-    print("_onSubmit > getUser: $getUser");
-
-    // if (AppBloc.userCubit.state == null) {
-    if (getUser == null) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: Routes.submit,
-      );
-      if (result == null) return;
-    }
-    if (!mounted) return;
-    Navigator.pushNamed(context, Routes.submit);
   }
 
   ///Build Item Menu
@@ -164,21 +132,6 @@ class _AppContainerState extends State<AppContainer> {
     );
   }
 
-  ///Build submit button
-  Widget? _buildSubmit() {
-    if (Application.setting.enableSubmit) {
-      return FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: _onSubmit,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      );
-    }
-    return null;
-  }
-
   ///Build bottom menu
   Widget _buildBottomMenu() {
     if (Application.setting.enableSubmit) {
@@ -212,20 +165,21 @@ class _AppContainerState extends State<AppContainer> {
 
   @override
   Widget build(BuildContext context) {
-    const submitPosition = FloatingActionButtonLocation.centerDocked;
-    return Scaffold(
-      body: BlocListener<AuthenticationCubit, AuthenticationState>(
-        listener: (context, authentication) async {
-          _listenAuthenticateChange(authentication);
-        },
-        child: IndexedStack(
-          index: _exportIndexed(_selected),
-          children: const <Widget>[Home(), Dashboard(), Account()],
-        ),
-      ),
-      bottomNavigationBar: _buildBottomMenu(),
-      floatingActionButton: _buildSubmit(),
-      floatingActionButtonLocation: submitPosition,
-    );
+    print('AppBloc.userCubit.state: ${AppBloc.userCubit.state}');
+    return AppBloc.userCubit.state == null
+        ? const SignIn()
+        : Scaffold(
+            body: BlocListener<AuthenticationCubit, AuthenticationState>(
+              listener: (context, authentication) async {
+                print('app_container, listener auth..');
+                _listenAuthenticateChange(authentication);
+              },
+              child: IndexedStack(
+                index: _exportIndexed(_selected),
+                children: const <Widget>[Home(), Dashboard(), Account()],
+              ),
+            ),
+            bottomNavigationBar: _buildBottomMenu()
+          );
   }
 }

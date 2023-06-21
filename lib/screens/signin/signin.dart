@@ -7,8 +7,7 @@ import 'package:mandiri_in_health/utils/utils.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
 
 class SignIn extends StatefulWidget {
-  final String from;
-  const SignIn({Key? key, required this.from}) : super(key: key);
+  const SignIn({Key? key}) : super(key: key);
 
   @override
   State<SignIn> createState() {
@@ -29,7 +28,7 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _textIDController.text = "supervisor@supervisor.com";
+    _textIDController.text = "Supervisor";
     _textPassController.text = "Supervisor";
   }
 
@@ -79,7 +78,11 @@ class _SignInState extends State<SignIn> {
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, login) {
           if (login == LoginState.success) {
-            Navigator.pop(context, widget.from);
+            print('Login Suksess...');
+
+            // Navigator.pop(context, Routes.home);
+            Navigator.of(context).pop();
+            Navigator.pushNamed(context, Routes.home);
           }
         },
         child: SafeArea(
@@ -90,7 +93,7 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 children: <Widget>[
                   AppTextInput(
-                    hintText: Translate.of(context).translate('account'),
+                    hintText: "Username",
                     errorText: _errorID,
                     controller: _textIDController,
                     focusNode: _focusID,
@@ -140,7 +143,7 @@ class _SignInState extends State<SignIn> {
                   BlocBuilder<LoginCubit, LoginState>(
                     builder: (context, login) {
                       return AppButton(
-                        Translate.of(context).translate('sign_in'),
+                        "Login",
                         mainAxisSize: MainAxisSize.max,
                         onPressed: _login,
                         loading: login == LoginState.loading,

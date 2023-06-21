@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mandiri_in_health/app_container.dart';
+import 'package:mandiri_in_health/models/closing_model.dart';
 import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/pipeline_model.dart';
+import 'package:mandiri_in_health/screens/closing/detail.dart';
+import 'package:mandiri_in_health/screens/closing/list.dart';
+import 'package:mandiri_in_health/screens/pipeline/detail.dart';
 import 'package:mandiri_in_health/screens/pipeline/list.dart';
 import 'package:mandiri_in_health/screens/quotation/list.dart';
 import 'package:mandiri_in_health/screens/sales_activity/list.dart';
@@ -77,9 +83,17 @@ class Routes {
       case signIn:
         return MaterialPageRoute(
           builder: (context) {
-            return SignIn(from: settings.arguments as String);
+            return const SignIn();
           },
           fullscreenDialog: true,
+        );
+
+      case home:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const AppContainer();
+          },
+          // fullscreenDialog: true,
         );
 
       case pipeline:
@@ -92,7 +106,7 @@ class Routes {
       case pipelineDetail:
         return MaterialPageRoute(
           builder: (context) {
-            return ProductDetail(item: settings.arguments as ProductModel);
+            return PipelineDetail(item: settings.arguments as PipelineModel);
           },
         );
 
@@ -121,6 +135,20 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             return ProductDetail(item: settings.arguments as ProductModel);
+          },
+        );
+
+      case closing:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const ClosingList();
+          },
+        );
+
+      case closingDetail:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ClosingDetail(item: settings.arguments as ClosingModel);
           },
         );
 
