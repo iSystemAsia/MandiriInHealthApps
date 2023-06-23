@@ -4,11 +4,15 @@ import 'package:mandiri_in_health/app_container.dart';
 import 'package:mandiri_in_health/models/closing_model.dart';
 import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
+import 'package:mandiri_in_health/models/quotation_model.dart';
+import 'package:mandiri_in_health/models/sales_activity_model.dart';
 import 'package:mandiri_in_health/screens/closing/detail.dart';
 import 'package:mandiri_in_health/screens/closing/list.dart';
 import 'package:mandiri_in_health/screens/pipeline/detail.dart';
 import 'package:mandiri_in_health/screens/pipeline/list.dart';
+import 'package:mandiri_in_health/screens/quotation/detail.dart';
 import 'package:mandiri_in_health/screens/quotation/list.dart';
+import 'package:mandiri_in_health/screens/sales_activity/detail.dart';
 import 'package:mandiri_in_health/screens/sales_activity/list.dart';
 import 'package:mandiri_in_health/screens/screen.dart';
 
@@ -120,7 +124,7 @@ class Routes {
       case salesActivityDetail:
         return MaterialPageRoute(
           builder: (context) {
-            return ProductDetail(item: settings.arguments as ProductModel);
+            return SalesActivityDetail(item: settings.arguments as SalesActivityModel);
           },
         );
 
@@ -134,7 +138,7 @@ class Routes {
       case quotationDetail:
         return MaterialPageRoute(
           builder: (context) {
-            return ProductDetail(item: settings.arguments as ProductModel);
+            return QuotationDetail(item: settings.arguments as QuotationModel);
           },
         );
 

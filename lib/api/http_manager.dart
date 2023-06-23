@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
+import 'package:mandiri_in_health/api/api.dart';
 import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/configs/config.dart';
 import 'package:mandiri_in_health/utils/logger.dart';
@@ -14,8 +15,7 @@ class HTTPManager {
     ///Dio
     _dio = Dio(
       BaseOptions(
-        // baseUrl: '${Application.domain}/index.php/wp-json',
-        baseUrl: '${Application.domain_}/api',
+        baseUrl: '${Application.domain}/api',
         connectTimeout: const Duration(seconds: 30000),
         receiveTimeout: const Duration(seconds: 30000),
         contentType: Headers.jsonContentType,
@@ -33,6 +33,7 @@ class HTTPManager {
             "Device-Version": Application.device?.version,
             "Type": Application.device?.type,
             "Device-Token": Application.device?.token,
+            "Accept": "application/json"
           };
           String? token = AppBloc.userCubit.state?.token;
           print("Request HTTP Token: $token");
@@ -48,16 +49,24 @@ class HTTPManager {
           print("Request HTTP Error: $error");
           print("Request HTTP Handler: $handler");
 
-          // if (exceptionCode.contains(error.response?.data['code'])) {
-          //   AppBloc.loginCubit.onLogout();
-          // }
+          String? requestUrl = error.requestOptions.uri.path.replaceAll('/api', '');
+          print("requestUrl: $requestUrl");
 
-          if (error.response?.data is Map) {
-            final response = Response(
-              requestOptions: error.requestOptions,
-              data: error.response?.data,
-            );
-            return handler.resolve(response);
+          if (error.response != null) {
+
+            print("Request HTTP Status Code: ${error.response!.statusCode}");
+
+            if (error.response!.statusCode == 401 && requestUrl != Api.logout) {
+              AppBloc.loginCubit.onLogout();
+            }
+
+            if (error.response?.data is Map) {
+              final response = Response(
+                requestOptions: error.requestOptions,
+                data: error.response?.data,
+              );
+              return handler.resolve(response);
+            }
           }
 
           return handler.next(error);

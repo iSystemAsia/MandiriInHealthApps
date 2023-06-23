@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/configs/config.dart';
 import 'package:mandiri_in_health/models/model.dart';
+import 'package:mandiri_in_health/models/user_model.dart';
 import 'package:mandiri_in_health/screens/dashboard/discovery.dart';
 import 'package:mandiri_in_health/screens/screen.dart';
 import 'package:mandiri_in_health/utils/utils.dart';
@@ -68,15 +69,32 @@ class _AppContainerState extends State<AppContainer> {
 
   ///On change tab bottom menu and handle when not yet authenticate
   void _onItemTapped(String route) async {
-    if (AppBloc.userCubit.state == null) {
+    if (!_isAuthenticate()) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const SignIn()),
           (Route<dynamic> route) => false);
       return;
     }
+    
     setState(() {
       _selected = route;
     });
+  }
+
+  bool _isAuthenticate() {
+    UserModel_? user = AppBloc.userCubit.state;
+    if(user == null) {
+      return false;
+    }
+
+    print("DateTime Now: ${DateTime.now().toUtc()}");
+    print("DateTime Expire At: ${user.expiresAt}");
+
+    if (user.expiresAt.isBefore(DateTime.now().toUtc())) {
+      return false;
+    }
+
+    return true;
   }
 
   ///Build Item Menu
@@ -166,20 +184,22 @@ class _AppContainerState extends State<AppContainer> {
   @override
   Widget build(BuildContext context) {
     print('AppBloc.userCubit.state: ${AppBloc.userCubit.state}');
-    return AppBloc.userCubit.state == null
-        ? const SignIn()
-        : Scaffold(
-            body: BlocListener<AuthenticationCubit, AuthenticationState>(
-              listener: (context, authentication) async {
-                print('app_container, listener auth..');
-                _listenAuthenticateChange(authentication);
-              },
-              child: IndexedStack(
-                index: _exportIndexed(_selected),
-                children: const <Widget>[Home(), Dashboard(), Account()],
-              ),
-            ),
-            bottomNavigationBar: _buildBottomMenu()
-          );
+    print('_isAuthenticate: ${_isAuthenticate()}');
+    if (!_isAuthenticate()) {
+      return const SignIn();
+    }
+
+    return Scaffold(
+        body: BlocListener<AuthenticationCubit, AuthenticationState>(
+          listener: (context, authentication) async {
+            print('AppContainer > listener auth > $authentication');
+            _listenAuthenticateChange(authentication);
+          },
+          child: IndexedStack(
+            index: _exportIndexed(_selected),
+            children: const <Widget>[Home(), Dashboard(), Account()],
+          ),
+        ),
+        bottomNavigationBar: _buildBottomMenu());
   }
 }

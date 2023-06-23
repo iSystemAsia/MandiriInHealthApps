@@ -14,6 +14,8 @@ class Api {
 
   static const String secretKey = "2y\$10\$QAsAzXePzUSQjX3T3PYuPuDJzAANS3Vf8If./n810N0i4itTeJLlm";
   static const String login_ = "/login";
+  static const String logout = "/logout";
+  static const String validateToken = "/validate";
   static const String achievementAgent = "/achievement-agent";
   static const String pipeline = "/pipeline";
   static const String salesActivity = "/sales-activity";
@@ -24,6 +26,14 @@ class Api {
     String url = "$login_?SecretKey=$secretKey";
     final result = await httpManager.post(url: url, data: params);
     return AuthModel.fromJson(result);
+  }
+
+  static Future<void> requestLogout() async {
+    await httpManager.get(url: logout, params: {'SecretKey': secretKey});
+  }
+
+  static Future<bool> requestValidateToken() async {
+    return await httpManager.get(url: validateToken, params: {'SecretKey': secretKey});
   }
 
   /// Pipeline
@@ -205,20 +215,6 @@ class Api {
   static const String bookingCancel = "/listar/v1/booking/cancel_by_id";
   static const String bookingAccept = "/listar/v1/booking/accept_by_id";
   static const String deactivate = "/listar/v1/auth/deactivate";
-
-  ///Login api
-  // static Future<ResultApiModel> requestLogin(params) async {
-  //   final result = await httpManager.post(url: login, data: params);
-  //   return ResultApiModel.fromJson(result);
-  // }
-
-  ///Validate token valid
-  static Future<ResultApiModel> requestValidateToken() async {
-    Map<String, dynamic> result = await httpManager.post(url: authValidate);
-    result['success'] = result['code'] == 'jwt_auth_valid_token';
-    result['message'] = result['code'] ?? result['message'];
-    return ResultApiModel.fromJson(result);
-  }
 
   ///Forgot password
   static Future<ResultApiModel> requestForgotPassword(params) async {

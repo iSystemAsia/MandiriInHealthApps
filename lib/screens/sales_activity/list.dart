@@ -136,7 +136,7 @@ class _SalesActivityListState extends State<SalesActivityList> {
 
   ///On navigate product detail
   void _onSalesActivityDetail(SalesActivityModel item) {
-    Navigator.pushNamed(context, Routes.productDetail, arguments: item);
+    Navigator.pushNamed(context, Routes.salesActivityDetail, arguments: item);
   }
 
   ///Export Icon for Mode View

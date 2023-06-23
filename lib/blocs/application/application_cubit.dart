@@ -82,12 +82,6 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     if (oldSetting != null) {
       Application.setting = SettingModel.fromJson(jsonDecode(oldSetting));
     }
-    // Api.requestSetting().then((response) {
-    //   if (response.success) {
-    //     Preferences.setString(Preferences.setting, jsonEncode(response.data));
-    //     Application.setting = SettingModel.fromJson(response.data);
-    //   }
-    // });
 
     ///Setup Theme & Font with dark Option
     AppBloc.themeCubit.onChangeTheme(

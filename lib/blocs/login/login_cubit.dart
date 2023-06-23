@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mandiri_in_health/api/api.dart';
 import 'package:mandiri_in_health/blocs/app_bloc.dart';
 import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/configs/config.dart';
@@ -51,7 +52,12 @@ class LoginCubit extends Cubit<LoginState> {
   void onLogout() async {
     print("LoginCubit > onLogout...");
 
-    ///Begin start auth flow
+    try {
+      await Api.requestLogout(); 
+    } catch (e) {
+      
+    }
+
     emit(LoginState.init);
     AppBloc.authenticateCubit.onClear();
   }

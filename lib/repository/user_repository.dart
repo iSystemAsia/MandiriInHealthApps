@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'dart:convert';
 
 import 'package:mandiri_in_health/api/api.dart';
@@ -29,12 +31,8 @@ class UserRepository {
 
   ///Fetch api validToken
   static Future<bool> validateToken() async {
-    final response = await Api.requestValidateToken();
-    if (response.success) {
-      return true;
-    }
-    AppBloc.messageCubit.onShow(response.message);
-    return false;
+    print("UserRepository > validateToken");
+    return await Api.requestValidateToken();
   }
 
   ///Fetch api deactivate

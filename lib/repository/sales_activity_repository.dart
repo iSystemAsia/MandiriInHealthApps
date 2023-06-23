@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mandiri_in_health/api/api.dart';
 import 'package:mandiri_in_health/configs/preferences.dart';
 import 'package:mandiri_in_health/models/model_filter.dart';
+import 'package:mandiri_in_health/models/sales_activity_model.dart';
 import 'package:mandiri_in_health/models/user_model.dart';
 
 class SalesActivityRepository {
@@ -27,5 +28,9 @@ class SalesActivityRepository {
     
     final response = await Api.requestSalesActivity(params);
     return [response['list'], response['pagination']];
+  }
+
+  static Future<SalesActivityModel?> loadSalesActivity(id) async {
+    return await Api.requestSalesActivityDetail(id);
   }
 }
