@@ -16,7 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeLoading());
 
   Future<void> onLoad() async {
-    List<String> banner = ["https://cdn-mdr.appbuilder.my.id/Performance-Nasional.jpg"];
+    List<String> banner = ["https://ma.bpmonline.asia/images/data/thumbnails/1/Header.jpg"];
     List<MenuModel> menuList = [];
     List<AchievementAgentModel> achievementAgentList = [];
     List<PipelineModel> pipelineList = [];

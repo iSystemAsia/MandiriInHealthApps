@@ -17,6 +17,9 @@ import 'package:mandiri_in_health/widgets/widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
+
+import '../../models/user_model.dart';
 
 class PipelineDetail extends StatefulWidget {
   const PipelineDetail({Key? key, required this.item}) : super(key: key);
@@ -497,6 +500,7 @@ class _PipelineDetailState extends State<PipelineDetail> {
     Widget openHours = Container();
     Widget attachments = Container();
     Widget socials = Container();
+
     Widget info = AppPlaceholder(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -701,6 +705,7 @@ class _PipelineDetailState extends State<PipelineDetail> {
         ),
       ),
     );
+
     Widget status = Container();
     Widget tags = Container();
     Widget latest = Container();
@@ -730,6 +735,52 @@ class _PipelineDetailState extends State<PipelineDetail> {
     Widget booking = Container();
     Color? backgroundAction;
 
+    ///Date established
+    if (pipeline?.CreatedOn != null) {
+      dateEstablish = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+			Text(
+				Translate.of(context).translate(
+				'Created On',
+				),
+				style: Theme.of(context).textTheme.labelSmall,
+			),
+			const SizedBox(height: 4),
+			Text(
+				DateFormat('yyyy-MM-dd kk:mm')
+					.format(pipeline!.CreatedOn as DateTime),
+				style: Theme.of(context)
+					.textTheme
+					.labelLarge!
+					.copyWith(fontWeight: FontWeight.bold),
+			),
+			const SizedBox(height: 4),
+			Text(
+				Translate.of(context).translate(
+				'Created By',
+				),
+				style: Theme.of(context).textTheme.labelSmall,
+			),
+			const SizedBox(height: 4),
+			Text(
+				pipeline!.created_by as String,
+				style: Theme.of(context)
+					.textTheme
+					.labelLarge!
+					.copyWith(fontWeight: FontWeight.bold),
+			)
+        ],
+      );
+    }
+
+    if (pipeline?.status != null) {
+      status = AppTag(
+        pipeline!.status_polis!,
+        type: TagType.status,
+      );
+    }
+
     /// Build Detail
     if (pipeline != null) {
       ///background action
@@ -737,160 +788,6 @@ class _PipelineDetailState extends State<PipelineDetail> {
       if (_iconColor == Colors.white) {
         backgroundAction = Colors.grey.withOpacity(0.3);
       }
-
-      ///Action Galleries
-      // if (product.galleries.isNotEmpty) {
-      //   actionGalleries = Row(
-      //     children: [
-      //       const SizedBox(width: 8),
-      //       Container(
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: backgroundAction,
-      //         ),
-      //         child: IconButton(
-      //           icon: const Icon(Icons.photo_library_outlined),
-      //           onPressed: () {
-      //             _onPhotoPreview(product);
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Action Map View
-      // if (product.location != null) {
-      //   actionMapView = Row(
-      //     children: [
-      //       const SizedBox(width: 8),
-      //       Container(
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: backgroundAction,
-      //         ),
-      //         child: IconButton(
-      //           icon: const Icon(Icons.map_outlined),
-      //           onPressed: () {
-      //             _onLocation(product);
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Status
-      // if (product.status.isNotEmpty) {
-      //   status = AppTag(
-      //     product.status,
-      //     type: TagType.status,
-      //   );
-      // }
-
-      ///Latest
-      // if (product.latest.isNotEmpty) {
-      //   latest = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       const Padding(
-      //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //         child: Divider(),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.symmetric(horizontal: 16),
-      //         child: Text(
-      //           Translate.of(context).translate('latest'),
-      //           style: Theme.of(context)
-      //               .textTheme
-      //               .titleMedium!
-      //               .copyWith(fontWeight: FontWeight.bold),
-      //         ),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       SizedBox(
-      //         height: 220,
-      //         child: ListView.builder(
-      //           scrollDirection: Axis.horizontal,
-      //           padding: const EdgeInsets.symmetric(horizontal: 8),
-      //           itemBuilder: (context, index) {
-      //             final ProductModel item = product.latest[index];
-      //             return Container(
-      //               width: MediaQuery.of(context).size.width / 2,
-      //               padding: const EdgeInsets.symmetric(horizontal: 8),
-      //               child: AppProductItem(
-      //                 onPressed: () {
-      //                   _onProductDetail(item);
-      //                 },
-      //                 item: item,
-      //                 type: ProductViewType.grid,
-      //               ),
-      //             );
-      //           },
-      //           itemCount: product.latest.length,
-      //         ),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Related list
-      // if (product.related.isNotEmpty) {
-      //   related = Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 16),
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-      //         Text(
-      //           Translate.of(context).translate('related'),
-      //           style: Theme.of(context)
-      //               .textTheme
-      //               .titleMedium!
-      //               .copyWith(fontWeight: FontWeight.bold),
-      //         ),
-      //         const SizedBox(height: 8),
-      //         ListView.separated(
-      //           shrinkWrap: true,
-      //           physics: const NeverScrollableScrollPhysics(),
-      //           padding: EdgeInsets.zero,
-      //           itemBuilder: (context, index) {
-      //             final item = product.related[index];
-      //             return AppProductItem(
-      //               onPressed: () {
-      //                 _onProductDetail(item);
-      //               },
-      //               item: item,
-      //               type: ProductViewType.small,
-      //             );
-      //           },
-      //           separatorBuilder: (context, index) {
-      //             return const SizedBox(height: 16);
-      //           },
-      //           itemCount: product.related.length,
-      //         ),
-      //       ],
-      //     ),
-      //   );
-      // }
-
-      ///Action
-      // action = [
-      //   Container(
-      //     decoration: BoxDecoration(
-      //       shape: BoxShape.circle,
-      //       color: backgroundAction,
-      //     ),
-      //     child: IconButton(
-      //       icon: const Icon(Icons.share_outlined),
-      //       onPressed: () {
-      //         _onShare(product);
-      //       },
-      //     ),
-      //   ),
-      //   actionMapView,
-      //   actionGalleries,
-      //   const SizedBox(width: 8),
-      // ];
 
       ///Banner
       banner = Stack(
@@ -927,57 +824,8 @@ class _PipelineDetailState extends State<PipelineDetail> {
               );
             },
           ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _showVideo = true;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey.withOpacity(0.3),
-                ),
-                child: const Icon(
-                  Icons.videocam_outlined,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
         ],
       );
-
-      ///Video
-      // if (product.videoURL.isNotEmpty && _showVideo) {
-      //   banner = AppVideo(
-      //     url: product.videoURL,
-      //     actions: [
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showVideo = false;
-      //           });
-      //         },
-      //         child: Container(
-      //           padding: const EdgeInsets.all(4),
-      //           decoration: BoxDecoration(
-      //             shape: BoxShape.circle,
-      //             color: Colors.grey.withOpacity(0.3),
-      //           ),
-      //           child: const Icon(
-      //             Icons.photo_size_select_actual_outlined,
-      //             color: Colors.white,
-      //           ),
-      //         ),
-      //       )
-      //     ],
-      //   );
-      // }
 
       ///Address
       if (pipeline.MdrAlamat != null) {
@@ -1034,31 +882,8 @@ class _PipelineDetailState extends State<PipelineDetail> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _showCategoryLocation = !_showCategoryLocation;
-                    });
-                  },
-                  child: Icon(
-                    _showCategoryLocation
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                  ),
-                )
               ],
             ),
-            // Visibility(
-            //   visible: _showCategoryLocation,
-            //   child: Container(
-            //     margin: const EdgeInsets.only(left: 42),
-            //     padding: const EdgeInsets.only(top: 12),
-            //     child: Text(
-            //       '${product.country?.title}, ${product.city?.title}, ${product.state?.title}',
-            //       style: Theme.of(context).textTheme.bodySmall,
-            //     ),
-            //   ),
-            // ),
           ],
         );
       }
@@ -1116,59 +941,6 @@ class _PipelineDetailState extends State<PipelineDetail> {
         );
       }
 
-      ///Fax
-      // if (product.fax.isNotEmpty) {
-      //   fax = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           _makeAction('tel:${product.fax}');
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Container(
-      //               width: 32,
-      //               height: 32,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.circle,
-      //                 color: Theme.of(context).dividerColor,
-      //               ),
-      //               child: const Icon(
-      //                 Icons.perm_phone_msg_outlined,
-      //                 color: Colors.white,
-      //                 size: 18,
-      //               ),
-      //             ),
-      //             const SizedBox(width: 8),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate('fax'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   Text(
-      //                     product.fax,
-      //                     maxLines: 1,
-      //                     overflow: TextOverflow.ellipsis,
-      //                     style: Theme.of(context)
-      //                         .textTheme
-      //                         .labelMedium!
-      //                         .copyWith(fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ],
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
       ///Email
       if (pipeline.MdrEmail != null) {
         email = Column(
@@ -1222,495 +994,191 @@ class _PipelineDetailState extends State<PipelineDetail> {
         );
       }
 
-      ///Website
-      // if (product.website.isNotEmpty) {
-      //   website = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           _makeAction(product.website);
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Container(
-      //               width: 32,
-      //               height: 32,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.circle,
-      //                 color: Theme.of(context).dividerColor,
-      //               ),
-      //               child: const Icon(
-      //                 Icons.language_outlined,
-      //                 color: Colors.white,
-      //                 size: 18,
-      //               ),
-      //             ),
-      //             const SizedBox(width: 8),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate('website'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   Text(
-      //                     product.website,
-      //                     maxLines: 1,
-      //                     overflow: TextOverflow.ellipsis,
-      //                     style: Theme.of(context)
-      //                         .textTheme
-      //                         .labelMedium!
-      //                         .copyWith(fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ],
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Open hours
-      // if (product.openHours.isNotEmpty) {
-      //   openHours = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showHour = !_showHour;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.access_time_outlined,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Text(
-      //                     Translate.of(context).translate('open_time'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showHour
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showHour,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: product.openHours.map((item) {
-      //             final hour = item.schedule
-      //                 .map((e) {
-      //                   return '${e.start.viewTime}-${e.end.viewTime}';
-      //                 })
-      //                 .toList()
-      //                 .join(",");
-      //             return Container(
-      //               decoration: BoxDecoration(
-      //                 border: Border(
-      //                   bottom: BorderSide(
-      //                     color: Theme.of(context).dividerColor,
-      //                     width: 1,
-      //                   ),
-      //                 ),
-      //               ),
-      //               margin: const EdgeInsets.only(left: 42),
-      //               padding: const EdgeInsets.symmetric(vertical: 8),
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate(item.key),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Expanded(
-      //                     child: Text(
-      //                       hour,
-      //                       style: Theme.of(context)
-      //                           .textTheme
-      //                           .labelSmall!
-      //                           .copyWith(
-      //                               color:
-      //                                   Theme.of(context).colorScheme.secondary,
-      //                               fontWeight: FontWeight.bold),
-      //                       maxLines: 1,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       textAlign: TextAlign.right,
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             );
-      //           }).toList(),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///File attachments
-      // if (product.attachments.isNotEmpty) {
-      //   attachments = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showFile = !_showFile;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.file_copy_outlined,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Column(
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [
-      //                       Text(
-      //                         Translate.of(context).translate('attachments'),
-      //                         style: Theme.of(context).textTheme.labelSmall,
-      //                       ),
-      //                       Text(
-      //                         '${product.attachments.length} ${Translate.of(context).translate('files')}',
-      //                         style: Theme.of(context)
-      //                             .textTheme
-      //                             .labelMedium!
-      //                             .copyWith(fontWeight: FontWeight.bold),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showFile
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showFile,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: product.attachments.map((item) {
-      //             return Container(
-      //               margin: const EdgeInsets.only(left: 42),
-      //               padding: const EdgeInsets.symmetric(vertical: 8),
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: <Widget>[
-      //                   Expanded(
-      //                     child: Text(
-      //                       '${item.name}.${item.type}',
-      //                       style: Theme.of(context).textTheme.labelSmall,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       maxLines: 1,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Row(
-      //                     children: [
-      //                       Text(
-      //                         item.size,
-      //                         style: Theme.of(context)
-      //                             .textTheme
-      //                             .labelSmall!
-      //                             .copyWith(
-      //                                 color: Theme.of(context)
-      //                                     .colorScheme
-      //                                     .secondary,
-      //                                 fontWeight: FontWeight.bold),
-      //                       ),
-      //                       const SizedBox(width: 8),
-      //                       AppDownloadFile(file: item),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             );
-      //           }).toList(),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Date established
-      // if (product.dateEstablish.isNotEmpty) {
-      //   dateEstablish = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       Text(
-      //         Translate.of(context).translate(
-      //           'date_established',
-      //         ),
-      //         style: Theme.of(context).textTheme.labelSmall,
-      //       ),
-      //       const SizedBox(height: 4),
-      //       Text(
-      //         product.dateEstablish,
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Price range
-      // if (product.priceMin.isNotEmpty || product.priceMax.isNotEmpty) {
-      //   priceRange = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.end,
-      //     children: <Widget>[
-      //       Text(
-      //         Translate.of(context).translate('price_range'),
-      //         style: Theme.of(context).textTheme.labelSmall,
-      //       ),
-      //       const SizedBox(height: 4),
-      //       Text(
-      //         "${product.priceMin} - ${product.priceMax}",
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Price
-      // if (product.priceDisplay.isNotEmpty) {
-      //   price = Row(
-      //     children: [
-      //       Text(
-      //         product.priceDisplay,
-      //         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-      //               fontWeight: FontWeight.bold,
-      //               color: Theme.of(context).colorScheme.primary,
-      //             ),
-      //       ),
-      //       const SizedBox(width: 8)
-      //     ],
-      //   );
-      // }
-
-      ///Booking button
-      // if (product.bookingUse) {
-      //   booking = InkWell(
-      //     onTap: _onBooking,
-      //     child: Container(
-      //       height: 24,
-      //       padding: const EdgeInsets.symmetric(horizontal: 16),
-      //       alignment: Alignment.center,
-      //       decoration: BoxDecoration(
-      //         borderRadius: BorderRadius.circular(12),
-      //         color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-      //       ),
-      //       child: Text(
-      //         Translate.of(context).translate('book_now'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(color: Theme.of(context).colorScheme.primary),
-      //       ),
-      //     ),
-      //   );
-      // }
-
-      ///Feature
-      // if (product.features.isNotEmpty) {
-      //   feature = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 16),
-      //       const Divider(),
-      //       const SizedBox(height: 8),
-      //       Text(
-      //         Translate.of(context).translate('featured'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .titleMedium!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       Wrap(
-      //         spacing: 8,
-      //         runSpacing: 8,
-      //         children: product.features.map((item) {
-      //           return IntrinsicWidth(
-      //             child: AppTag(
-      //               item.title,
-      //               type: TagType.chip,
-      //               icon: Icon(
-      //                 item.icon,
-      //                 size: 10,
-      //                 color: Theme.of(context).colorScheme.secondary,
-      //               ),
-      //             ),
-      //           );
-      //         }).toList(),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Tags
-      // if (product.tags.isNotEmpty) {
-      //   tags = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 8),
-      //       const Divider(),
-      //       const SizedBox(height: 8),
-      //       Text(
-      //         Translate.of(context).translate('tags'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .titleMedium!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       Wrap(
-      //         spacing: 8,
-      //         runSpacing: 8,
-      //         children: product.tags.map((item) {
-      //           return IntrinsicWidth(
-      //             child: AppTag(
-      //               item.title,
-      //               type: TagType.chip,
-      //             ),
-      //           );
-      //         }).toList(),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///socials
-      // if (product.socials.isNotEmpty) {
-      //   socials = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 16),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showSocial = !_showSocial;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.link,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Text(
-      //                     Translate.of(context).translate('social_network'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showSocial
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showSocial,
-      //         child: Padding(
-      //           padding: const EdgeInsets.only(left: 8, top: 8),
-      //           child: Wrap(
-      //             spacing: 8,
-      //             runSpacing: 8,
-      //             children: product.socials.entries.map((entry) {
-      //               return InkWell(
-      //                 onTap: () {
-      //                   _makeAction(entry.value ?? '');
-      //                 },
-      //                 child: Container(
-      //                   width: 32,
-      //                   height: 32,
-      //                   decoration: BoxDecoration(
-      //                     shape: BoxShape.circle,
-      //                     image: DecorationImage(
-      //                       image: AssetImage(
-      //                         _exportSocial(entry.key),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               );
-      //             }).toList(),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
+      ///Feature isi body nya
+      if (pipeline != null) {
+        feature = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8),
+            const Divider(),
+            // const SizedBox(height: 8),
+            Text(
+              Translate.of(context).translate('Data Kanal'),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+            const Divider(),
+            const SizedBox(height: 8),
+            Row(
+				mainAxisAlignment: MainAxisAlignment.spaceAround,
+				children: [
+					Column(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Text(
+						Translate.of(context).translate('Kanal Distribusi'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.kanal!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+							.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+						Translate.of(context).translate('Agent'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.agent!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+							.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+						Translate.of(context).translate('Email Agent'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.MdrEmailAgent!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+							.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+						Translate.of(context).translate('KA Unit'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.kepala_unit!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+							.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+						Translate.of(context).translate('KA. KPM'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.kepala_kanal!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+							.copyWith(fontWeight: FontWeight.bold),
+						),
+					],
+					),
+					Column(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Text(
+							Translate.of(context).translate('Kategori Asuransi'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.kategori_asuransi_eksisting!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+								.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+							Translate.of(context).translate('Asuransi Eksisting'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.asuransi_eksisting!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+								.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+							Translate.of(context).translate('Broker Name'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.broker!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+								.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+							Translate.of(context).translate('Co Insurance'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.co_insurance!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+								.copyWith(fontWeight: FontWeight.bold),
+						),
+						const SizedBox(height: 10),
+						Text(
+							Translate.of(context).translate('Syariah'),
+							style: Theme.of(context).textTheme.labelSmall,
+						),
+						Text(
+							pipeline.syariah!,
+							maxLines: 2,
+							overflow: TextOverflow.ellipsis,
+							style: Theme.of(context)
+								.textTheme
+								.labelMedium!
+								.copyWith(fontWeight: FontWeight.bold),
+						),
+					],
+					)
+				],
+            ),
+			const SizedBox(height: 8),
+            const Divider(),
+            // const SizedBox(height: 8),
+            Text(
+              Translate.of(context).translate('Data Badan Usaha'),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+            const Divider(),
+            const SizedBox(height: 8),
+          ],
+        );
+      }
 
       ///Info
       info = Padding(
@@ -1733,7 +1201,9 @@ class _PipelineDetailState extends State<PipelineDetail> {
                 ),
                 IconButton(
                   icon: Icon(
-                    pipeline.MdrKomitmentAgen! ? Icons.favorite : Icons.favorite_border,
+                    pipeline.MdrKomitmentAgen!
+                        ? Icons.favorite
+                        : Icons.favorite_border,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: _onFavorite,
@@ -1742,79 +1212,18 @@ class _PipelineDetailState extends State<PipelineDetail> {
                 booking,
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: <Widget>[
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: <Widget>[
-            //         Text(
-            //           product.category?.title ?? '',
-            //           style: Theme.of(context).textTheme.labelSmall,
-            //         ),
-            //         const SizedBox(height: 4),
-            //         InkWell(
-            //           onTap: () {
-            //             _onReview(product);
-            //           },
-            //           child: Row(
-            //             crossAxisAlignment: CrossAxisAlignment.center,
-            //             children: <Widget>[
-            //               AppTag(
-            //                 "${product.rate}",
-            //                 type: TagType.rate,
-            //               ),
-            //               const SizedBox(width: 4),
-            //               RatingBar.builder(
-            //                 initialRating: product.rate,
-            //                 unratedColor: Colors.amber.withAlpha(100),
-            //                 itemCount: 5,
-            //                 itemSize: 14.0,
-            //                 itemBuilder: (context, _) => const Icon(
-            //                   Icons.star,
-            //                   color: Colors.amber,
-            //                 ),
-            //                 onRatingUpdate: (rate) {},
-            //                 ignoreGestures: true,
-            //               ),
-            //               const SizedBox(width: 4),
-            //               Text(
-            //                 "(${product.numRate})",
-            //                 style: Theme.of(context).textTheme.labelLarge,
-            //               ),
-            //             ],
-            //           ),
-            //         )
-            //       ],
-            //     ),
-            //     price,
-            //   ],
-            // ),
             address,
             phone,
             fax,
             email,
-            website,
-            openHours,
-            attachments,
-            socials,
-            const SizedBox(height: 16),
-            // Text(
-            //   pipeline.description,
-            //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //         height: 1.3,
-            //       ),
-            // ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                dateEstablish,
-                priceRange,
+                dateEstablish
               ],
             ),
             feature,
-            tags,
           ],
         ),
       );
@@ -1848,21 +1257,26 @@ class _PipelineDetailState extends State<PipelineDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // AppUserInfo(
-                      //   user: product?.author,
-                      //   type: UserViewType.basic,
-                      //   onPressed: () {
-                      //     _onProfile(product!.author!);
-                      //   },
-                      // ),
+                    //   AppUserInfo(
+                    //     user: UserModel_(
+					// 		username: pipeline!.created_by as String, 
+					// 		name: pipeline!.created_by as String, 
+					// 		contactId: pipeline!.created_by as String, 
+					// 		kanalId: pipeline!.created_by as String, 
+					// 		isAgent: false,
+					// 		token: pipeline!.created_by as String, 
+					// 		expiresAt: DateTime.now(),
+					// 	),
+                    //     type: UserViewType.basic,
+                    //     onPressed: () {
+                    //       // _onProfile(product!.author!);
+                    //     },
+                    //   ),
                       status
                     ],
                   ),
                 ),
-                info,
-                latest,
-                const SizedBox(height: 16),
-                related,
+                info
               ],
             ),
           ),

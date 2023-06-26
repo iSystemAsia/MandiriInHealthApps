@@ -50,6 +50,7 @@ class PipelineModel {
   final String? quotation;
   final String? update_aktifitas;
   final ImageModel? image;
+  final String? created_by;
 
   PipelineModel({
     required this.Id,
@@ -99,6 +100,7 @@ class PipelineModel {
     this.quotation,
     this.update_aktifitas,
     this.image,
+    this.created_by,
   });
 
   factory PipelineModel.fromJson(Map<String, dynamic> json) {
@@ -112,6 +114,7 @@ class PipelineModel {
       Id: json['Id'],
       CreatedOn: json['CreatedOn'] != null ? DateTime.parse(json['CreatedOn']) : null,
       ModifiedOn: json['ModifiedOn'] != null ? DateTime.parse(json['ModifiedOn']) : null,
+      created_by: json['created_by'] ?? "",
       MdrEmailAgent: json['MdrEmailAgent'] ?? "",
       MdrName: json['MdrName'] ?? "",
       MdrNamaDireksi: json['MdrNamaDireksi'] ?? "",

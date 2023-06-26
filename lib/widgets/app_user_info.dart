@@ -11,12 +11,14 @@ class AppUserInfo extends StatelessWidget {
   final UserModel_? user;
   final VoidCallback? onPressed;
   final UserViewType type;
+  final String? createdBy;
 
   const AppUserInfo({
     Key? key,
     this.user,
     this.onPressed,
     this.type = UserViewType.basic,
+    this.createdBy,
   }) : super(key: key);
 
   @override
@@ -164,7 +166,7 @@ class AppUserInfo extends StatelessWidget {
         return Container();
 
       default:
-        if (user == null) {
+        if (createdBy?.isEmpty ?? true) {
           return AppPlaceholder(
             child: Row(
               children: <Widget>[
@@ -247,7 +249,7 @@ class AppUserInfo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    user!.name,
+                    createdBy!,
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
