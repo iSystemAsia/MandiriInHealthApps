@@ -51,12 +51,13 @@ class HomeSwipe extends StatelessWidget {
         },
         autoplayDelay: 3000,
         autoplayDisableOnInteraction: false,
-        autoplay: true,
+        autoplay: false,
         itemCount: images!.length,
-        pagination: const SwiperPagination(
-          alignment: Alignment(0.0, 0.5),
-          builder: SwiperPagination.dots,
-        ),
+        physics: const NeverScrollableScrollPhysics()
+        // pagination: const SwiperPagination(
+        //   alignment: Alignment(0.0, 0.5),
+        //   builder: SwiperPagination.dots,
+        // ),
       );
     }
 

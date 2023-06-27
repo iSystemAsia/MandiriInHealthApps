@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\raras\Downloads\Compressed\codecanyon-IuxrsZST-listar-fluxpro-mobile-directory-listing-app-for-flutter-wordpress\source"
+export "FLUTTER_ROOT=C:\Users\ahmad\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\Data\Github Repository\MandiriInHealthApps"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

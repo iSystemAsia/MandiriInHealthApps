@@ -5,6 +5,7 @@ import 'package:mandiri_in_health/models/model_image.dart';
 class PipelineModel {
   final String Id;
   final String MdrName;
+  final String? CreatedBy;
   final String? CreatedOn;
   final String? ModifiedOn;
   final String? MdrEmailAgent;
@@ -22,7 +23,7 @@ class PipelineModel {
   final bool? MdrKomitmentAgen;
   final bool? MdrKomitmenKaUnit;
   final String? MdrStatusAktivitas;
-  final DateTime? MdrTanggalAktifitasBerkahir;
+  final String? MdrTanggalAktifitasBerkahir;
   final String? MdrKeteranganProgres;
   final String? KanalDistribusi;
   final String? InsuranceAgent;
@@ -54,6 +55,7 @@ class PipelineModel {
   PipelineModel({
     required this.Id,
     required this.MdrName,
+    this.CreatedBy,
     this.CreatedOn,
     this.ModifiedOn,
     this.MdrEmailAgent,
@@ -110,6 +112,7 @@ class PipelineModel {
 
     return PipelineModel(
       Id: json['Id'],
+      CreatedBy: json['CreatedBy'] ?? "",
       CreatedOn: json['CreatedOn'] ?? "",
       ModifiedOn: json['ModifiedOn'] ?? "",
       MdrEmailAgent: json['MdrEmailAgent'] ?? "",
@@ -128,7 +131,7 @@ class PipelineModel {
       MdrKomitmentAgen: json['MdrKomitmentAgen'] ?? false,
       MdrKomitmenKaUnit: json['MdrKomitmenKaUnit'] ?? false,
       MdrStatusAktivitas: json['MdrStatusAktivitas'] ?? "",
-      MdrTanggalAktifitasBerkahir: json['MdrTanggalAktifitasBerkahir'] != null ? DateTime.parse(json['MdrTanggalAktifitasBerkahir']) : null,
+      MdrTanggalAktifitasBerkahir: json['MdrTanggalAktifitasBerkahir'] ?? "",
       MdrKeteranganProgres: json['MdrKeteranganProgres'] ?? "",
       KanalDistribusi: json['KanalDistribusi'] ?? "",
       InsuranceAgent: json['InsuranceAgent'] ?? "",
