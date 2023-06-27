@@ -136,7 +136,7 @@ class SalesActivityItem extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                item!.pipeline ?? "",
+                item!.Pipeline ?? "",
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
@@ -156,10 +156,7 @@ class SalesActivityItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               Text(
-                  item!.MdrLastActivityDate != null
-                      ? DateFormat('dd/MM/yyyy')
-                          .format(item!.MdrLastActivityDate as DateTime)
-                      : "",
+                  item!.MdrLastActivityDate ?? "",
                   style: Theme.of(context).textTheme.labelMedium)
             ],
           ),
@@ -301,7 +298,7 @@ class SalesActivityItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          item!.pipeline ?? "",
+                          item!.Pipeline ?? "",
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
@@ -344,10 +341,7 @@ class SalesActivityItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                  item!.MdrLastActivityDate != null
-                                      ? DateFormat('dd/MM/yyyy').format(
-                                          item!.MdrLastActivityDate as DateTime)
-                                      : "",
+                                  item!.MdrLastActivityDate ?? "",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodySmall),
                             )
@@ -494,7 +488,7 @@ class SalesActivityItem extends StatelessWidget {
                             children: [
                               const SizedBox(height: 8),
                               Text(
-                                item!.pipeline ?? "",
+                                item!.Pipeline ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
@@ -541,10 +535,7 @@ class SalesActivityItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.MdrLastActivityDate != null
-                                ? DateFormat('dd/MM/yyyy').format(
-                                    item!.MdrLastActivityDate as DateTime)
-                                : "",
+                            item!.MdrLastActivityDate ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

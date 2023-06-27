@@ -983,7 +983,7 @@ class _ClosingDetailState extends State<ClosingDetail> {
       // }
 
       ///Address
-      if (closing.alamat != null) {
+      if (closing.Alamat != null) {
         address = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1022,7 +1022,7 @@ class _ClosingDetailState extends State<ClosingDetail> {
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                               Text(
-                                closing.alamat ?? "",
+                                closing.Alamat ?? "",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
@@ -1067,14 +1067,14 @@ class _ClosingDetailState extends State<ClosingDetail> {
       }
 
       ///Phone
-      if (closing.no_telp != null) {
+      if (closing.PhoneNumber != null) {
         phone = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
             InkWell(
               onTap: () {
-                _phoneAction(closing.no_telp ?? "");
+                _phoneAction(closing.PhoneNumber ?? "");
               },
               child: Row(
                 children: <Widget>[
@@ -1101,7 +1101,7 @@ class _ClosingDetailState extends State<ClosingDetail> {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          closing.no_telp ?? "",
+                          closing.PhoneNumber ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
@@ -1173,14 +1173,14 @@ class _ClosingDetailState extends State<ClosingDetail> {
       // }
 
       ///Email
-      if (closing.email != null) {
+      if (closing.Email != null) {
         email = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
             InkWell(
               onTap: () {
-                _makeAction('mailto:${closing.email}');
+                _makeAction('mailto:${closing.Email}');
               },
               child: Row(
                 children: <Widget>[
@@ -1207,7 +1207,7 @@ class _ClosingDetailState extends State<ClosingDetail> {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          closing.email ?? "",
+                          closing.Email ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)

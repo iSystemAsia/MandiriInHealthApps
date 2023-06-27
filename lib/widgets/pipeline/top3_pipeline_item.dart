@@ -116,7 +116,7 @@ class Top3PipelineItem extends StatelessWidget {
                       .labelLarge!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
-                Text(item!.kanal ?? "",
+                Text(item!.KanalDistribusi ?? "",
                     style: Theme.of(context).textTheme.labelSmall),
                 const SizedBox(height: 4),
                 Column(

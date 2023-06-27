@@ -979,7 +979,7 @@ class _QuotationDetailState extends State<QuotationDetail> {
       // }
 
       ///Address
-      if (quotation.alamat != null) {
+      if (quotation.Alamat != null) {
         address = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1018,7 +1018,7 @@ class _QuotationDetailState extends State<QuotationDetail> {
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                               Text(
-                                quotation.alamat!,
+                                quotation.Alamat!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)

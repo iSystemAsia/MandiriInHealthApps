@@ -979,7 +979,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
       // }
 
       ///Address
-      if (salesActivity.alamat != null) {
+      if (salesActivity.Alamat != null) {
         address = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1018,7 +1018,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                               Text(
-                                salesActivity.alamat!,
+                                salesActivity.Alamat!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
@@ -1063,14 +1063,14 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
       }
 
       ///Phone
-      if (salesActivity.no_telp != null) {
+      if (salesActivity.NoTelp != null) {
         phone = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
             InkWell(
               onTap: () {
-                _phoneAction(salesActivity.no_telp!);
+                _phoneAction(salesActivity.NoTelp!);
               },
               child: Row(
                 children: <Widget>[
@@ -1097,7 +1097,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          salesActivity.no_telp!,
+                          salesActivity.NoTelp!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
@@ -1169,14 +1169,14 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
       // }
 
       ///Email
-      if (salesActivity.email != null) {
+      if (salesActivity.Email != null) {
         email = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 12),
             InkWell(
               onTap: () {
-                _makeAction('mailto:${salesActivity.email}');
+                _makeAction('mailto:${salesActivity.Email}');
               },
               child: Row(
                 children: <Widget>[
@@ -1203,7 +1203,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          salesActivity.email!,
+                          salesActivity.Email!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)

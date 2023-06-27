@@ -109,7 +109,7 @@ class Top5QuotationItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  item!.badan_usaha ?? "",
+                  item!.BUName ?? "",
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
@@ -119,7 +119,7 @@ class Top5QuotationItem extends StatelessWidget {
                 Text(item!.MdrName,
                     style: Theme.of(context).textTheme.labelSmall),
                 Text(
-                  item!.status ?? "",
+                  item!.QuotationStatus ?? "",
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),

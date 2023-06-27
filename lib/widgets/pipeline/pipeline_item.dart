@@ -143,7 +143,7 @@ class PipelineItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                item?.kanal ?? '',
+                item?.KanalDistribusi ?? '',
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               const SizedBox(height: 8),
@@ -243,11 +243,11 @@ class PipelineItem extends StatelessWidget {
                         // child: Column(
                         //   crossAxisAlignment: CrossAxisAlignment.start,
                         //   children: <Widget>[
-                        //     item!.kanal.isNotEmpty
+                        //     item!.KanalDistribusi.isNotEmpty
                         //         ? Padding(
                         //             padding: const EdgeInsets.all(4),
                         //             child: AppTag(
-                        //               item!.kanal,
+                        //               item!.KanalDistribusi,
                         //               type: TagType.status,
                         //             ),
                         //           )
@@ -302,7 +302,7 @@ class PipelineItem extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item?.kanal ?? '',
+                          item?.KanalDistribusi ?? '',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         const SizedBox(height: 8),
@@ -444,9 +444,9 @@ class PipelineItem extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // item!.kanal.isNotEmpty
+                              // item!.KanalDistribusi.isNotEmpty
                               //     ? AppTag(
-                              //         item!.kanal,
+                              //         item!.KanalDistribusi,
                               //         type: TagType.status,
                               //       )
                               //     : Container(),
@@ -503,7 +503,7 @@ class PipelineItem extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                item?.kanal ?? '',
+                                item?.KanalDistribusi ?? '',
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

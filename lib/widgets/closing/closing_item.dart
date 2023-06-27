@@ -124,12 +124,12 @@ class ClosingItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                item?.pipeline ?? '',
+                item?.Pipeline ?? '',
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               const SizedBox(height: 8),
               Text(
-                item!.status ?? "",
+                item!.ClosingStatus ?? "",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary),
@@ -283,7 +283,7 @@ class ClosingItem extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item!.pipeline ?? '',
+                          item!.Pipeline ?? '',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         const SizedBox(height: 8),
@@ -296,7 +296,7 @@ class ClosingItem extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Expanded(
-                              child: Text(item!.no_telp ?? "",
+                              child: Text(item!.PhoneNumber ?? "",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.bodySmall),
                             )
@@ -313,7 +313,7 @@ class ClosingItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                item!.alamat ?? "",
+                                item!.Alamat ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
@@ -325,7 +325,7 @@ class ClosingItem extends StatelessWidget {
                           children: [
                             const SizedBox(height: 4),
                             Text(
-                              item!.status ?? "",
+                              item!.ClosingStatus ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -451,7 +451,7 @@ class ClosingItem extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                item!.pipeline ?? '',
+                                item!.Pipeline ?? '',
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],
@@ -462,7 +462,7 @@ class ClosingItem extends StatelessWidget {
                           children: [
                             const SizedBox(height: 8),
                             Text(
-                              item!.status ?? "",
+                              item!.ClosingStatus ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -487,7 +487,7 @@ class ClosingItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.no_telp ?? "",
+                            item!.PhoneNumber ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -505,7 +505,7 @@ class ClosingItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.alamat ?? "",
+                            item!.Alamat ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

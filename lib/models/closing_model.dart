@@ -5,20 +5,20 @@ import 'package:mandiri_in_health/models/model_image.dart';
 class ClosingModel {
   final String Id;
   final String MdrName;
-  final DateTime? CreatedOn;
-  final DateTime? ModifiedOn;
+  final String? CreatedOn;
+  final String? ModifiedOn;
   final String? MdrNotes;
   final String? MdrSLAHari;
   final bool? MdrPendingDokumen;
-  final String? pipeline;
-  final String? quotation;
-  final String? status;
-  final String? produk;
-  final String? alamat;
-  final String? kode_pos;
-  final String? created_by;
-  final String? no_telp;
-  final String? email;
+  final String? Pipeline;
+  final String? Quotation;
+  final String? ClosingStatus;
+  final String? Product;
+  final String? Alamat;
+  final String? KodePos;
+  final String? CreatedBy;
+  final String? PhoneNumber;
+  final String? Email;
   final ImageModel? image;
 
   ClosingModel({
@@ -29,15 +29,15 @@ class ClosingModel {
     this.MdrNotes,
     this.MdrSLAHari,
     this.MdrPendingDokumen,
-    this.pipeline,
-    this.quotation,
-    this.status,
-    this.produk,
-    this.alamat,
-    this.kode_pos,
-    this.created_by,
-    this.no_telp,
-    this.email,
+    this.Pipeline,
+    this.Quotation,
+    this.ClosingStatus,
+    this.Product,
+    this.Alamat,
+    this.KodePos,
+    this.CreatedBy,
+    this.PhoneNumber,
+    this.Email,
     this.image
   });
 
@@ -45,20 +45,20 @@ class ClosingModel {
     return ClosingModel(
       Id: json['Id'],
       MdrName: json['MdrName'],
-      CreatedOn: json['CreatedOn'] != null ? DateTime.parse(json['CreatedOn']) : null,
-      ModifiedOn: json['ModifiedOn'] != null ? DateTime.parse(json['ModifiedOn']) : null,
+      CreatedOn: json['CreatedOn'] ?? "",
+      ModifiedOn: json['ModifiedOn'] ?? "",
       MdrNotes: json['MdrNotes'] ?? "",
       MdrSLAHari: json['MdrSLAHari'] ?? "",
       MdrPendingDokumen: json['MdrPendingDokumen'] ?? false,
-      pipeline: json['pipeline'] ?? "",
-      quotation: json['quotation'] ?? "",
-      status: json['status'] ?? "",
-      produk: json['produk'] ?? "",
-      alamat: json['alamat'] ?? "",
-      kode_pos: json['kode_pos'] ?? "",
-      created_by: json['created_by'] ?? "",
-      no_telp: json['no_telp'] ?? "",
-      email: json['email'] ?? "",
+      Pipeline: json['Pipeline'] ?? "",
+      Quotation: json['Quotation'] ?? "",
+      ClosingStatus: json['ClosingStatus'] ?? "",
+      Product: json['Product'] ?? "",
+      Alamat: json['Alamat'] ?? "",
+      KodePos: json['KodePos'] ?? "",
+      CreatedBy: json['CreatedBy'] ?? "",
+      PhoneNumber: json['PhoneNumber'] ?? "",
+      Email: json['Email'] ?? "",
       image: json['image'] != null ? ImageModel.fromJson(json['image']) : null
     );
   }

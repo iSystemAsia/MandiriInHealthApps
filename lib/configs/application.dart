@@ -3,7 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class Application {
   static bool debug = true;
-  static String domain = 'http://192.168.15.42:8000';
+  static String domain = 'http://192.168.15.40:8000';
   static DeviceModel? device;
   static PackageInfo? packageInfo;
   static SettingModel setting = SettingModel.fromDefault();

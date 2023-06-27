@@ -124,12 +124,12 @@ class QuotationItem extends StatelessWidget {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                item!.badan_usaha ?? "",
+                item!.BUName ?? "",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               const SizedBox(height: 8),
               Text(
-                item!.status ?? "",
+                item!.QuotationStatus ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelSmall!
@@ -229,7 +229,7 @@ class QuotationItem extends StatelessWidget {
                         //             padding: const EdgeInsets.all(4),
                         //             child: AppTag(
                         //               item!.kanal,
-                        //               type: TagType.status,
+                        //               type: TagType.QuotationStatus,
                         //             ),
                         //           )
                         //         : Container()
@@ -283,12 +283,12 @@ class QuotationItem extends StatelessWidget {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item!.badan_usaha ?? "",
+                          item!.BUName ?? "",
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          item!.status ?? "",
+                          item!.QuotationStatus ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .labelSmall!
@@ -321,7 +321,7 @@ class QuotationItem extends StatelessWidget {
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                item!.alamat ?? "",
+                                item!.Alamat ?? "",
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
@@ -442,12 +442,12 @@ class QuotationItem extends StatelessWidget {
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                item!.badan_usaha ?? "",
+                                item!.BUName ?? "",
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                item!.status ?? "",
+                                item!.QuotationStatus ?? "",
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -487,7 +487,7 @@ class QuotationItem extends StatelessWidget {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            item!.alamat ?? "",
+                            item!.Alamat ?? "",
                             maxLines: 1,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),

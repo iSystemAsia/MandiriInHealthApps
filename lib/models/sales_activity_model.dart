@@ -5,21 +5,21 @@ import 'package:mandiri_in_health/models/model_image.dart';
 class SalesActivityModel {
   final String Id;
   final String MdrKodeBooking;
-  final DateTime? CreatedOn;
-  final DateTime? ModifiedOn;
+  final String? CreatedOn;
+  final String? ModifiedOn;
   final String? MdrStatusAktivitas;
   final String? MdrKeteranganProgres;
   final bool? MdrCommitment;
-  final DateTime? MdrLastActivityDate;
+  final String? MdrLastActivityDate;
   final String? MdrPerkiranClosing;
-  final String? update_aktifitas;
-  final String? pipeline;
-  final String? alamat;
-  final String? kode_pos;
-  final String? no_telp;
-  final String? email;
-  final String? gwp;
-  final String? created_by;
+  final String? UpdateAktivitas;
+  final String? Pipeline;
+  final String? Alamat;
+  final String? KodePos;
+  final String? NoTelp;
+  final String? Email;
+  final String? GWP;
+  final String? CreatedBy;
   final ImageModel? image;
 
   SalesActivityModel({
@@ -32,14 +32,14 @@ class SalesActivityModel {
     this.MdrCommitment,
     this.MdrLastActivityDate,
     this.MdrPerkiranClosing,
-    this.update_aktifitas,
-    this.pipeline,
-    this.alamat,
-    this.kode_pos,
-    this.no_telp,
-    this.email,
-    this.gwp,
-    this.created_by,
+    this.UpdateAktivitas,
+    this.Pipeline,
+    this.Alamat,
+    this.KodePos,
+    this.NoTelp,
+    this.Email,
+    this.GWP,
+    this.CreatedBy,
     this.image
   });
 
@@ -47,21 +47,21 @@ class SalesActivityModel {
     return SalesActivityModel(
       Id: json['Id'],
       MdrKodeBooking: json['MdrKodeBooking'],
-      CreatedOn: json['CreatedOn'] != null ? DateTime.parse(json['CreatedOn']) : null,
-      ModifiedOn: json['ModifiedOn'] != null ? DateTime.parse(json['ModifiedOn']) : null,
+      CreatedOn: json['CreatedOn'] ?? "",
+      ModifiedOn: json['ModifiedOn'] ?? "",
       MdrStatusAktivitas: json['MdrStatusAktivitas'] ?? "",
       MdrKeteranganProgres: json['MdrKeteranganProgres'] ?? "",
       MdrCommitment: json['MdrCommitment'] ?? false,
-      MdrLastActivityDate: json['MdrLastActivityDate'] != null ? DateTime.parse(json['MdrLastActivityDate']) : null,
+      MdrLastActivityDate: json['MdrLastActivityDate'] ?? "",
       MdrPerkiranClosing: json['MdrPerkiranClosing'] ?? "",
-      update_aktifitas: json['update_aktifitas'] ?? "",
-      pipeline: json['pipeline'] ?? "",
-      alamat: json['alamat'] ?? "",
-      kode_pos: json['kode_pos'] ?? "",
-      no_telp: json['no_telp'] ?? "",
-      email: json['email'] ?? "",
-      gwp: json['gwp'] ?? "",
-      created_by: json['created_by'] ?? "",
+      UpdateAktivitas: json['UpdateAktivitas'] ?? "",
+      Pipeline: json['Pipeline'] ?? "",
+      Alamat: json['Alamat'] ?? "",
+      KodePos: json['KodePos'] ?? "",
+      NoTelp: json['NoTelp'] ?? "",
+      Email: json['Email'] ?? "",
+      GWP: json['GWP'] ?? "",
+      CreatedBy: json['CreatedBy'] ?? "",
       image: json['image'] != null ? ImageModel.fromJson(json['image']) : null
     );
   }

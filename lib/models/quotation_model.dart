@@ -5,10 +5,10 @@ import 'package:mandiri_in_health/models/model_image.dart';
 class QuotationModel {
   final String Id;
   final String MdrName;
-  final DateTime? CreatedOn;
-  final DateTime? ModifiedOn;
-  final DateTime? MdrInsuranceStartDate;
-  final DateTime? MdrInsuranceEndDate;
+  final String? CreatedOn;
+  final String? ModifiedOn;
+  final String? MdrInsuranceStartDate;
+  final String? MdrInsuranceEndDate;
   final bool? MdrP;
   final bool? MdrI;
   final bool? MdrS;
@@ -89,20 +89,20 @@ class QuotationModel {
   final String? MdrVirtualEkses;
   final String? MdrCatatanEkses;
   final String? MdrCatatanPoolfund;
-  final String? kanal;
-  final String? badan_usaha;
-  final String? alamat;
-  final String? kode_pos;
-  final String? gwp;
-  final String? created_by;
-  final String? status;
-  final String? agent;
-  final String? kepala_unit;
-  final String? kepala_kanal;
-  final String? produk;
-  final String? skema_produk;
-  final String? tujuan_klaim_reimburse_pengajuan;
-  final String? tujuan_klaim_reimburse_disetujui;
+  final String? KanalDistribusi;
+  final String? BUName;
+  final String? Alamat;
+  final String? KodePos;
+  final String? GWP;
+  final String? CreatedBy;
+  final String? QuotationStatus;
+  final String? AgentName;
+  final String? KAUNIT;
+  final String? KepalaKanal;
+  final String? Product;
+  final String? SkemaProduct;
+  final String? TujuanKlaimReimbursePengajuan;
+  final String? TujuanKlaimReimburseDiSetujui;
   final ImageModel? image;
 
   QuotationModel({
@@ -192,20 +192,20 @@ class QuotationModel {
     this.MdrVirtualEkses,
     this.MdrCatatanEkses,
     this.MdrCatatanPoolfund,
-    this.kanal,
-    this.badan_usaha,
-    this.alamat,
-    this.kode_pos,
-    this.gwp,
-    this.created_by,
-    this.status,
-    this.agent,
-    this.kepala_unit,
-    this.kepala_kanal,
-    this.produk,
-    this.skema_produk,
-    this.tujuan_klaim_reimburse_pengajuan,
-    this.tujuan_klaim_reimburse_disetujui,
+    this.KanalDistribusi,
+    this.BUName,
+    this.Alamat,
+    this.KodePos,
+    this.GWP,
+    this.CreatedBy,
+    this.QuotationStatus,
+    this.AgentName,
+    this.KAUNIT,
+    this.KepalaKanal,
+    this.Product,
+    this.SkemaProduct,
+    this.TujuanKlaimReimbursePengajuan,
+    this.TujuanKlaimReimburseDiSetujui,
     this.image
   });
 
@@ -218,10 +218,10 @@ class QuotationModel {
     return QuotationModel(
       Id: json['Id'],
       MdrName: json['MdrName'],
-      CreatedOn: json['CreatedOn'] != null ? DateTime.parse(json['CreatedOn']) : null,
-      ModifiedOn: json['ModifiedOn'] != null ? DateTime.parse(json['ModifiedOn']) : null,
-      MdrInsuranceStartDate: json['MdrInsuranceStartDate'] != null ? DateTime.parse(json['MdrInsuranceStartDate']) : null,
-      MdrInsuranceEndDate: json['MdrInsuranceEndDate'] != null ? DateTime.parse(json['MdrInsuranceEndDate']) : null,
+      CreatedOn: json['CreatedOn'] ?? "",
+      ModifiedOn: json['ModifiedOn']  ?? "",
+      MdrInsuranceStartDate: json['MdrInsuranceStartDate'] ?? "",
+      MdrInsuranceEndDate: json['MdrInsuranceEndDate'] ?? "",
       MdrP: json['MdrP'] ?? false,
       MdrI: json['MdrI'] ?? false,
       MdrS: json['MdrS'] ?? false,
@@ -302,16 +302,20 @@ class QuotationModel {
       MdrVirtualEkses: json['MdrVirtualEkses'] ?? "",
       MdrCatatanEkses: json['MdrCatatanEkses'] ?? "",
       MdrCatatanPoolfund: json['MdrCatatanPoolfund'] ?? "",
-      kanal: json['kanal'] ?? "",
-      badan_usaha: json['badan_usaha'] ?? "",
-      status: json['status'] ?? "",
-      agent: json['agent'] ?? "",
-      kepala_unit: json['kepala_unit'] ?? "",
-      kepala_kanal: json['kepala_kanal'] ?? "",
-      produk: json['produk'] ?? "",
-      skema_produk: json['skema_produk'] ?? "",
-      tujuan_klaim_reimburse_pengajuan: json['tujuan_klaim_reimburse_pengajuan'] ?? "",
-      tujuan_klaim_reimburse_disetujui: json['tujuan_klaim_reimburse_disetujui'] ?? "",
+      KanalDistribusi: json['KanalDistribusi'] ?? "",
+      BUName: json['BUName'] ?? "",
+      Alamat: json['Alamat'] ?? "",
+      KodePos: json['KodePos'] ?? "",
+      GWP: json['GWP'] ?? "",
+      CreatedBy: json['CreatedBy'] ?? "",
+      QuotationStatus: json['QuotationStatus'] ?? "",
+      AgentName: json['AgentName'] ?? "",
+      KAUNIT: json['KAUNIT'] ?? "",
+      KepalaKanal: json['KepalaKanal'] ?? "",
+      Product: json['Product'] ?? "",
+      SkemaProduct: json['SkemaProduct'] ?? "",
+      TujuanKlaimReimbursePengajuan: json['TujuanKlaimReimbursePengajuan'] ?? "",
+      TujuanKlaimReimburseDiSetujui: json['TujuanKlaimReimburseDiSetujui'] ?? "",
       image: image
     );
   }

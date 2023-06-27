@@ -5,8 +5,8 @@ import 'package:mandiri_in_health/models/model_image.dart';
 class PipelineModel {
   final String Id;
   final String MdrName;
-  final DateTime? CreatedOn;
-  final DateTime? ModifiedOn;
+  final String? CreatedOn;
+  final String? ModifiedOn;
   final String? MdrEmailAgent;
   final String? MdrNamaDireksi;
   final String? MdrPICName;
@@ -24,31 +24,31 @@ class PipelineModel {
   final String? MdrStatusAktivitas;
   final DateTime? MdrTanggalAktifitasBerkahir;
   final String? MdrKeteranganProgres;
-  final String? kanal;
-  final String? agent;
-  final String? kepala_unit;
-  final String? kepala_kanal;
-  final String? produk;
-  final String? status;
-  final String? status_polis;
-  final String? kategori_asuransi_eksisting;
-  final String? asuransi_eksisting;
-  final String? broker;
-  final String? co_insurance;
-  final String? syariah;
-  final String? kepemilikan_bu;
-  final String? provinsi;
-  final String? kabupaten;
-  final String? kecamatan;
-  final String? kelurahan;
-  final String? kode_pos;
-  final String? wilayah_badan_usaha;
-  final String? sektor_industri;
-  final String? sinergi_bank_mandiri;
-  final String? termin_bayar;
-  final String? perkiraan_closing;
-  final String? quotation;
-  final String? update_aktifitas;
+  final String? KanalDistribusi;
+  final String? InsuranceAgent;
+  final String? KaUnit;
+  final String? KepalaKPM;
+  final String? Produk;
+  final String? Status;
+  final String? PolisStatus;
+  final String? KategoriAsuransiEksisting;
+  final String? AsuransiEksisting;
+  final String? BrokerName;
+  final String? CoInsurance;
+  final String? Syariah;
+  final String? KepemilikanBU;
+  final String? Provinsi;
+  final String? Kabupaten;
+  final String? Kecamatan;
+  final String? Kelurahan;
+  final String? KodePosLookup;
+  final String? WilayahBadanUsaha;
+  final String? SektorIndustri;
+  final String? SinergiBankMandiri;
+  final String? TerminBayar;
+  final String? PerkiraanClosing;
+  final String? Quotation;
+  final String? UpdateAktifitas;
   final ImageModel? image;
 
   PipelineModel({
@@ -73,31 +73,31 @@ class PipelineModel {
     this.MdrStatusAktivitas,
     this.MdrTanggalAktifitasBerkahir,
     this.MdrKeteranganProgres,
-    this.kanal,
-    this.agent,
-    this.kepala_unit,
-    this.kepala_kanal,
-    this.produk,
-    this.status,
-    this.status_polis,
-    this.kategori_asuransi_eksisting,
-    this.asuransi_eksisting,
-    this.broker,
-    this.co_insurance,
-    this.syariah,
-    this.kepemilikan_bu,
-    this.provinsi,
-    this.kabupaten,
-    this.kecamatan,
-    this.kelurahan,
-    this.kode_pos,
-    this.wilayah_badan_usaha,
-    this.sektor_industri,
-    this.sinergi_bank_mandiri,
-    this.termin_bayar,
-    this.perkiraan_closing,
-    this.quotation,
-    this.update_aktifitas,
+    this.KanalDistribusi,
+    this.InsuranceAgent,
+    this.KaUnit,
+    this.KepalaKPM,
+    this.Produk,
+    this.Status,
+    this.PolisStatus,
+    this.KategoriAsuransiEksisting,
+    this.AsuransiEksisting,
+    this.BrokerName,
+    this.CoInsurance,
+    this.Syariah,
+    this.KepemilikanBU,
+    this.Provinsi,
+    this.Kabupaten,
+    this.Kecamatan,
+    this.Kelurahan,
+    this.KodePosLookup,
+    this.WilayahBadanUsaha,
+    this.SektorIndustri,
+    this.SinergiBankMandiri,
+    this.TerminBayar,
+    this.PerkiraanClosing,
+    this.Quotation,
+    this.UpdateAktifitas,
     this.image,
   });
 
@@ -110,8 +110,8 @@ class PipelineModel {
 
     return PipelineModel(
       Id: json['Id'],
-      CreatedOn: json['CreatedOn'] != null ? DateTime.parse(json['CreatedOn']) : null,
-      ModifiedOn: json['ModifiedOn'] != null ? DateTime.parse(json['ModifiedOn']) : null,
+      CreatedOn: json['CreatedOn'] ?? "",
+      ModifiedOn: json['ModifiedOn'] ?? "",
       MdrEmailAgent: json['MdrEmailAgent'] ?? "",
       MdrName: json['MdrName'] ?? "",
       MdrNamaDireksi: json['MdrNamaDireksi'] ?? "",
@@ -130,31 +130,31 @@ class PipelineModel {
       MdrStatusAktivitas: json['MdrStatusAktivitas'] ?? "",
       MdrTanggalAktifitasBerkahir: json['MdrTanggalAktifitasBerkahir'] != null ? DateTime.parse(json['MdrTanggalAktifitasBerkahir']) : null,
       MdrKeteranganProgres: json['MdrKeteranganProgres'] ?? "",
-      kanal: json['kanal'] ?? "",
-      agent: json['agent'] ?? "",
-      kepala_unit: json['kepala_unit'] ?? "",
-      kepala_kanal: json['kepala_kanal'] ?? "",
-      produk: json['produk'] ?? "",
-      status: json['status'] ?? "",
-      status_polis: json['status_polis'] ?? "",
-      kategori_asuransi_eksisting: json['kategori_asuransi_eksisting'] ?? "",
-      asuransi_eksisting: json['asuransi_eksisting'] ?? "",
-      broker: json['broker'] ?? "",
-      co_insurance: json['co_insurance'] ?? "",
-      syariah: json['syariah'] ?? "",
-      kepemilikan_bu: json['kepemilikan_bu'] ?? "",
-      provinsi: json['provinsi'] ?? "",
-      kabupaten: json['kabupaten'] ?? "",
-      kecamatan: json['kecamatan'] ?? "",
-      kelurahan: json['kelurahan'] ?? "",
-      kode_pos: json['kode_pos'] ?? "",
-      wilayah_badan_usaha: json['wilayah_badan_usaha'] ?? "",
-      sektor_industri: json['sektor_industri'] ?? "",
-      sinergi_bank_mandiri: json['sinergi_bank_mandiri'] ?? "",
-      termin_bayar: json['termin_bayar'] ?? "",
-      perkiraan_closing: json['perkiraan_closing'] ?? "",
-      quotation: json['quotation'] ?? "",
-      update_aktifitas: json['update_aktifitas'] ?? "",
+      KanalDistribusi: json['KanalDistribusi'] ?? "",
+      InsuranceAgent: json['InsuranceAgent'] ?? "",
+      KaUnit: json['KaUnit'] ?? "",
+      KepalaKPM: json['KepalaKPM'] ?? "",
+      Produk: json['Produk'] ?? "",
+      Status: json['Status'] ?? "",
+      PolisStatus: json['PolisStatus'] ?? "",
+      KategoriAsuransiEksisting: json['KategoriAsuransiEksisting'] ?? "",
+      AsuransiEksisting: json['AsuransiEksisting'] ?? "",
+      BrokerName: json['BrokerName'] ?? "",
+      CoInsurance: json['CoInsurance'] ?? "",
+      Syariah: json['Syariah'] ?? "",
+      KepemilikanBU: json['KepemilikanBU'] ?? "",
+      Provinsi: json['Provinsi'] ?? "",
+      Kabupaten: json['Kabupaten'] ?? "",
+      Kecamatan: json['Kecamatan'] ?? "",
+      Kelurahan: json['Kelurahan'] ?? "",
+      KodePosLookup: json['KodePosLookup'] ?? "",
+      WilayahBadanUsaha: json['WilayahBadanUsaha'] ?? "",
+      SektorIndustri: json['SektorIndustri'] ?? "",
+      SinergiBankMandiri: json['SinergiBankMandiri'] ?? "",
+      TerminBayar: json['TerminBayar'] ?? "",
+      PerkiraanClosing: json['PerkiraanClosing'] ?? "",
+      Quotation: json['Quotation'] ?? "",
+      UpdateAktifitas: json['UpdateAktifitas'] ?? "",
       image: image
     );
   }
