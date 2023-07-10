@@ -740,43 +740,42 @@ class _PipelineDetailState extends State<PipelineDetail> {
       dateEstablish = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-			Text(
-				Translate.of(context).translate(
-				'Created On',
-				),
-				style: Theme.of(context).textTheme.labelSmall,
-			),
-			const SizedBox(height: 4),
-			Text(
-				DateFormat('yyyy-MM-dd kk:mm')
-					.format(pipeline!.CreatedOn as DateTime),
-				style: Theme.of(context)
-					.textTheme
-					.labelLarge!
-					.copyWith(fontWeight: FontWeight.bold),
-			),
-			const SizedBox(height: 4),
-			Text(
-				Translate.of(context).translate(
-				'Created By',
-				),
-				style: Theme.of(context).textTheme.labelSmall,
-			),
-			const SizedBox(height: 4),
-			Text(
-				pipeline!.created_by as String,
-				style: Theme.of(context)
-					.textTheme
-					.labelLarge!
-					.copyWith(fontWeight: FontWeight.bold),
-			)
+          Text(
+            Translate.of(context).translate(
+              'Created On',
+            ),
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            pipeline!.CreatedOn ?? "",
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            Translate.of(context).translate(
+              'Created By',
+            ),
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            pipeline!.CreatedBy as String,
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontWeight: FontWeight.bold),
+          )
         ],
       );
     }
 
-    if (pipeline?.status != null) {
+    if (pipeline?.PolisStatus != null) {
       status = AppTag(
-        pipeline!.status_polis!,
+        pipeline!.PolisStatus!,
         type: TagType.status,
       );
     }
@@ -1012,159 +1011,159 @@ class _PipelineDetailState extends State<PipelineDetail> {
             const Divider(),
             const SizedBox(height: 8),
             Row(
-				mainAxisAlignment: MainAxisAlignment.spaceAround,
-				children: [
-					Column(
-					crossAxisAlignment: CrossAxisAlignment.start,
-					children: [
-						Text(
-						Translate.of(context).translate('Kanal Distribusi'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.kanal!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-							.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-						Translate.of(context).translate('Agent'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.agent!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-							.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-						Translate.of(context).translate('Email Agent'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.MdrEmailAgent!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-							.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-						Translate.of(context).translate('KA Unit'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.kepala_unit!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-							.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-						Translate.of(context).translate('KA. KPM'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.kepala_kanal!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-							.copyWith(fontWeight: FontWeight.bold),
-						),
-					],
-					),
-					Column(
-					crossAxisAlignment: CrossAxisAlignment.start,
-					children: [
-						Text(
-							Translate.of(context).translate('Kategori Asuransi'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.kategori_asuransi_eksisting!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-								.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-							Translate.of(context).translate('Asuransi Eksisting'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.asuransi_eksisting!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-								.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-							Translate.of(context).translate('Broker Name'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.broker!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-								.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-							Translate.of(context).translate('Co Insurance'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.co_insurance!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-								.copyWith(fontWeight: FontWeight.bold),
-						),
-						const SizedBox(height: 10),
-						Text(
-							Translate.of(context).translate('Syariah'),
-							style: Theme.of(context).textTheme.labelSmall,
-						),
-						Text(
-							pipeline.syariah!,
-							maxLines: 2,
-							overflow: TextOverflow.ellipsis,
-							style: Theme.of(context)
-								.textTheme
-								.labelMedium!
-								.copyWith(fontWeight: FontWeight.bold),
-						),
-					],
-					)
-				],
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Translate.of(context).translate('Kanal Distribusi'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.KanalDistribusi!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Agent'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.InsuranceAgent!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Email Agent'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.MdrEmailAgent!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('KA Unit'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.KaUnit!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('KA. KPM'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.KepalaKPM!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Translate.of(context).translate('Kategori Asuransi'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.KategoriAsuransiEksisting!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Asuransi Eksisting'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.AsuransiEksisting!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Broker Name'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.BrokerName!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Co Insurance'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.CoInsurance!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      Translate.of(context).translate('Syariah'),
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Text(
+                      pipeline.Syariah!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )
+              ],
             ),
-			const SizedBox(height: 8),
+            const SizedBox(height: 8),
             const Divider(),
             // const SizedBox(height: 8),
             Text(
@@ -1219,9 +1218,7 @@ class _PipelineDetailState extends State<PipelineDetail> {
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                dateEstablish
-              ],
+              children: <Widget>[dateEstablish],
             ),
             feature,
           ],
@@ -1257,21 +1254,21 @@ class _PipelineDetailState extends State<PipelineDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    //   AppUserInfo(
-                    //     user: UserModel_(
-					// 		username: pipeline!.created_by as String, 
-					// 		name: pipeline!.created_by as String, 
-					// 		contactId: pipeline!.created_by as String, 
-					// 		kanalId: pipeline!.created_by as String, 
-					// 		isAgent: false,
-					// 		token: pipeline!.created_by as String, 
-					// 		expiresAt: DateTime.now(),
-					// 	),
-                    //     type: UserViewType.basic,
-                    //     onPressed: () {
-                    //       // _onProfile(product!.author!);
-                    //     },
-                    //   ),
+                      //   AppUserInfo(
+                      //     user: UserModel_(
+                      // 		username: pipeline!.created_by as String,
+                      // 		name: pipeline!.created_by as String,
+                      // 		contactId: pipeline!.created_by as String,
+                      // 		kanalId: pipeline!.created_by as String,
+                      // 		isAgent: false,
+                      // 		token: pipeline!.created_by as String,
+                      // 		expiresAt: DateTime.now(),
+                      // 	),
+                      //     type: UserViewType.basic,
+                      //     onPressed: () {
+                      //       // _onProfile(product!.author!);
+                      //     },
+                      //   ),
                       status
                     ],
                   ),

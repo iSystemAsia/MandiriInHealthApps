@@ -124,6 +124,7 @@ class Routes {
       case salesActivityDetail:
         return MaterialPageRoute(
           builder: (context) {
+            // return SalesActivityDetail(item: settings.arguments as SalesActivityModel);
             return SalesActivityDetail(item: settings.arguments as SalesActivityModel);
           },
         );

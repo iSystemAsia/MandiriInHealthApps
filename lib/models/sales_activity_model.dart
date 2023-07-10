@@ -20,6 +20,8 @@ class SalesActivityModel {
   final String? Email;
   final String? GWP;
   final String? CreatedBy;
+  
+
   final ImageModel? image;
 
   SalesActivityModel({

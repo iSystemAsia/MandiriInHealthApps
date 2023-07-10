@@ -22,8 +22,8 @@ class UserModel_ {
       username: json["username"],
       name: json["name"],
       contactId: json["contact_id"],
-      kanalId: json["kanal_id"],
-      isAgent: json["is_agent"],
+      kanalId: json["kanal_id"] ?? "",
+      isAgent: json["is_agent"] ?? false,
       token: json['token'],
       expiresAt: DateTime.parse(json['expires_at']),
     );

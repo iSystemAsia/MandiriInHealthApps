@@ -1,20 +1,16 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandiri_in_health/blocs/bloc.dart';
 import 'package:mandiri_in_health/blocs/sales_activity/detail_cubit.dart';
 import 'package:mandiri_in_health/blocs/sales_activity/detail_state.dart';
 import 'package:mandiri_in_health/configs/config.dart';
-import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/sales_activity_model.dart';
+import 'package:mandiri_in_health/screens/sales_activity/closing_detail.dart';
 import 'package:mandiri_in_health/utils/utils.dart';
+import 'package:mandiri_in_health/widgets/title_detail_item.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SalesActivityDetail extends StatefulWidget {
@@ -31,32 +27,23 @@ class SalesActivityDetail extends StatefulWidget {
 class _SalesActivityDetailState extends State<SalesActivityDetail> {
   final _scrollController = ScrollController();
   final _salesActivityDetailCubit = SalesActivityDetailCubit();
-  late StreamSubscription _reviewSubscription;
 
   Color? _iconColor = Colors.white;
-  bool _showCategoryLocation = true;
-  bool _showVideo = true;
-  bool _showHour = true;
-  bool _showFile = true;
-  bool _showSocial = true;
+  bool _showClosing = false;
+  bool _showLoss = false;
+  bool _showPindahProduk = false;
+  bool _showLapse = false;
+  bool _showAddressDetail = false;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
     _salesActivityDetailCubit.onLoad(widget.item.Id);
-    // _reviewSubscription = AppBloc.reviewCubit.stream.listen((state) {
-    //   if (state is ReviewSuccess &&
-    //       state.id != null &&
-    //       state.id == widget.item.Id) {
-    //     _pipelineDetailCubit.onLoad(widget.item.Id);
-    //   }
-    // });
   }
 
   @override
   void dispose() {
-    _reviewSubscription.cancel();
     _salesActivityDetailCubit.close();
     _scrollController.dispose();
     super.dispose();
@@ -106,240 +93,6 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
           ],
         );
       },
-    );
-  }
-
-  void _onCopy(ProductModel item) {
-    Clipboard.setData(
-      ClipboardData(text: item.link),
-    );
-    AppBloc.messageCubit.onShow('listing_link_copied');
-  }
-
-  ///On Scan QR
-  void _onShare(ProductModel item) async {
-    final result = await showModalBottomSheet<String?>(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        final id = '${item.id}';
-        final link = 'listar://qrcode?type=listing&action=view&id=$id';
-        return SafeArea(
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.8,
-            ),
-            child: IntrinsicHeight(
-              child: Container(
-                padding: const EdgeInsets.only(
-                  bottom: 8,
-                  left: 16,
-                  right: 16,
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      width: 40,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        color: Theme.of(context).dividerColor,
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: item.image.thumb,
-                              placeholder: (context, url) {
-                                return AppPlaceholder(
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                );
-                              },
-                              imageBuilder: (context, imageProvider) {
-                                return Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: imageProvider,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                );
-                              },
-                              errorWidget: (context, url, error) {
-                                return AppPlaceholder(
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: const Icon(Icons.error),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item.title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  Translate.of(context).translate(
-                                    'share_qr_listing',
-                                  ),
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  AppButton(
-                                    Translate.of(context).translate('share'),
-                                    mainAxisSize: MainAxisSize.max,
-                                    size: ButtonSize.small,
-                                    type: ButtonType.outline,
-                                    onPressed: () {
-                                      Navigator.pop(context, "share");
-                                    },
-                                  ),
-                                  AppButton(
-                                    Translate.of(context).translate('copy'),
-                                    mainAxisSize: MainAxisSize.max,
-                                    size: ButtonSize.small,
-                                    onPressed: () {
-                                      Navigator.pop(context, "copy");
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              height: 150,
-                              child: QrImageView(
-                                data: link,
-                                size: 150,
-                                backgroundColor: Colors.white,
-                                errorStateBuilder: (cxt, err) {
-                                  return const Text(
-                                    "Uh oh! Something went wrong...",
-                                    textAlign: TextAlign.center,
-                                  );
-                                },
-                                padding: EdgeInsets.zero,
-                                embeddedImage: NetworkImage(item.image.thumb),
-                                embeddedImageStyle: const QrEmbeddedImageStyle(
-                                  size: Size(24, 24),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-    if (result == 'share') {
-      Share.share(
-        'Check out my item ${item.link}',
-        subject: 'PassionUI',
-      );
-    } else if (result == 'copy') {
-      _onCopy(item);
-    }
-  }
-
-  ///On navigate gallery
-  void _onPhotoPreview(ProductModel item) {
-    Navigator.pushNamed(
-      context,
-      Routes.gallery,
-      arguments: item,
-    );
-  }
-
-  ///On navigate review
-  void _onReview(ProductModel product) async {
-    if (AppBloc.userCubit.state == null) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: Routes.productDetail,
-      );
-      if (result != Routes.productDetail) return;
-    }
-    if (!mounted) return;
-    Navigator.pushNamed(
-      context,
-      Routes.review,
-      arguments: product,
-    );
-  }
-
-  ///On like product
-  void _onFavorite() async {
-    if (AppBloc.userCubit.state == null) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: Routes.productDetail,
-      );
-      if (result != Routes.productDetail) return;
-    }
-    // _pipelineDetailCubit.onFavorite();
-  }
-
-  ///On Booking
-  void _onBooking() async {
-    if (AppBloc.userCubit.state == null) {
-      final result = await Navigator.pushNamed(
-        context,
-        Routes.signIn,
-        arguments: Routes.productDetail,
-      );
-      if (result != Routes.productDetail) return;
-    }
-    if (!mounted) return;
-    Navigator.pushNamed(
-      context,
-      Routes.booking,
-      arguments: widget.item.Id,
     );
   }
 
@@ -451,51 +204,20 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
     }
   }
 
-  ///Build social image
-  String _exportSocial(String type) {
-    switch (type) {
-      case "telegram":
-        return Images.telegram;
-      case "twitter":
-        return Images.twitter;
-      case "flickr":
-        return Images.flickr;
-      case "google_plus":
-        return Images.google;
-      case "tumblr":
-        return Images.tumblr;
-      case "linkedin":
-        return Images.linkedin;
-      case "pinterest":
-        return Images.pinterest;
-      case "youtube":
-        return Images.youtube;
-      case "instagram":
-        return Images.instagram;
-      default:
-        return Images.facebook;
-    }
-  }
-
   ///Build content UI
   Widget _buildContent(SalesActivityModel? salesActivity) {
     ///Build UI loading
     List<Widget> action = [];
-    Widget actionGalleries = Container();
-    Widget actionMapView = Container();
     Widget banner = AppPlaceholder(
       child: Container(
         color: Colors.white,
       ),
     );
+    Widget status = Container();
     Widget address = Container();
     Widget phone = Container();
-    Widget fax = Container();
     Widget email = Container();
-    Widget website = Container();
-    Widget openHours = Container();
-    Widget attachments = Container();
-    Widget socials = Container();
+    Widget keterangan = Container();
     Widget info = AppPlaceholder(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -700,10 +422,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         ),
       ),
     );
-    Widget status = Container();
-    Widget tags = Container();
-    Widget latest = Container();
-    Widget feature = AppPlaceholder(
+    Widget closing = AppPlaceholder(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -722,176 +441,8 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         ),
       ),
     );
-    Widget related = feature;
-    Widget dateEstablish = Container();
-    Widget priceRange = Container();
-    Widget price = Container();
-    Widget booking = Container();
-    Color? backgroundAction;
 
-    /// Build Detail
     if (salesActivity != null) {
-      ///background action
-
-      if (_iconColor == Colors.white) {
-        backgroundAction = Colors.grey.withOpacity(0.3);
-      }
-
-      ///Action Galleries
-      // if (product.galleries.isNotEmpty) {
-      //   actionGalleries = Row(
-      //     children: [
-      //       const SizedBox(width: 8),
-      //       Container(
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: backgroundAction,
-      //         ),
-      //         child: IconButton(
-      //           icon: const Icon(Icons.photo_library_outlined),
-      //           onPressed: () {
-      //             _onPhotoPreview(product);
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Action Map View
-      // if (product.location != null) {
-      //   actionMapView = Row(
-      //     children: [
-      //       const SizedBox(width: 8),
-      //       Container(
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: backgroundAction,
-      //         ),
-      //         child: IconButton(
-      //           icon: const Icon(Icons.map_outlined),
-      //           onPressed: () {
-      //             _onLocation(product);
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Status
-      // if (product.status.isNotEmpty) {
-      //   status = AppTag(
-      //     product.status,
-      //     type: TagType.status,
-      //   );
-      // }
-
-      ///Latest
-      // if (product.latest.isNotEmpty) {
-      //   latest = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       const Padding(
-      //         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      //         child: Divider(),
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.symmetric(horizontal: 16),
-      //         child: Text(
-      //           Translate.of(context).translate('latest'),
-      //           style: Theme.of(context)
-      //               .textTheme
-      //               .titleMedium!
-      //               .copyWith(fontWeight: FontWeight.bold),
-      //         ),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       SizedBox(
-      //         height: 220,
-      //         child: ListView.builder(
-      //           scrollDirection: Axis.horizontal,
-      //           padding: const EdgeInsets.symmetric(horizontal: 8),
-      //           itemBuilder: (context, index) {
-      //             final ProductModel item = product.latest[index];
-      //             return Container(
-      //               width: MediaQuery.of(context).size.width / 2,
-      //               padding: const EdgeInsets.symmetric(horizontal: 8),
-      //               child: AppProductItem(
-      //                 onPressed: () {
-      //                   _onProductDetail(item);
-      //                 },
-      //                 item: item,
-      //                 type: ProductViewType.grid,
-      //               ),
-      //             );
-      //           },
-      //           itemCount: product.latest.length,
-      //         ),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Related list
-      // if (product.related.isNotEmpty) {
-      //   related = Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 16),
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-      //         Text(
-      //           Translate.of(context).translate('related'),
-      //           style: Theme.of(context)
-      //               .textTheme
-      //               .titleMedium!
-      //               .copyWith(fontWeight: FontWeight.bold),
-      //         ),
-      //         const SizedBox(height: 8),
-      //         ListView.separated(
-      //           shrinkWrap: true,
-      //           physics: const NeverScrollableScrollPhysics(),
-      //           padding: EdgeInsets.zero,
-      //           itemBuilder: (context, index) {
-      //             final item = product.related[index];
-      //             return AppProductItem(
-      //               onPressed: () {
-      //                 _onProductDetail(item);
-      //               },
-      //               item: item,
-      //               type: ProductViewType.small,
-      //             );
-      //           },
-      //           separatorBuilder: (context, index) {
-      //             return const SizedBox(height: 16);
-      //           },
-      //           itemCount: product.related.length,
-      //         ),
-      //       ],
-      //     ),
-      //   );
-      // }
-
-      ///Action
-      // action = [
-      //   Container(
-      //     decoration: BoxDecoration(
-      //       shape: BoxShape.circle,
-      //       color: backgroundAction,
-      //     ),
-      //     child: IconButton(
-      //       icon: const Icon(Icons.share_outlined),
-      //       onPressed: () {
-      //         _onShare(product);
-      //       },
-      //     ),
-      //   ),
-      //   actionMapView,
-      //   actionGalleries,
-      //   const SizedBox(width: 8),
-      // ];
-
-      ///Banner
       banner = Stack(
         children: [
           CachedNetworkImage(
@@ -925,793 +476,284 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                 ),
               );
             },
-          ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _showVideo = true;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey.withOpacity(0.3),
-                ),
-                child: const Icon(
-                  Icons.videocam_outlined,
-                  color: Colors.white,
-                ),
-              ),
-            ),
           )
         ],
       );
 
-      ///Video
-      // if (product.videoURL.isNotEmpty && _showVideo) {
-      //   banner = AppVideo(
-      //     url: product.videoURL,
-      //     actions: [
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showVideo = false;
-      //           });
-      //         },
-      //         child: Container(
-      //           padding: const EdgeInsets.all(4),
-      //           decoration: BoxDecoration(
-      //             shape: BoxShape.circle,
-      //             color: Colors.grey.withOpacity(0.3),
-      //           ),
-      //           child: const Icon(
-      //             Icons.photo_size_select_actual_outlined,
-      //             color: Colors.white,
-      //           ),
-      //         ),
-      //       )
-      //     ],
-      //   );
-      // }
+      status = AppTag(
+        salesActivity.MdrStatusAktivitas ?? "",
+        type: TagType.status,
+      );
 
-      ///Address
-      if (salesActivity.Alamat != null) {
-        address = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      // _makeAction(
-                      //   'https://www.google.com/maps/search/?api=1&query=${product.location!.latitude},${product.location!.longitude}',
-                      // );
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).dividerColor,
-                          ),
-                          child: const Icon(
-                            Icons.location_on_outlined,
-                            color: Colors.white,
-                            size: 18,
-                          ),
+      address = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: InkWell(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).dividerColor,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                Translate.of(context).translate('address'),
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              Text(
-                                salesActivity.Alamat!,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
+                        child: const Icon(
+                          Icons.location_on_outlined,
+                          color: Colors.white,
+                          size: 18,
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "ALAMAT",
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            Text(
+                              salesActivity.Alamat ?? "",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _showCategoryLocation = !_showCategoryLocation;
-                    });
-                  },
-                  child: Icon(
-                    _showCategoryLocation
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _showAddressDetail = !_showAddressDetail;
+                  });
+                },
+                child: Icon(
+                  _showAddressDetail
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                ),
+              )
+            ],
+          ),
+          Visibility(
+            visible: _showAddressDetail,
+            child: Container(
+              margin: const EdgeInsets.only(left: 42),
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(
+                "KODE POS ${salesActivity.KodePos}",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+          ),
+        ],
+      );
+
+      phone = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          InkWell(
+            onTap: () {
+              salesActivity.NoTelp!.isNotEmpty
+                  ? _phoneAction(salesActivity.NoTelp!)
+                  : null;
+            },
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  child: const Icon(
+                    Icons.phone_outlined,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "NO. TELP",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Text(
+                        salesActivity.NoTelp ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 )
               ],
             ),
-            // Visibility(
-            //   visible: _showCategoryLocation,
-            //   child: Container(
-            //     margin: const EdgeInsets.only(left: 42),
-            //     padding: const EdgeInsets.only(top: 12),
-            //     child: Text(
-            //       '${product.country?.title}, ${product.city?.title}, ${product.state?.title}',
-            //       style: Theme.of(context).textTheme.bodySmall,
-            //     ),
-            //   ),
-            // ),
-          ],
-        );
-      }
+          ),
+        ],
+      );
 
-      ///Phone
-      if (salesActivity.NoTelp != null) {
-        phone = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            InkWell(
-              onTap: () {
-                _phoneAction(salesActivity.NoTelp!);
-              },
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    child: const Icon(
-                      Icons.phone_outlined,
-                      color: Colors.white,
-                      size: 18,
-                    ),
+      email = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          InkWell(
+            onTap: () {
+              salesActivity.Email!.isNotEmpty
+                  ? _makeAction('mailto:${salesActivity.Email}')
+                  : null;
+            },
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).dividerColor,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          Translate.of(context).translate('phone'),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          salesActivity.NoTelp!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        );
-      }
-
-      ///Fax
-      // if (product.fax.isNotEmpty) {
-      //   fax = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           _makeAction('tel:${product.fax}');
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Container(
-      //               width: 32,
-      //               height: 32,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.circle,
-      //                 color: Theme.of(context).dividerColor,
-      //               ),
-      //               child: const Icon(
-      //                 Icons.perm_phone_msg_outlined,
-      //                 color: Colors.white,
-      //                 size: 18,
-      //               ),
-      //             ),
-      //             const SizedBox(width: 8),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate('fax'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   Text(
-      //                     product.fax,
-      //                     maxLines: 1,
-      //                     overflow: TextOverflow.ellipsis,
-      //                     style: Theme.of(context)
-      //                         .textTheme
-      //                         .labelMedium!
-      //                         .copyWith(fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ],
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Email
-      if (salesActivity.Email != null) {
-        email = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 12),
-            InkWell(
-              onTap: () {
-                _makeAction('mailto:${salesActivity.Email}');
-              },
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).dividerColor,
-                    ),
-                    child: const Icon(
-                      Icons.email_outlined,
-                      color: Colors.white,
-                      size: 18,
-                    ),
+                  child: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.white,
+                    size: 18,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          Translate.of(context).translate('email'),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          salesActivity.Email!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "EMAIL",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Text(
+                        salesActivity.Email ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ],
-        );
-      }
+          ),
+        ],
+      );
 
-      ///Website
-      // if (product.website.isNotEmpty) {
-      //   website = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           _makeAction(product.website);
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Container(
-      //               width: 32,
-      //               height: 32,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.circle,
-      //                 color: Theme.of(context).dividerColor,
-      //               ),
-      //               child: const Icon(
-      //                 Icons.language_outlined,
-      //                 color: Colors.white,
-      //                 size: 18,
-      //               ),
-      //             ),
-      //             const SizedBox(width: 8),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate('website'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   Text(
-      //                     product.website,
-      //                     maxLines: 1,
-      //                     overflow: TextOverflow.ellipsis,
-      //                     style: Theme.of(context)
-      //                         .textTheme
-      //                         .labelMedium!
-      //                         .copyWith(fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ],
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
+      keterangan = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          InkWell(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  child: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "KETERANGAN PROGRESS",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Text(
+                        salesActivity.MdrKeteranganProgres ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
 
-      ///Open hours
-      // if (product.openHours.isNotEmpty) {
-      //   openHours = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showHour = !_showHour;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.access_time_outlined,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Text(
-      //                     Translate.of(context).translate('open_time'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showHour
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showHour,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: product.openHours.map((item) {
-      //             final hour = item.schedule
-      //                 .map((e) {
-      //                   return '${e.start.viewTime}-${e.end.viewTime}';
-      //                 })
-      //                 .toList()
-      //                 .join(",");
-      //             return Container(
-      //               decoration: BoxDecoration(
-      //                 border: Border(
-      //                   bottom: BorderSide(
-      //                     color: Theme.of(context).dividerColor,
-      //                     width: 1,
-      //                   ),
-      //                 ),
-      //               ),
-      //               margin: const EdgeInsets.only(left: 42),
-      //               padding: const EdgeInsets.symmetric(vertical: 8),
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: <Widget>[
-      //                   Text(
-      //                     Translate.of(context).translate(item.key),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Expanded(
-      //                     child: Text(
-      //                       hour,
-      //                       style: Theme.of(context)
-      //                           .textTheme
-      //                           .labelSmall!
-      //                           .copyWith(
-      //                               color:
-      //                                   Theme.of(context).colorScheme.secondary,
-      //                               fontWeight: FontWeight.bold),
-      //                       maxLines: 1,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       textAlign: TextAlign.right,
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             );
-      //           }).toList(),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
+      closing = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showClosing = !_showClosing;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Closing",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showClosing
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Visibility(
+              visible: _showClosing,
+              child: ClosingItemDetail(item: salesActivity)),
+        ],
+      );
 
-      ///File attachments
-      // if (product.attachments.isNotEmpty) {
-      //   attachments = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 12),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showFile = !_showFile;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.file_copy_outlined,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Column(
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [
-      //                       Text(
-      //                         Translate.of(context).translate('attachments'),
-      //                         style: Theme.of(context).textTheme.labelSmall,
-      //                       ),
-      //                       Text(
-      //                         '${product.attachments.length} ${Translate.of(context).translate('files')}',
-      //                         style: Theme.of(context)
-      //                             .textTheme
-      //                             .labelMedium!
-      //                             .copyWith(fontWeight: FontWeight.bold),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showFile
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showFile,
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: product.attachments.map((item) {
-      //             return Container(
-      //               margin: const EdgeInsets.only(left: 42),
-      //               padding: const EdgeInsets.symmetric(vertical: 8),
-      //               child: Row(
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: <Widget>[
-      //                   Expanded(
-      //                     child: Text(
-      //                       '${item.name}.${item.type}',
-      //                       style: Theme.of(context).textTheme.labelSmall,
-      //                       overflow: TextOverflow.ellipsis,
-      //                       maxLines: 1,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Row(
-      //                     children: [
-      //                       Text(
-      //                         item.size,
-      //                         style: Theme.of(context)
-      //                             .textTheme
-      //                             .labelSmall!
-      //                             .copyWith(
-      //                                 color: Theme.of(context)
-      //                                     .colorScheme
-      //                                     .secondary,
-      //                                 fontWeight: FontWeight.bold),
-      //                       ),
-      //                       const SizedBox(width: 8),
-      //                       AppDownloadFile(file: item),
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             );
-      //           }).toList(),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Date established
-      // if (product.dateEstablish.isNotEmpty) {
-      //   dateEstablish = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       Text(
-      //         Translate.of(context).translate(
-      //           'date_established',
-      //         ),
-      //         style: Theme.of(context).textTheme.labelSmall,
-      //       ),
-      //       const SizedBox(height: 4),
-      //       Text(
-      //         product.dateEstablish,
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Price range
-      // if (product.priceMin.isNotEmpty || product.priceMax.isNotEmpty) {
-      //   priceRange = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.end,
-      //     children: <Widget>[
-      //       Text(
-      //         Translate.of(context).translate('price_range'),
-      //         style: Theme.of(context).textTheme.labelSmall,
-      //       ),
-      //       const SizedBox(height: 4),
-      //       Text(
-      //         "${product.priceMin} - ${product.priceMax}",
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       )
-      //     ],
-      //   );
-      // }
-
-      ///Price
-      // if (product.priceDisplay.isNotEmpty) {
-      //   price = Row(
-      //     children: [
-      //       Text(
-      //         product.priceDisplay,
-      //         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-      //               fontWeight: FontWeight.bold,
-      //               color: Theme.of(context).colorScheme.primary,
-      //             ),
-      //       ),
-      //       const SizedBox(width: 8)
-      //     ],
-      //   );
-      // }
-
-      ///Booking button
-      // if (product.bookingUse) {
-      //   booking = InkWell(
-      //     onTap: _onBooking,
-      //     child: Container(
-      //       height: 24,
-      //       padding: const EdgeInsets.symmetric(horizontal: 16),
-      //       alignment: Alignment.center,
-      //       decoration: BoxDecoration(
-      //         borderRadius: BorderRadius.circular(12),
-      //         color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-      //       ),
-      //       child: Text(
-      //         Translate.of(context).translate('book_now'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .labelLarge!
-      //             .copyWith(color: Theme.of(context).colorScheme.primary),
-      //       ),
-      //     ),
-      //   );
-      // }
-
-      ///Feature
-      // if (product.features.isNotEmpty) {
-      //   feature = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 16),
-      //       const Divider(),
-      //       const SizedBox(height: 8),
-      //       Text(
-      //         Translate.of(context).translate('featured'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .titleMedium!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       Wrap(
-      //         spacing: 8,
-      //         runSpacing: 8,
-      //         children: product.features.map((item) {
-      //           return IntrinsicWidth(
-      //             child: AppTag(
-      //               item.title,
-      //               type: TagType.chip,
-      //               icon: Icon(
-      //                 item.icon,
-      //                 size: 10,
-      //                 color: Theme.of(context).colorScheme.secondary,
-      //               ),
-      //             ),
-      //           );
-      //         }).toList(),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Tags
-      // if (product.tags.isNotEmpty) {
-      //   tags = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 8),
-      //       const Divider(),
-      //       const SizedBox(height: 8),
-      //       Text(
-      //         Translate.of(context).translate('tags'),
-      //         style: Theme.of(context)
-      //             .textTheme
-      //             .titleMedium!
-      //             .copyWith(fontWeight: FontWeight.bold),
-      //       ),
-      //       const SizedBox(height: 8),
-      //       Wrap(
-      //         spacing: 8,
-      //         runSpacing: 8,
-      //         children: product.tags.map((item) {
-      //           return IntrinsicWidth(
-      //             child: AppTag(
-      //               item.title,
-      //               type: TagType.chip,
-      //             ),
-      //           );
-      //         }).toList(),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///socials
-      // if (product.socials.isNotEmpty) {
-      //   socials = Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       const SizedBox(height: 16),
-      //       InkWell(
-      //         onTap: () {
-      //           setState(() {
-      //             _showSocial = !_showSocial;
-      //           });
-      //         },
-      //         child: Row(
-      //           children: <Widget>[
-      //             Expanded(
-      //               child: Row(
-      //                 children: <Widget>[
-      //                   Container(
-      //                     width: 32,
-      //                     height: 32,
-      //                     decoration: BoxDecoration(
-      //                       shape: BoxShape.circle,
-      //                       color: Theme.of(context).dividerColor,
-      //                     ),
-      //                     child: const Icon(
-      //                       Icons.link,
-      //                       color: Colors.white,
-      //                       size: 18,
-      //                     ),
-      //                   ),
-      //                   const SizedBox(width: 8),
-      //                   Text(
-      //                     Translate.of(context).translate('social_network'),
-      //                     style: Theme.of(context).textTheme.labelSmall,
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //             Icon(
-      //               _showSocial
-      //                   ? Icons.keyboard_arrow_up
-      //                   : Icons.keyboard_arrow_down,
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //       Visibility(
-      //         visible: _showSocial,
-      //         child: Padding(
-      //           padding: const EdgeInsets.only(left: 8, top: 8),
-      //           child: Wrap(
-      //             spacing: 8,
-      //             runSpacing: 8,
-      //             children: product.socials.entries.map((entry) {
-      //               return InkWell(
-      //                 onTap: () {
-      //                   _makeAction(entry.value ?? '');
-      //                 },
-      //                 child: Container(
-      //                   width: 32,
-      //                   height: 32,
-      //                   decoration: BoxDecoration(
-      //                     shape: BoxShape.circle,
-      //                     image: DecorationImage(
-      //                       image: AssetImage(
-      //                         _exportSocial(entry.key),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ),
-      //               );
-      //             }).toList(),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   );
-      // }
-
-      ///Info
       info = Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
@@ -1722,94 +764,132 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    salesActivity.MdrKodeBooking,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    salesActivity.UpdateAktivitas ?? "",
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(width: 4),
-                booking,
+                IconButton(
+                  icon: Icon(
+                    salesActivity.MdrCommitment!
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: null,
+                ),
               ],
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: <Widget>[
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: <Widget>[
-            //         Text(
-            //           product.category?.title ?? '',
-            //           style: Theme.of(context).textTheme.labelSmall,
-            //         ),
-            //         const SizedBox(height: 4),
-            //         InkWell(
-            //           onTap: () {
-            //             _onReview(product);
-            //           },
-            //           child: Row(
-            //             crossAxisAlignment: CrossAxisAlignment.center,
-            //             children: <Widget>[
-            //               AppTag(
-            //                 "${product.rate}",
-            //                 type: TagType.rate,
-            //               ),
-            //               const SizedBox(width: 4),
-            //               RatingBar.builder(
-            //                 initialRating: product.rate,
-            //                 unratedColor: Colors.amber.withAlpha(100),
-            //                 itemCount: 5,
-            //                 itemSize: 14.0,
-            //                 itemBuilder: (context, _) => const Icon(
-            //                   Icons.star,
-            //                   color: Colors.amber,
-            //                 ),
-            //                 onRatingUpdate: (rate) {},
-            //                 ignoreGestures: true,
-            //               ),
-            //               const SizedBox(width: 4),
-            //               Text(
-            //                 "(${product.numRate})",
-            //                 style: Theme.of(context).textTheme.labelLarge,
-            //               ),
-            //             ],
-            //           ),
-            //         )
-            //       ],
-            //     ),
-            //     price,
-            //   ],
-            // ),
             address,
             phone,
-            fax,
             email,
-            website,
-            openHours,
-            attachments,
-            socials,
+            keterangan,
             const SizedBox(height: 16),
-            // Text(
-            //   pipeline.description,
-            //   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            //         height: 1.3,
-            //       ),
-            // ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                dateEstablish,
-                priceRange,
-              ],
-            ),
-            feature,
-            tags,
+            closing
           ],
         ),
       );
+
+      // openHours = Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     const SizedBox(height: 12),
+      //     InkWell(
+      //       onTap: () {
+      //         setState(() {
+      //           _showHour = !_showHour;
+      //         });
+      //       },
+      //       child: Row(
+      //         children: <Widget>[
+      //           Expanded(
+      //             child: Row(
+      //               children: <Widget>[
+      //                 Container(
+      //                   width: 32,
+      //                   height: 32,
+      //                   decoration: BoxDecoration(
+      //                     shape: BoxShape.circle,
+      //                     color: Theme.of(context).dividerColor,
+      //                   ),
+      //                   child: const Icon(
+      //                     Icons.access_time_outlined,
+      //                     color: Colors.white,
+      //                     size: 18,
+      //                   ),
+      //                 ),
+      //                 const SizedBox(width: 8),
+      //                 Text(
+      //                   Translate.of(context).translate('open_time'),
+      //                   style: Theme.of(context).textTheme.labelSmall,
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //           Icon(
+      //             _showHour
+      //                 ? Icons.keyboard_arrow_up
+      //                 : Icons.keyboard_arrow_down,
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //     Visibility(
+      //       visible: _showHour,
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: product.openHours.map((item) {
+      //           final hour = item.schedule
+      //               .map((e) {
+      //                 return '${e.start.viewTime}-${e.end.viewTime}';
+      //               })
+      //               .toList()
+      //               .join(",");
+      //           return Container(
+      //             decoration: BoxDecoration(
+      //               border: Border(
+      //                 bottom: BorderSide(
+      //                   color: Theme.of(context).dividerColor,
+      //                   width: 1,
+      //                 ),
+      //               ),
+      //             ),
+      //             margin: const EdgeInsets.only(left: 42),
+      //             padding: const EdgeInsets.symmetric(vertical: 8),
+      //             child: Row(
+      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //               children: <Widget>[
+      //                 Text(
+      //                   Translate.of(context).translate(item.key),
+      //                   style: Theme.of(context).textTheme.labelSmall,
+      //                 ),
+      //                 const SizedBox(width: 8),
+      //                 Expanded(
+      //                   child: Text(
+      //                     hour,
+      //                     style: Theme.of(context)
+      //                         .textTheme
+      //                         .labelSmall!
+      //                         .copyWith(
+      //                             color:
+      //                                 Theme.of(context).colorScheme.secondary,
+      //                             fontWeight: FontWeight.bold),
+      //                     maxLines: 1,
+      //                     overflow: TextOverflow.ellipsis,
+      //                     textAlign: TextAlign.right,
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           );
+      //         }).toList(),
+      //       ),
+      //     ),
+      //   ],
+      // );
     }
 
     return CustomScrollView(
@@ -1840,21 +920,15 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // AppUserInfo(
-                      //   user: product?.author,
-                      //   type: UserViewType.basic,
-                      //   onPressed: () {
-                      //     _onProfile(product!.author!);
-                      //   },
-                      // ),
+                      TitleDetail(
+                        title: salesActivity?.Pipeline,
+                        subTitle: salesActivity?.MdrKodeBooking,
+                      ),
                       status
                     ],
                   ),
                 ),
-                info,
-                latest,
-                const SizedBox(height: 16),
-                related,
+                info
               ],
             ),
           ),
