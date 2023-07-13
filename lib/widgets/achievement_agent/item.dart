@@ -57,16 +57,35 @@ class AchievementAgentItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        item!.title,
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            item!.info,
+                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                  color: Color.fromARGB(255, 255, 255, 0),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ],
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 50),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            item!.title,
+                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ), 
                   ],
                 ),
               );

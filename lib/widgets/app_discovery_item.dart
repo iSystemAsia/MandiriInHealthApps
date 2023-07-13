@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/utils/utils.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
+import '../blocs/discovery/dashboardPage.dart';
 
 class AppDiscoveryItem extends StatelessWidget {
   final DiscoveryModel? item;
@@ -19,6 +20,7 @@ class AppDiscoveryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (item != null) {
+      print(item);
       return Column(
         children: [
           Row(
@@ -53,25 +55,12 @@ class AppDiscoveryItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${item!.category.count} ${Translate.of(context).translate('location')}',
+                      '${item!.list.length} ${Translate.of(context).translate('dashboard')}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              TextButton(
-                onPressed: () {
-                  onSeeMore!(item!.category);
-                },
-                child: Text(
-                  Translate.of(context).translate('see_more'),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                ),
-              ),
-              const SizedBox(width: 8),
             ],
           ),
           const SizedBox(height: 8),
@@ -88,7 +77,8 @@ class AppDiscoveryItem extends StatelessWidget {
                     item: product,
                     type: ProductViewType.card,
                     onPressed: () {
-                      onProductDetail!(product);
+                      print(product.title);
+                      Navigator.push(context, new MaterialPageRoute(builder: (context) => new DashboardPage(item: product)));
                     },
                   ),
                 );
