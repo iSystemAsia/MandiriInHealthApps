@@ -41,16 +41,6 @@ class _SignInState extends State<SignIn> {
     super.dispose();
   }
 
-  ///On navigate forgot password
-  void _forgotPassword() {
-    Navigator.pushNamed(context, Routes.forgotPassword);
-  }
-
-  ///On navigate sign up
-  void _signUp() {
-    Navigator.pushNamed(context, Routes.signUp);
-  }
-
   ///On login
   void _login() async {
     Utils.hiddenKeyboard(context);
@@ -149,22 +139,6 @@ class _SignInState extends State<SignIn> {
                         loading: login == LoginState.loading,
                       );
                     },
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      AppButton(
-                        Translate.of(context).translate('forgot_password'),
-                        onPressed: _forgotPassword,
-                        type: ButtonType.text,
-                      ),
-                      AppButton(
-                        Translate.of(context).translate('sign_up'),
-                        onPressed: _signUp,
-                        type: ButtonType.text,
-                      ),
-                    ],
                   ),
                 ],
               ),

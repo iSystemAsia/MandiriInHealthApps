@@ -3,6 +3,7 @@ import 'package:mandiri_in_health/blocs/pipeline/list_state.dart';
 import 'package:mandiri_in_health/configs/config.dart';
 import 'package:mandiri_in_health/models/model_filter.dart';
 import 'package:mandiri_in_health/models/model_pagination.dart';
+import 'package:mandiri_in_health/models/pipeline_filter_model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/repository/pipeline_repository.dart';
 
@@ -13,14 +14,14 @@ class PipelineListCubit extends Cubit<PipelineListState> {
   List<PipelineModel> list = [];
   PaginationModel? pagination;
 
-  Future<void> onLoad() async {
+  Future<void> onLoad(PipelineFilterModel filter) async {
     page = 1;
 
     ///Fetch API
     final result = await PipelineRepository.loadList(
       page: page,
       perPage: 10,
-      // filter: filter,
+      filter: filter,
     );
     if (result != null) {
       list = result[0];

@@ -10,6 +10,7 @@ import 'package:mandiri_in_health/models/model_filter.dart';
 import 'package:mandiri_in_health/models/model_picker.dart';
 import 'package:mandiri_in_health/models/model_setting.dart';
 import 'package:mandiri_in_health/models/model_sort.dart';
+import 'package:mandiri_in_health/models/pipeline_filter_model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/utils/translate.dart';
 import 'package:mandiri_in_health/widgets/app_bottom_picker.dart';
@@ -35,7 +36,7 @@ class _PipelineListState extends State<PipelineList> {
   final PageType _pageType = PageType.list;
   ProductViewType _listMode = Application.setting.listMode;
 
-  // FilterModel _filter = FilterModel.fromDefault();
+  final PipelineFilterModel _filter = PipelineFilterModel.fromDefault();
 
   @override
   void initState() {
@@ -74,7 +75,7 @@ class _PipelineListState extends State<PipelineList> {
 
   ///On Refresh List
   Future<void> _onRefresh() async {
-    await _listCubit.onLoad();
+    await _listCubit.onLoad(_filter);
   }
 
   ///On Change Sort
@@ -86,15 +87,20 @@ class _PipelineListState extends State<PipelineList> {
         return AppBottomPicker(
           picker: PickerModel(
             selected: [],
-            data: Application.setting.sort,
+            data: [
+              SortModel(title: "Data terbaru", value: "DESC", field: "CreatedOn"),
+              SortModel(title: "Data lampau", value: "ASC", field: "CreatedOn"),
+              SortModel(title: "Premi disetahunkan terbesar", value: "DESC", field: "MdrPremiDisetahunkan"),
+              SortModel(title: "Premi disetahunkan terkecil", value: "ASC", field: "MdrPremiDisetahunkan"),
+            ],
           ),
         );
       },
     );
     if (result != null) {
-      // setState(() {
-      //   _filter.sort = result;
-      // });
+      setState(() {
+        _filter.sort = result;
+      });
       _onRefresh();
     }
   }

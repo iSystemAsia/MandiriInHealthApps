@@ -7,7 +7,17 @@ import 'package:mandiri_in_health/blocs/quotation/detail_cubit.dart';
 import 'package:mandiri_in_health/blocs/quotation/detail_state.dart';
 import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/widgets/info_detail_item.dart';
+import 'package:mandiri_in_health/widgets/quotation/additional_information_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/cara_pembayaran_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/disetujui_detail.dart';
 import 'package:mandiri_in_health/widgets/quotation/general_information_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/komisi_disetujui_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/komisi_pengajuan_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/marketing_info_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/pengajuan_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/sla_disetujui_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/sla_pengajuan_detail.dart';
+import 'package:mandiri_in_health/widgets/quotation/underwriting_info_detail.dart';
 import 'package:mandiri_in_health/widgets/title_detail_item.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
 
@@ -29,10 +39,18 @@ class _QuotationDetailState extends State<QuotationDetail> {
   Color? _iconColor = Colors.white;
   bool _showAddressDetail = false;
   bool _showGeneralInformation = false;
-  bool _showDataBadanUsaha = false;
-  bool _showDataPotensiBisnis = false;
-  bool _showUpdateAktifitas = false;
-  bool _showRiwayatAktivitas = false;
+  bool _showCaraPembayaran = false;
+  bool _showKomisiPengajuan = false;
+  bool _showKomisiDisetujui = false;
+  bool _showSlaPengajuan = false;
+  bool _showSlaDisetujui = false;
+  bool _showPengajuan = false;
+  bool _showDisetujui = false;
+  bool _showUnderwritingInfo = false;
+  bool _showMarketingInfo = false;
+  bool _showAdditionalInfo = false;
+  bool _showTambahanInfo = false;
+  bool _showEksesInfo = false;
 
   @override
   void initState() {
@@ -281,7 +299,7 @@ class _QuotationDetailState extends State<QuotationDetail> {
         ),
       ),
     );
-    
+
     Widget generalInformation = AppPlaceholder(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -313,7 +331,6 @@ class _QuotationDetailState extends State<QuotationDetail> {
     Widget additionalInformation = generalInformation;
     Widget tambahan = generalInformation;
     Widget ekses = generalInformation;
-    Widget installment = Container();
 
     if (quotation != null) {
       banner = Stack(
@@ -559,8 +576,524 @@ class _QuotationDetailState extends State<QuotationDetail> {
         ],
       );
 
+      caraPembayaran = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showCaraPembayaran = !_showCaraPembayaran;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "CARA PEMBAYARAN",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showCaraPembayaran
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showCaraPembayaran,
+              child: CaraPembayaranDetail(item: quotation)),
+        ],
+      );
+
+      komisiPengajuan = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showKomisiPengajuan = !_showKomisiPengajuan;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "KOMISI PENGAJUAN",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showKomisiPengajuan
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showKomisiPengajuan,
+              child: KomisiPengajuanDetail(item: quotation)),
+        ],
+      );
+
+      komisiDisetujui = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showKomisiDisetujui = !_showKomisiDisetujui;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "KOMISI DISETUJUI",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showKomisiDisetujui
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showKomisiDisetujui,
+              child: KomisiDisetujuiDetail(item: quotation)),
+        ],
+      );
+
+      slaPengajuanDalamHari = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showSlaPengajuan = !_showSlaPengajuan;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "SLA PENGAJUAN (DALAM HARI)",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showSlaPengajuan
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showSlaPengajuan,
+              child: SlaPengajuanDetail(item: quotation)),
+        ],
+      );
+
+      slaDisetujuiDalamHari = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showSlaDisetujui = !_showSlaDisetujui;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "SLA DISETUJUI (DALAM HARI)",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showSlaDisetujui
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showSlaDisetujui,
+              child: SlaDisetujuiDetail(item: quotation)),
+        ],
+      );
+
+      pengajuan = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showPengajuan = !_showPengajuan;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "PENGAJUAN",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showPengajuan
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showPengajuan,
+              child: PengajuanDetail(item: quotation)),
+        ],
+      );
+
+      disetujui = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showDisetujui = !_showDisetujui;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "PENGAJUAN",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showDisetujui
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showDisetujui,
+              child: DisetujuiDetail(item: quotation)),
+        ],
+      );
+
+      underwritingInfo = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showUnderwritingInfo = !_showUnderwritingInfo;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "UNDERWRITING INFO",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showUnderwritingInfo
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showUnderwritingInfo,
+              child: UnderwritingInfoDetail(item: quotation)),
+        ],
+      );
+
+      marketingInfo = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showMarketingInfo = !_showMarketingInfo;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "MARKETING INFO",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showMarketingInfo
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showMarketingInfo,
+              child: MarketingInfoDetail(item: quotation)),
+        ],
+      );
+
+      additionalInformation = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showAdditionalInfo = !_showAdditionalInfo;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "ADDITIONAL INFORMATION",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showAdditionalInfo
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showAdditionalInfo,
+              child: AdditionalInformationDetail(item: quotation)),
+        ],
+      );
+
+      tambahan = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showTambahanInfo = !_showTambahanInfo;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "TAMBAHAN",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showTambahanInfo
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showTambahanInfo,
+              child: TambahanDetail(item: quotation)),
+        ],
+      );
+
+      ekses = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showEksesInfo = !_showEksesInfo;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "EKSES",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showEksesInfo
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showEksesInfo,
+              child: EksesDetail(item: quotation)),
+        ],
+      );
+
       infoListItem.addAll([
         generalInformation,
+        caraPembayaran,
+        komisiPengajuan,
+        komisiDisetujui,
+        slaPengajuanDalamHari,
+        slaDisetujuiDalamHari,
+        pengajuan,
+        disetujui,
+        underwritingInfo,
+        marketingInfo,
+        additionalInformation,
+        tambahan,
+        ekses
       ]);
 
       info = Padding(
