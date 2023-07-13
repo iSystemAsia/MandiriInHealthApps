@@ -88,6 +88,19 @@ class PipelineItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
@@ -139,12 +152,16 @@ class PipelineItem extends StatelessWidget {
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
-                    .labelLarge!
+                    .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 item?.KanalDistribusi ?? '',
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              Text(
+                item?.UpdateAktifitas ?? '',
+                style: Theme.of(context).textTheme.labelMedium,
               ),
               const SizedBox(height: 8),
               Text(
@@ -240,20 +257,20 @@ class PipelineItem extends StatelessWidget {
                             bottomLeft: Radius.circular(8),
                           ),
                         ),
-                        // child: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: <Widget>[
-                        //     item!.KanalDistribusi.isNotEmpty
-                        //         ? Padding(
-                        //             padding: const EdgeInsets.all(4),
-                        //             child: AppTag(
-                        //               item!.KanalDistribusi,
-                        //               type: TagType.status,
-                        //             ),
-                        //           )
-                        //         : Container()
-                        //   ],
-                        // ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
                       );
                     },
                     placeholder: (context, url) {
@@ -298,12 +315,16 @@ class PipelineItem extends StatelessWidget {
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
-                              .titleSmall!
+                              .titleMedium!
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
                           item?.KanalDistribusi ?? '',
-                          style: Theme.of(context).textTheme.labelSmall,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        Text(
+                          item?.UpdateAktifitas ?? '',
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -317,7 +338,7 @@ class PipelineItem extends StatelessWidget {
                             Expanded(
                               child: Text(item!.MdrNoTelp ?? "",
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodySmall),
+                                  style: Theme.of(context).textTheme.labelMedium),
                             )
                           ],
                         ),
@@ -334,7 +355,7 @@ class PipelineItem extends StatelessWidget {
                               child: Text(
                                 item!.MdrAlamat ?? "",
                                 maxLines: 1,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             )
                           ],
@@ -365,7 +386,9 @@ class PipelineItem extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Icon(
-                  item!.MdrKomitmentAgen ?? false ? Icons.favorite : Icons.favorite_border,
+                  item!.MdrKomitmentAgen ?? false
+                      ? Icons.favorite
+                      : Icons.favorite_border,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               )
@@ -444,12 +467,12 @@ class PipelineItem extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // item!.KanalDistribusi.isNotEmpty
-                              //     ? AppTag(
-                              //         item!.KanalDistribusi,
-                              //         type: TagType.status,
-                              //       )
-                              //     : Container(),
+                              item!.PolisStatus!.isNotEmpty
+                                  ? AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    )
+                                  : Container(),
                               Icon(
                                 item!.MdrKomitmentAgen ?? false
                                     ? Icons.favorite
@@ -499,13 +522,17 @@ class PipelineItem extends StatelessWidget {
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall!
+                                    .titleMedium!
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 item?.KanalDistribusi ?? '',
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
+                              Text(
+                                item?.UpdateAktifitas ?? '',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              )
                             ],
                           ),
                         ),
@@ -541,7 +568,7 @@ class PipelineItem extends StatelessWidget {
                           child: Text(
                             item!.MdrNoTelp ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],
@@ -559,7 +586,7 @@ class PipelineItem extends StatelessWidget {
                           child: Text(
                             item!.MdrAlamat ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],

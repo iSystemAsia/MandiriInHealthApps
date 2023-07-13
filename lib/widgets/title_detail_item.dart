@@ -62,21 +62,29 @@ class TitleDetail extends StatelessWidget {
       widgetList.add(imageContainer);
     }
 
-    var titleItem = Text(
-      title ?? "",
-      style: Theme.of(context)
-          .textTheme
-          .labelLarge!
-          .copyWith(fontWeight: FontWeight.bold),
-    );
+    var titleItem = Container(
+        constraints: const BoxConstraints(maxWidth: 280),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8.0)),
+        child: Text(title ?? "",
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.bold),
+            softWrap: false,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis));
     var subTitleItem = Text(
       subTitle ?? "",
-      style: Theme.of(context).textTheme.labelSmall,
+      style: Theme.of(context).textTheme.labelLarge,
     );
+    var textItemList = <Widget>[titleItem];
+    if (subTitle != null) {
+      textItemList.add(subTitleItem);
+    }
 
     var textItem = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[titleItem, subTitleItem],
+      children: textItemList,
     );
 
     if (image != null) {

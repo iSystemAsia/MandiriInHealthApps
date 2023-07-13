@@ -113,11 +113,13 @@ class Top3PipelineItem extends StatelessWidget {
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
-                      .labelLarge!
+                      .titleSmall!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(item!.KanalDistribusi ?? "",
-                    style: Theme.of(context).textTheme.labelSmall),
+                    style: Theme.of(context).textTheme.labelMedium),
+                Text(item!.PolisStatus ?? "",
+                    style: Theme.of(context).textTheme.labelMedium),
                 const SizedBox(height: 4),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

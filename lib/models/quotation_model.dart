@@ -93,6 +93,10 @@ class QuotationModel {
   final String? BUName;
   final String? Alamat;
   final String? KodePos;
+  final String? Provinsi;
+  final String? Kabupaten;
+  final String? Kecamatan;
+  final String? Kelurahan;
   final String? GWP;
   final String? CreatedBy;
   final String? QuotationStatus;
@@ -103,6 +107,8 @@ class QuotationModel {
   final String? SkemaProduct;
   final String? TujuanKlaimReimbursePengajuan;
   final String? TujuanKlaimReimburseDiSetujui;
+  final String? PolisStatus;
+  final String? Title;
   final ImageModel? image;
 
   QuotationModel({
@@ -196,6 +202,10 @@ class QuotationModel {
     this.BUName,
     this.Alamat,
     this.KodePos,
+    this.Provinsi,
+    this.Kabupaten,
+    this.Kecamatan,
+    this.Kelurahan,
     this.GWP,
     this.CreatedBy,
     this.QuotationStatus,
@@ -206,18 +216,15 @@ class QuotationModel {
     this.SkemaProduct,
     this.TujuanKlaimReimbursePengajuan,
     this.TujuanKlaimReimburseDiSetujui,
+    this.PolisStatus,
+    this.Title,
     this.image
   });
 
   factory QuotationModel.fromJson(Map<String, dynamic> json) {
-    ImageModel? image;
-    if (json['image'] != null) {
-      image = ImageModel.fromJson(json['image']);
-    }
-
     return QuotationModel(
-      Id: json['Id'],
-      MdrName: json['MdrName'],
+      Id: json['Id'] ?? "",
+      MdrName: json['MdrName'] ?? "",
       CreatedOn: json['CreatedOn'] ?? "",
       ModifiedOn: json['ModifiedOn']  ?? "",
       MdrInsuranceStartDate: json['MdrInsuranceStartDate'] ?? "",
@@ -306,6 +313,10 @@ class QuotationModel {
       BUName: json['BUName'] ?? "",
       Alamat: json['Alamat'] ?? "",
       KodePos: json['KodePos'] ?? "",
+      Provinsi: json['Provinsi'] ?? "",
+      Kabupaten: json['Kabupaten'] ?? "",
+      Kecamatan: json['Kecamatan'] ?? "",
+      Kelurahan: json['Kelurahan'] ?? "",
       GWP: json['GWP'] ?? "",
       CreatedBy: json['CreatedBy'] ?? "",
       QuotationStatus: json['QuotationStatus'] ?? "",
@@ -316,7 +327,9 @@ class QuotationModel {
       SkemaProduct: json['SkemaProduct'] ?? "",
       TujuanKlaimReimbursePengajuan: json['TujuanKlaimReimbursePengajuan'] ?? "",
       TujuanKlaimReimburseDiSetujui: json['TujuanKlaimReimburseDiSetujui'] ?? "",
-      image: image
+      PolisStatus: json['PolisStatus'] ?? "",
+      Title: json['Title'] ?? "",
+      image: json['image'] != null ? ImageModel.fromJson(json['image']) : null
     );
   }
 }

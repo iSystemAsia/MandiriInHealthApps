@@ -66,7 +66,8 @@ class _AppState extends State<App> {
                           return const AppContainer();
                         }
                         if (application == ApplicationState.intro) {
-                          return const Intro();
+                          AppBloc.applicationCubit.onCompletedIntro();
+                          // return const Intro();
                         }
                         return const SplashScreen();
                       },

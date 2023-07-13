@@ -139,7 +139,7 @@ class _AppContainerState extends State<AppContainer> {
           Text(
             Translate.of(context).translate(title),
             style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  fontSize: 10,
+                  fontSize: 13,
                   color: color,
                 ),
             maxLines: 1,

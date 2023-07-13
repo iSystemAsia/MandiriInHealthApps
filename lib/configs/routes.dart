@@ -8,8 +8,9 @@ import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/models/sales_activity_model.dart';
 import 'package:mandiri_in_health/screens/closing/detail.dart';
 import 'package:mandiri_in_health/screens/closing/list.dart';
-import 'package:mandiri_in_health/screens/pipeline/detail.dart';
 import 'package:mandiri_in_health/screens/pipeline/list.dart';
+import 'package:mandiri_in_health/screens/pipeline/detail_new_business.dart';
+import 'package:mandiri_in_health/screens/pipeline/detail_renewal.dart';
 import 'package:mandiri_in_health/screens/quotation/detail.dart';
 import 'package:mandiri_in_health/screens/quotation/list.dart';
 import 'package:mandiri_in_health/screens/sales_activity/detail.dart';
@@ -110,7 +111,12 @@ class Routes {
       case pipelineDetail:
         return MaterialPageRoute(
           builder: (context) {
-            return PipelineDetail(item: settings.arguments as PipelineModel);
+            var item = settings.arguments as PipelineModel;
+            if(item.PolisStatus == 'NEW BUSINESS') {
+                return PipelineNewBusinessDetail(item: settings.arguments as PipelineModel);
+            }
+
+            return PipelineRenewalDetail(item: settings.arguments as PipelineModel);
           },
         );
 

@@ -3,49 +3,51 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandiri_in_health/blocs/sales_activity/detail_cubit.dart';
-import 'package:mandiri_in_health/blocs/sales_activity/detail_state.dart';
-import 'package:mandiri_in_health/models/sales_activity_model.dart';
-import 'package:mandiri_in_health/widgets/sales_activity/closing_detail.dart';
-import 'package:mandiri_in_health/widgets/sales_activity/lapse_detail.dart';
-import 'package:mandiri_in_health/widgets/sales_activity/loss_detail.dart';
-import 'package:mandiri_in_health/widgets/sales_activity/pindah_produk_detail.dart';
+import 'package:mandiri_in_health/blocs/pipeline/detail_cubit.dart';
+import 'package:mandiri_in_health/blocs/pipeline/detail_state.dart';
+import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/widgets/info_detail_item.dart';
+import 'package:mandiri_in_health/widgets/pipeline/renewal/data_badan_usaha.dart';
+import 'package:mandiri_in_health/widgets/pipeline/renewal/data_kanal.dart';
+import 'package:mandiri_in_health/widgets/pipeline/renewal/data_potensi_bisnis.dart';
+import 'package:mandiri_in_health/widgets/pipeline/renewal/update_aktifitas.dart';
+import 'package:mandiri_in_health/widgets/pipeline/riwayat_sales_activity.dart';
 import 'package:mandiri_in_health/widgets/title_detail_item.dart';
 import 'package:mandiri_in_health/widgets/widget.dart';
 
-class SalesActivityDetail extends StatefulWidget {
-  const SalesActivityDetail({Key? key, required this.item}) : super(key: key);
+class PipelineRenewalDetail extends StatefulWidget {
+  const PipelineRenewalDetail({Key? key, required this.item}) : super(key: key);
 
-  final SalesActivityModel item;
+  final PipelineModel item;
 
   @override
-  State<SalesActivityDetail> createState() {
-    return _SalesActivityDetailState();
+  State<PipelineRenewalDetail> createState() {
+    return _PipelineRenewalDetailState();
   }
 }
 
-class _SalesActivityDetailState extends State<SalesActivityDetail> {
+class _PipelineRenewalDetailState extends State<PipelineRenewalDetail> {
   final _scrollController = ScrollController();
-  final _salesActivityDetailCubit = SalesActivityDetailCubit();
+  final _pipelineDetailCubit = PipelineDetailCubit();
 
   Color? _iconColor = Colors.white;
-  bool _showClosing = false;
-  bool _showLoss = false;
-  bool _showPindahProduk = false;
-  bool _showLapse = false;
   bool _showAddressDetail = false;
+  bool _showDataKanal = false;
+  bool _showDataBadanUsaha = false;
+  bool _showDataPotensiBisnis = false;
+  bool _showUpdateAktifitas = false;
+  bool _showRiwayatAktivitas = false;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _salesActivityDetailCubit.onLoad(widget.item.Id);
+    _pipelineDetailCubit.onLoad(widget.item.Id);
   }
 
   @override
   void dispose() {
-    _salesActivityDetailCubit.close();
+    _pipelineDetailCubit.close();
     _scrollController.dispose();
     super.dispose();
   }
@@ -64,7 +66,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
   }
 
   ///Build content UI
-  Widget _buildContent(SalesActivityModel? salesActivity) {
+  Widget _buildContent(PipelineModel? pipeline) {
     ///Build UI loading
     List<Widget> action = [];
     Widget banner = AppPlaceholder(
@@ -72,11 +74,11 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         color: Colors.white,
       ),
     );
+    Widget title = Container();
     Widget status = Container();
     Widget address = Container();
     Widget phone = Container();
     Widget email = Container();
-    Widget keterangan = Container();
     Widget createdBy = Container();
     Widget createdOn = Container();
     Widget info = AppPlaceholder(
@@ -283,7 +285,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         ),
       ),
     );
-    Widget closing = AppPlaceholder(
+    Widget dataKanal = AppPlaceholder(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -302,15 +304,16 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         ),
       ),
     );
-    Widget loss = closing;
-    Widget pindahProduk = closing;
-    Widget lapse = closing;
+    Widget dataBadanUsaha = dataKanal;
+    Widget dataPotensiBisnis = dataKanal;
+    Widget updateAktifitas = dataKanal;
+    Widget riwayatSalesActivity = Container();
 
-    if (salesActivity != null) {
+    if (pipeline != null) {
       banner = Stack(
         children: [
           CachedNetworkImage(
-            imageUrl: salesActivity.image!.full,
+            imageUrl: pipeline.image!.full,
             placeholder: (context, url) {
               return AppPlaceholder(
                 child: Container(
@@ -345,8 +348,22 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
       );
 
       status = AppTag(
-        salesActivity.MdrStatusAktivitas!,
+        pipeline.PolisStatus!,
         type: TagType.status,
+      );
+
+      title = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TitleDetail(
+              title: pipeline.MdrName,
+            ),
+            status
+          ],
+        ),
       );
 
       var infoListItem = <Widget>[];
@@ -384,7 +401,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                             Text(
-                              salesActivity.Alamat!,
+                              pipeline.MdrAlamat!,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
@@ -419,10 +436,10 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
               margin: const EdgeInsets.only(left: 42),
               padding: const EdgeInsets.only(top: 12),
               child: Text(
-                "KOTA/KABUPATEN ${salesActivity.Kabupaten!}\n" +
-                    "KECAMATAN ${salesActivity.Kecamatan!}\n" +
-                    "KELURAHAN ${salesActivity.Kelurahan!}\n" +
-                    "KODE POS ${salesActivity.KodePos}",
+                "KOTA/KABUPATEN ${pipeline.Kabupaten}\n" +
+                    "KECAMATAN ${pipeline.Kecamatan}\n" +
+                    "KELURAHAN ${pipeline.Kelurahan}\n" +
+                    "KODE POS ${pipeline.KodePosLookup}",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -435,7 +452,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
 
       phone = InfoDetail(
           label: "NO. TELP",
-          value: salesActivity.NoTelp!,
+          value: pipeline.MdrNoTelp!,
           icon: const Icon(
             Icons.phone_outlined,
             color: Colors.white,
@@ -444,63 +461,16 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
 
       email = InfoDetail(
           label: "EMAIL",
-          value: salesActivity.Email!,
+          value: pipeline.MdrEmail!,
           icon: const Icon(
             Icons.email_outlined,
             color: Colors.white,
             size: 18,
           ));
 
-      keterangan = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 12),
-          InkWell(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).dividerColor,
-                  ),
-                  child: const Icon(
-                    Icons.description_outlined,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "KETERANGAN PROGRESS",
-                        style: Theme.of(context).textTheme.labelSmall,
-                      ),
-                      Text(
-                        salesActivity.MdrKeteranganProgres!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      );
-
       createdBy = InfoDetail(
           label: "CREATED BY",
-          value: salesActivity.CreatedBy!,
+          value: pipeline.CreatedBy!,
           icon: const Icon(
             Icons.person_outlined,
             color: Colors.white,
@@ -509,19 +479,19 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
 
       createdOn = InfoDetail(
           label: "CREATED ON",
-          value: salesActivity.CreatedOn!,
+          value: pipeline.CreatedOn!,
           icon: const Icon(
             Icons.date_range_outlined,
             color: Colors.white,
             size: 18,
           ));
 
-      var updateAktifitasCommitment = Row(
+      var commitment = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
             child: Text(
-              salesActivity.UpdateAktivitas!,
+              pipeline.UpdateAktifitas!,
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -531,7 +501,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
           ),
           IconButton(
             icon: Icon(
-              salesActivity.MdrCommitment!
+              pipeline.MdrKomitmentAgen!
                   ? Icons.favorite
                   : Icons.favorite_border,
               color: Theme.of(context).colorScheme.primary,
@@ -541,198 +511,244 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
         ],
       );
       infoListItem.addAll([
-        updateAktifitasCommitment,
+        commitment,
         address,
         phone,
         email,
-        keterangan,
         createdBy,
         createdOn,
         const SizedBox(height: 16)
       ]);
 
-      if (salesActivity.UpdateAktivitas == 'CLOSING') {
-        closing = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _showClosing = !_showClosing;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "CLOSING",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+      dataKanal = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showDataKanal = !_showDataKanal;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "DATA KANAL",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  Icon(
-                    _showClosing
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                  )
-                ],
-              ),
+                ),
+                Icon(
+                  _showDataKanal
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
             ),
-            const SizedBox(height: 12),
-            Visibility(
-                visible: _showClosing,
-                child: ClosingItemDetail(item: salesActivity)),
-          ],
-        );
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showDataKanal,
+              child: DataKanalRenewalDetail(item: pipeline)),
+        ],
+      );
 
-        infoListItem.add(closing);
-      }
-
-      if (salesActivity.UpdateAktivitas == 'LOSS') {
-        loss = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _showLoss = !_showLoss;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "LOSS",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+      dataBadanUsaha = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showDataBadanUsaha = !_showDataBadanUsaha;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "DATA BADAN USAHA",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  Icon(
-                    _showLoss
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                  )
-                ],
-              ),
+                ),
+                Icon(
+                  _showDataBadanUsaha
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
             ),
-            const SizedBox(height: 12),
-            Visibility(
-                visible: _showLoss, child: LossItemDetail(item: salesActivity)),
-          ],
-        );
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showDataBadanUsaha,
+              child: DataBadanUsahaRenewalDetail(item: pipeline)),
+        ],
+      );
 
-        infoListItem.add(loss);
-      }
-
-      if (salesActivity.UpdateAktivitas == 'PINDAH PRODUK') {
-        pindahProduk = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _showPindahProduk = !_showPindahProduk;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "PINDAH PRODUK",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+      dataPotensiBisnis = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showDataPotensiBisnis = !_showDataPotensiBisnis;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "DATA POTENSI BISNIS",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  Icon(
-                    _showPindahProduk
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                  )
-                ],
-              ),
+                ),
+                Icon(
+                  _showDataPotensiBisnis
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
             ),
-            const SizedBox(height: 12),
-            Visibility(
-                visible: _showPindahProduk,
-                child: PindahProdukItemDetail(item: salesActivity)),
-          ],
-        );
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showDataPotensiBisnis,
+              child: DataPotensiBisnisRenewalDetail(item: pipeline)),
+        ],
+      );
 
-        infoListItem.add(pindahProduk);
-      }
-
-      if (salesActivity.UpdateAktivitas == 'LAPSE') {
-        lapse = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _showLapse = !_showLapse;
-                });
-              },
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "LAPSE",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+      updateAktifitas = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showUpdateAktifitas = !_showUpdateAktifitas;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "UPDATE AKTIFITAS",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  Icon(
-                    _showLapse
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                  )
-                ],
-              ),
+                ),
+                Icon(
+                  _showUpdateAktifitas
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
             ),
-            const SizedBox(height: 12),
-            Visibility(
-                visible: _showLapse,
-                child: LapseItemDetail(item: salesActivity)),
-          ],
-        );
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showUpdateAktifitas,
+              child: UpdateAktifitasRenewalDetail(item: pipeline)),
+        ],
+      );
 
-        infoListItem.add(lapse);
-      }
+      riwayatSalesActivity = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _showRiwayatAktivitas = !_showRiwayatAktivitas;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "RIWAYAT AKTIFITAS",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  _showRiwayatAktivitas
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Visibility(
+              visible: _showRiwayatAktivitas,
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                separatorBuilder: (context, index) {
+                  return const Divider();
+                },
+                itemBuilder: (context, index) {
+                  final item = pipeline.RiwayatSalesActivity?[index];
+                  return RiwayatSalesActivityItem(item: item);
+                },
+                itemCount: pipeline.RiwayatSalesActivity!.length,
+              )),
+        ],
+      );
+
+      infoListItem.addAll([
+        dataKanal,
+        dataBadanUsaha,
+        dataPotensiBisnis,
+        updateAktifitas,
+        riwayatSalesActivity
+      ]);
 
       info = Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
@@ -763,24 +779,7 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
           child: SafeArea(
             top: false,
             child: Column(
-              children: <Widget>[
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TitleDetail(
-                        title: salesActivity?.Pipeline,
-                        subTitle: salesActivity?.MdrKodeBooking,
-                      ),
-                      status
-                    ],
-                  ),
-                ),
-                info
-              ],
+              children: <Widget>[const SizedBox(height: 16), title, info],
             ),
           ),
         )
@@ -792,14 +791,14 @@ class _SalesActivityDetailState extends State<SalesActivityDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => _salesActivityDetailCubit,
-        child: BlocBuilder<SalesActivityDetailCubit, SalesActivityDetailState>(
+        create: (context) => _pipelineDetailCubit,
+        child: BlocBuilder<PipelineDetailCubit, PipelineDetailState>(
           builder: (context, state) {
-            SalesActivityModel? salesActivity;
-            if (state is SalesActivityDetailSuccess) {
-              salesActivity = state.salesActivity;
+            PipelineModel? pipeline;
+            if (state is PipelineDetailSuccess) {
+              pipeline = state.pipeline;
             }
-            return _buildContent(salesActivity);
+            return _buildContent(pipeline);
           },
         ),
       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mandiri_in_health/models/sales_activity_model.dart';
+import 'package:mandiri_in_health/models/pipeline_model.dart';
 
-class ClosingItemDetail extends StatelessWidget {
-  final SalesActivityModel item;
-  const ClosingItemDetail({Key? key, required this.item}) : super(key: key);
+class DataPotensiBisnisRenewalDetail extends StatelessWidget {
+  final PipelineModel item;
+  const DataPotensiBisnisRenewalDetail({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class ClosingItemDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "KANAL DISTRIBUSI",
+                "KODE BOOKING",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrKodeBooking!,
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -26,16 +26,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "NAMA BU",
+                "PRODUK",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.Produk ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -43,16 +43,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "KATEGORI ASURANSI EKSISTING",
+                "POLIS STATUS",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.PolisStatus ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -60,16 +60,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "ASURANSI EKSISTING",
+                "JUMLAH PESERTA",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrJumlahPeserta ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -77,16 +77,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "SINERGI BANK MANDIRI",
+                "PAYMENT METHOD",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.PaymentMethod!,
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -94,16 +94,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "KA. UNIT",
+                "PREMI DISETAHUNKAN",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrPremiDisetahunkan ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -111,16 +111,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "AGEN ASURANSI",
+                "PREMI PER TERMIN",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrPremiPerTermin ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -128,16 +128,16 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "NAMA BROKER",
+                "PREMI/BULAN",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrPremiPerBulan ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
@@ -145,23 +145,108 @@ class ClosingItemDetail extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "KETERANGAN SINERGI BANK MANDIRI",
+                "TMT",
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                item.Email ?? "",
+                item.MdrTmt ?? "",
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ],
-          )
+          ),
+          const SizedBox(height: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "TMB",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                item.MdrTmb ?? "",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "RENEWAL JATUH TEMPO",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                item.MdrRenewalJatuhTempo ?? "",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "TAHUN PIPELINE",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                item.MdrTahunPipeline ?? "",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "GWP",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                item.MdrGWP!,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "QUOTATION",
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              Text(
+                item.Quotation!,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ]);
   }
 }

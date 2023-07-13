@@ -113,14 +113,16 @@ class Top5QuotationItem extends StatelessWidget {
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
-                      .labelLarge!
+                      .titleSmall!
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(item!.MdrName,
-                    style: Theme.of(context).textTheme.labelSmall),
+                    style: Theme.of(context).textTheme.labelMedium),
+                Text(item!.QuotationStatus!,
+                    style: Theme.of(context).textTheme.labelMedium),
                 Text(
-                  item!.QuotationStatus ?? "",
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  item!.Product ?? "",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),
                 ),

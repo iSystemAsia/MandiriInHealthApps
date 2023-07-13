@@ -169,12 +169,12 @@ class _HomeState extends State<Home> {
                 achievementTitle,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyLarge!
+                    .titleLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 achievementSubTitle,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -184,6 +184,7 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.only(top: 4),
           child: content,
         ),
+        const SizedBox(height: 12)
       ],
     );
   }
@@ -236,16 +237,16 @@ class _HomeState extends State<Home> {
                 top3PipelineTitle,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyLarge!
+                    .titleLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 top3PipelineSubTitle,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           content,
         ],
       ),
@@ -300,16 +301,16 @@ class _HomeState extends State<Home> {
                 top5QuotationTitle,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyLarge!
+                    .titleLarge!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 top5QuotationSubTitle,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           content,
         ],
       ),

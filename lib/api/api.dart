@@ -1,4 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:mandiri_in_health/blocs/app_bloc.dart';
+import 'package:mandiri_in_health/configs/application.dart';
 import 'package:mandiri_in_health/models/closing_model.dart';
 import 'package:mandiri_in_health/models/sales_activity_model.dart';
 import 'package:mandiri_in_health/utils/utils.dart';
@@ -8,11 +12,13 @@ import 'package:mandiri_in_health/models/model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/models/quotation_model.dart';
 import 'package:mandiri_in_health/models/auth_model.dart';
+import 'package:http/http.dart' as http;
 
 class Api {
   static final httpManager = HTTPManager();
 
-  static const String secretKey = "2y\$10\$QAsAzXePzUSQjX3T3PYuPuDJzAANS3Vf8If./n810N0i4itTeJLlm";
+  static const String secretKey =
+      "2y\$10\$QAsAzXePzUSQjX3T3PYuPuDJzAANS3Vf8If./n810N0i4itTeJLlm";
   static const String login_ = "/login";
   static const String logout = "/logout";
   static const String validateToken = "/validate";
@@ -33,7 +39,8 @@ class Api {
   }
 
   static Future<bool> requestValidateToken() async {
-    return await httpManager.get(url: validateToken, params: {'SecretKey': secretKey});
+    return await httpManager
+        .get(url: validateToken, params: {'SecretKey': secretKey});
   }
 
   /// Pipeline
@@ -68,7 +75,8 @@ class Api {
   }
 
   static Future<PipelineModel> requestPipelineDetail(id) async {
-    final result = await httpManager.get(url: "$pipeline/$id", params: {'SecretKey': secretKey});
+    final result = await httpManager
+        .get(url: "$pipeline/$id", params: {'SecretKey': secretKey});
     return PipelineModel.fromJson(result);
   }
 
@@ -106,7 +114,8 @@ class Api {
   }
 
   static Future<QuotationModel> requestQuotationDetail(id) async {
-    final result = await httpManager.get(url: "$quotation/$id", params: {'SecretKey': secretKey});
+    final result = await httpManager
+        .get(url: "$quotation/$id", params: {'SecretKey': secretKey});
     return QuotationModel.fromJson(result);
   }
 
@@ -132,22 +141,23 @@ class Api {
   }
 
   static Future<SalesActivityModel> requestSalesActivityDetail(id) async {
-    final result = await httpManager.get(url: "$salesActivity/$id", params: {'SecretKey': secretKey});
+    final result = await httpManager
+        .get(url: "$salesActivity/$id", params: {'SecretKey': secretKey});
     return SalesActivityModel.fromJson(result);
   }
 
   /// End Sales Activity
 
   /// Closing
-  
+
   static Future<Map<String, dynamic>> requestClosing(params) async {
     List<ClosingModel> closingList = [];
     params['SecretKey'] = secretKey;
     final result = await httpManager.get(url: closing, params: params);
     print("requestClosing: $result");
 
-    result['data'].forEach(
-        (item) => closingList.add(ClosingModel.fromJson(item)));
+    result['data']
+        .forEach((item) => closingList.add(ClosingModel.fromJson(item)));
     PaginationModel pagination = PaginationModel(
         page: result['current_page'],
         perPage: result['per_page'],
@@ -158,13 +168,15 @@ class Api {
   }
 
   static Future<ClosingModel> requestClosingDetail(id) async {
-    final result = await httpManager.get(url: "$closing/$id", params: {'SecretKey': secretKey});
+    final result = await httpManager
+        .get(url: "$closing/$id", params: {'SecretKey': secretKey});
     return ClosingModel.fromJson(result);
   }
 
   /// End Closing
-  
-  static Future<List<AchievementAgentModel>> requestAchievementAgent(params) async {
+
+  static Future<List<AchievementAgentModel>> requestAchievementAgent(
+      params) async {
     List<AchievementAgentModel> achievementAgentList = [];
     params['SecretKey'] = secretKey;
     final result = await httpManager.get(url: achievementAgent, params: params);

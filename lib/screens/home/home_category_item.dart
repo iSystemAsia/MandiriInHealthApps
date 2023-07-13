@@ -71,7 +71,7 @@ class HomeCategoryItem extends StatelessWidget {
               item!.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
         ),

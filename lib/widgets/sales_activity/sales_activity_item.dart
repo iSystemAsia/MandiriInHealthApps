@@ -89,6 +89,19 @@ class SalesActivityItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Padding(
@@ -140,7 +153,7 @@ class SalesActivityItem extends StatelessWidget {
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
-                    .labelLarge!
+                    .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
@@ -155,8 +168,7 @@ class SalesActivityItem extends StatelessWidget {
                 item!.MdrKeteranganProgres ?? "",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
-              Text(
-                  item!.MdrLastActivityDate ?? "",
+              Text(item!.MdrLastActivityDate ?? "",
                   style: Theme.of(context).textTheme.labelMedium)
             ],
           ),
@@ -244,20 +256,20 @@ class SalesActivityItem extends StatelessWidget {
                             bottomLeft: Radius.circular(8),
                           ),
                         ),
-                        // child: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: <Widget>[
-                        //     item!.kanal.isNotEmpty
-                        //         ? Padding(
-                        //             padding: const EdgeInsets.all(4),
-                        //             child: AppTag(
-                        //               item!.kanal,
-                        //               type: TagType.status,
-                        //             ),
-                        //           )
-                        //         : Container()
-                        //   ],
-                        // ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
                       );
                     },
                     placeholder: (context, url) {
@@ -302,15 +314,16 @@ class SalesActivityItem extends StatelessWidget {
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
-                              .titleSmall!
+                              .titleMedium!
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          item!.MdrStatusAktivitas ?? '',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
+                          item?.UpdateAktivitas ?? '',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        Text(
+                          item?.MdrStatusAktivitas ?? '',
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                         const SizedBox(height: 4),
                         Row(
@@ -325,7 +338,7 @@ class SalesActivityItem extends StatelessWidget {
                               child: Text(
                                 item!.MdrKeteranganProgres ?? "".toString(),
                                 maxLines: 1,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             )
                           ],
@@ -340,10 +353,10 @@ class SalesActivityItem extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Expanded(
-                              child: Text(
-                                  item!.MdrLastActivityDate ?? "",
+                              child: Text(item!.MdrLastActivityDate ?? "",
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodySmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium),
                             )
                           ],
                         ),
@@ -437,12 +450,12 @@ class SalesActivityItem extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // item!.kanal.isNotEmpty
-                              //     ? AppTag(
-                              //         item!.kanal,
-                              //         type: TagType.status,
-                              //       )
-                              //     : Container(),
+                              item!.PolisStatus!.isNotEmpty
+                                  ? AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    )
+                                  : Container(),
                               Icon(
                                 item!.MdrCommitment ?? false
                                     ? Icons.favorite
@@ -492,7 +505,7 @@ class SalesActivityItem extends StatelessWidget {
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall!
+                                    .titleMedium!
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
@@ -520,7 +533,7 @@ class SalesActivityItem extends StatelessWidget {
                           child: Text(
                             item!.MdrKeteranganProgres ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],
@@ -537,7 +550,7 @@ class SalesActivityItem extends StatelessWidget {
                           child: Text(
                             item!.MdrLastActivityDate ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],

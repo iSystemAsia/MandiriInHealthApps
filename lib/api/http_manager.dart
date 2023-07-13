@@ -16,8 +16,8 @@ class HTTPManager {
     _dio = Dio(
       BaseOptions(
         baseUrl: '${Application.domain}/api',
-        connectTimeout: const Duration(seconds: 30000),
-        receiveTimeout: const Duration(seconds: 30000),
+        connectTimeout: const Duration(seconds: 30000*2*5),
+        receiveTimeout: const Duration(seconds: 30000*2*5),
         contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
       ),
@@ -120,13 +120,23 @@ class HTTPManager {
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.light);
         SVProgressHUD.show();
       }
+
+      print("get > url: $url");
+      print("get > queryParameters: $params");
+      print("get > options: $options");
+
       final response = await _dio.get(
         url,
         queryParameters: params,
         options: options,
       );
+      print("get > response: $response");
+      print("get > response > data: ${response.data}");
+
       return response.data;
     } on DioError catch (error) {
+      print("get > error: $error");
+
       return _errorHandle(error);
     } finally {
       if (loading == true) {

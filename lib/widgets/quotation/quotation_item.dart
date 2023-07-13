@@ -84,6 +84,24 @@ class QuotationItem extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
                 placeholder: (context, url) {
@@ -114,27 +132,25 @@ class QuotationItem extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 8),
               Text(
                 item!.MdrName,
                 maxLines: 1,
                 style: Theme.of(context)
                     .textTheme
-                    .labelLarge!
+                    .titleMedium!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
-              Text(
-                item!.BUName ?? "",
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-              const SizedBox(height: 8),
               Text(
                 item!.QuotationStatus ?? "",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.labelMedium,
               ),
+              Text(
+                item!.Product ?? "",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary),
+                textAlign: TextAlign.end,
+              )
             ],
           ),
         );
@@ -221,20 +237,20 @@ class QuotationItem extends StatelessWidget {
                             bottomLeft: Radius.circular(8),
                           ),
                         ),
-                        // child: Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: <Widget>[
-                        //     item!.kanal.isNotEmpty
-                        //         ? Padding(
-                        //             padding: const EdgeInsets.all(4),
-                        //             child: AppTag(
-                        //               item!.kanal,
-                        //               type: TagType.QuotationStatus,
-                        //             ),
-                        //           )
-                        //         : Container()
-                        //   ],
-                        // ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            item!.PolisStatus!.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
                       );
                     },
                     placeholder: (context, url) {
@@ -279,20 +295,13 @@ class QuotationItem extends StatelessWidget {
                           maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
-                              .titleSmall!
+                              .titleMedium!
                               .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          item!.BUName ?? "",
-                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           item!.QuotationStatus ?? "",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -306,7 +315,8 @@ class QuotationItem extends StatelessWidget {
                             Expanded(
                               child: Text(item!.MdrPhoneNumber ?? "",
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.bodySmall),
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium),
                             )
                           ],
                         ),
@@ -323,11 +333,28 @@ class QuotationItem extends StatelessWidget {
                               child: Text(
                                 item!.Alamat ?? "",
                                 maxLines: 1,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             )
                           ],
                         ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            Text(
+                              item!.Product ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   )
@@ -400,6 +427,25 @@ class QuotationItem extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              item!.PolisStatus!.isNotEmpty
+                                  ? AppTag(
+                                      item!.PolisStatus!,
+                                      type: TagType.status,
+                                    )
+                                  : Container()
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
                 placeholder: (context, url) {
@@ -438,20 +484,13 @@ class QuotationItem extends StatelessWidget {
                                 maxLines: 1,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall!
+                                    .titleMedium!
                                     .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                item!.BUName ?? "",
-                                style: Theme.of(context).textTheme.labelSmall,
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 item!.QuotationStatus ?? "",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
                             ],
                           ),
@@ -471,12 +510,11 @@ class QuotationItem extends StatelessWidget {
                           child: Text(
                             item!.MdrPhoneNumber ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],
                     ),
-                    const SizedBox(height: 4),
                     Row(
                       children: <Widget>[
                         Icon(
@@ -489,11 +527,25 @@ class QuotationItem extends StatelessWidget {
                           child: Text(
                             item!.Alamat ?? "",
                             maxLines: 1,
-                            style: Theme.of(context).textTheme.bodySmall,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         )
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          item!.Product ?? "",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary),
+                        )
+                      ],
+                    )
                   ],
                 ),
               )
