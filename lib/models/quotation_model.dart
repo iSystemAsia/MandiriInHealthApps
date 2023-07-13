@@ -124,6 +124,14 @@ class QuotationModel {
   final String? MdrKategoriPenyakit2;
   final String? MdrKategoriPenyakit3;
   final String? MdrCatatanMarketing;
+  final String? MdrASODepositAwal;
+  final String? MdrASOTopUP;
+  final bool? MdrBenefitSubenefit2;
+  final bool? MdrBenefitSubenefit3;
+  final bool? MdrEksesDiTagihDiTempat;
+  final bool? MdrDepositEkses;
+  final String? MdrJumlahDepositEkses;
+  final String? MdrTopUpEkses;
   final List<QuotationInstallmentModel>? Installment;
   final ImageModel? image;
 
@@ -248,6 +256,14 @@ class QuotationModel {
       this.MdrKategoriPenyakit2,
       this.MdrKategoriPenyakit3,
       this.MdrCatatanMarketing,
+      this.MdrASODepositAwal,
+      this.MdrASOTopUP,
+      this.MdrBenefitSubenefit2,
+      this.MdrBenefitSubenefit3,
+      this.MdrEksesDiTagihDiTempat,
+      this.MdrDepositEkses,
+      this.MdrJumlahDepositEkses,
+      this.MdrTopUpEkses,
       this.Installment,
       this.image});
 
@@ -391,6 +407,14 @@ class QuotationModel {
         MdrKategoriPenyakit2: json['MdrKategoriPenyakit2'] ?? "",
         MdrKategoriPenyakit3: json['MdrKategoriPenyakit3'] ?? "",
         MdrCatatanMarketing: json['MdrCatatanMarketing'] ?? "",
+        MdrASODepositAwal: json['MdrASODepositAwal'] ?? "",
+        MdrASOTopUP: json['MdrASOTopUP'] ?? "",
+        MdrBenefitSubenefit2: json['MdrBenefitSubenefit2'] ?? false,
+        MdrBenefitSubenefit3: json['MdrBenefitSubenefit3'] ?? false,
+        MdrEksesDiTagihDiTempat: json['MdrEksesDiTagihDiTempat'] ?? false,
+        MdrDepositEkses: json['MdrDepositEkses'] ?? false,
+        MdrJumlahDepositEkses: json['MdrJumlahDepositEkses'] ?? "",
+        MdrTopUpEkses: json['MdrTopUpEkses'] ?? "",
         Installment: Installment,
         image:
             json['image'] != null ? ImageModel.fromJson(json['image']) : null);
