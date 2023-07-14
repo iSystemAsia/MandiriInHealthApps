@@ -327,6 +327,11 @@ class Api {
     return ResultApiModel.fromJson(result);
   }
 
+  static Future<ResultApiModel> requestDashboardList() async {
+    final result = await httpManager.get(url: "api.jsonbin.io/v3/b/64b02b428e4aa6225ebdbadd");
+    return ResultApiModel.fromJson(result);
+  }
+
   ///Get Home
   static Future<ResultApiModel> requestHome() async {
     final result = await httpManager.get(url: home);

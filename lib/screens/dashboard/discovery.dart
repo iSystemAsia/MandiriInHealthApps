@@ -26,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    // _discoveryCubit.onLoad();
+    _discoveryCubit.onLoad();
     _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
       if (state is Submitted) {
         _onRefresh();
@@ -46,11 +46,6 @@ class _DashboardState extends State<Dashboard> {
     await _discoveryCubit.onLoad();
   }
 
-  ///On search
-  void _onSearch() {
-    Navigator.pushNamed(context, Routes.searchHistory);
-  }
-
   ///On navigate list product
   void _onProductList(CategoryModel item) {
     Navigator.pushNamed(
@@ -65,38 +60,12 @@ class _DashboardState extends State<Dashboard> {
     Navigator.pushNamed(context, Routes.productDetail, arguments: item);
   }
 
-  ///On scan
-  void _onScan() async {
-    final result = await Navigator.pushNamed(context, Routes.scanQR);
-    if (result != null) {
-      final deeplink = DeepLinkModel.fromString(result as String);
-      if (deeplink.target.isNotEmpty) {
-        if (!mounted) return;
-        Navigator.pushNamed(
-          context,
-          Routes.deepLink,
-          arguments: deeplink,
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Column(
-              children: [
-                HomeSearchBar(
-                  onSearch: _onSearch,
-                  onScan: _onScan,
-                ),
-              ],
-            ),
-          ),
+          const SizedBox(height: 50),
           Expanded(
             child: BlocBuilder<DiscoveryCubit, DiscoveryState>(
               bloc: _discoveryCubit,

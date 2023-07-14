@@ -270,7 +270,7 @@ class AppCategoryItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: Text(
-                            item!.title,
+                            "asd",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
