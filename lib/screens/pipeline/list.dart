@@ -12,6 +12,7 @@ import 'package:mandiri_in_health/models/model_setting.dart';
 import 'package:mandiri_in_health/models/model_sort.dart';
 import 'package:mandiri_in_health/models/pipeline_filter_model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
+import 'package:mandiri_in_health/screens/pipeline/add_pipeline.dart';
 import 'package:mandiri_in_health/utils/translate.dart';
 import 'package:mandiri_in_health/widgets/app_bottom_picker.dart';
 import 'package:mandiri_in_health/widgets/app_product_item.dart';
@@ -317,6 +318,14 @@ class _PipelineListState extends State<PipelineList> {
         appBar: AppBar(
           centerTitle: true,
           title: const Text("Pipeline"),
+          actions: <Widget>[
+            IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) => new AddPipeline()));
+            },
+          ),
+          ],
         ),
         body: Column(
           children: <Widget>[
