@@ -6,11 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandiri_in_health/blocs/pipeline/list_cubit.dart';
 import 'package:mandiri_in_health/blocs/pipeline/list_state.dart';
 import 'package:mandiri_in_health/configs/config.dart';
-import 'package:mandiri_in_health/models/model_filter.dart';
 import 'package:mandiri_in_health/models/model_picker.dart';
 import 'package:mandiri_in_health/models/model_setting.dart';
 import 'package:mandiri_in_health/models/model_sort.dart';
-import 'package:mandiri_in_health/models/pipeline_filter_model.dart';
+import 'package:mandiri_in_health/models/filter_model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/utils/translate.dart';
 import 'package:mandiri_in_health/widgets/app_bottom_picker.dart';
@@ -36,7 +35,7 @@ class _PipelineListState extends State<PipelineList> {
   final PageType _pageType = PageType.list;
   ProductViewType _listMode = Application.setting.listMode;
 
-  final PipelineFilterModel _filter = PipelineFilterModel.fromDefault();
+  final FilterModel _filter = FilterModel.fromDefault();
 
   @override
   void initState() {

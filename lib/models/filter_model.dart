@@ -2,9 +2,11 @@
 
 import 'package:mandiri_in_health/models/model_sort.dart';
 
-class PipelineFilterModel {
+class FilterModel {
+  final String? search;
   final String? kanal;
   final String? produk;
+  final String? nama_bu;
   final String? kepala_unit;
   final String? agent;
   final String? status;
@@ -12,9 +14,11 @@ class PipelineFilterModel {
   final bool? is_komit;
   SortModel? sort;
 
-  PipelineFilterModel(
-      {this.kanal,
+  FilterModel(
+      {this.search,
+      this.kanal,
       this.produk,
+      this.nama_bu,
       this.kepala_unit,
       this.agent,
       this.status,
@@ -24,12 +28,20 @@ class PipelineFilterModel {
 
   Future<Map<String, dynamic>> getParams() async {
     Map<String, dynamic> params = {};
+    if (search != null) {
+      params['search'] = search;
+    }
+    
     if (kanal != null) {
       params['kanal'] = kanal;
     }
 
     if (produk != null) {
       params['produk'] = produk;
+    }
+
+    if (nama_bu != null) {
+      params['nama_bu'] = nama_bu;
     }
 
     if (kepala_unit != null) {
@@ -60,8 +72,9 @@ class PipelineFilterModel {
     return params;
   }
 
-  factory PipelineFilterModel.fromDefault() {
-    return PipelineFilterModel(
+  factory FilterModel.fromDefault() {
+    return FilterModel(
+        search: null,
         kanal: null,
         produk: null,
         kepala_unit: null,

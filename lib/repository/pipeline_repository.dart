@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:mandiri_in_health/api/api.dart';
 import 'package:mandiri_in_health/configs/preferences.dart';
-import 'package:mandiri_in_health/models/model_filter.dart';
-import 'package:mandiri_in_health/models/pipeline_filter_model.dart';
+import 'package:mandiri_in_health/models/filter_model.dart';
 import 'package:mandiri_in_health/models/pipeline_model.dart';
 import 'package:mandiri_in_health/models/user_model.dart';
 
@@ -11,7 +10,7 @@ class PipelineRepository {
   static Future<List?> loadList({
     int? page,
     int? perPage,
-    PipelineFilterModel? filter,
+    FilterModel? filter,
     String? keyword,
   }) async {
     Map<String, dynamic> params = {
